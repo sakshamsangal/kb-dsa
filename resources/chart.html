@@ -1,0 +1,59 @@
+<!DOCTYPE>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>chart.js</title>
+    <style>
+
+    </style>
+</head>
+<body>
+<canvas id="chartId" aria-label="chart" height="350" width="650"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.1.1/chart.min.js"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.1.1/helpers.esm.min.js">
+</script>
+<script>
+<!--var arr = [10, 20, 30, 40, 50,60]-->
+<!--var arr = [30,30,30,30,30,30]-->
+<!--var arr = [30,20,10,25,15,5]-->
+<!--var arr = [30,60,20,25,55,15]-->
+var arr = [10,20,40,30,20,10]
+      var x = {
+         type: 'bar',
+         data: {
+<!--            labels: ["0", "1", "2", "3", "4"],-->
+            labels: [0,1,2,3,4,5],
+<!--            labels: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],-->
+            datasets: [{
+               label: "Array",
+               data: arr,
+<!--               backgroundColor: ['lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue'],-->
+<!--               backgroundColor: ['yellow', 'aqua', 'pink', 'lightgreen', 'lightblue', 'gold'],-->
+<!--               borderColor: ['black', 'black', 'black', 'black', 'black', 'black'],-->
+               borderColor: 'black',
+               backgroundColor: 'lightblue',
+<!--               borderColor: ['red', 'blue', 'fuchsia', 'green', 'navy', 'black'],-->
+               borderWidth: 2,
+            }],
+         },
+         options: {
+         indexAxis: 'x',
+            responsive: false,
+             plugins: {
+      legend: {
+        position: 'right',
+      },
+      title: {
+        display: true,
+        text: 'DSA'
+      }
+    }
+         },
+      }
+      var chrt = document.getElementById("chartId").getContext("2d");
+
+      var chartId = new Chart(chrt, x);
+
+</script>
+</body>
+</html>
