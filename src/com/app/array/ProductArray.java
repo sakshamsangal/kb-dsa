@@ -3,7 +3,16 @@ package com.app.array;
 import java.util.Arrays;
 
 public class ProductArray {
-    void productArray(int arr[], int n) {
+    /* Driver program to test above functions */
+    public static void main(String[] args) {
+        ProductArray pa = new ProductArray();
+        int[] arr = {10, 3, 5, 6, 2};
+        int n = arr.length;
+        System.out.println("The product array is : ");
+        pa.productArray(arr, n);
+    }
+
+    void productArray(int[] arr, int n) {
 
         // Base case
         if (n == 1) {
@@ -40,16 +49,6 @@ public class ProductArray {
         for (i = 0; i < n; i++)
             System.out.print(prod[i] + " ");
 
-        return;
-    }
-
-    /* Driver program to test above functions */
-    public static void main(String[] args) {
-        ProductArray pa = new ProductArray();
-        int[] arr = {10, 3, 5, 6, 2};
-        int n = arr.length;
-        System.out.println("The product array is : ");
-        pa.productArray(arr, n);
     }
 }
 

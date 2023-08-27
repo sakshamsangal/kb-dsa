@@ -1,15 +1,6 @@
 package com.app.array;
 
 public class MergeTwoSortedLinkedLists {
-    static class LinkedListNode<T> {
-        T data;
-        LinkedListNode<T> next;
-
-        public LinkedListNode(T data) {
-            this.data = data;
-        }
-    }
-
     public static LinkedListNode<Integer> sortTwoLists(LinkedListNode<Integer> first, LinkedListNode<Integer> second) {
 
         LinkedListNode<Integer> head = new LinkedListNode<>(-1);
@@ -36,5 +27,14 @@ public class MergeTwoSortedLinkedLists {
             second = second.next;
         }
         return head.next;
+    }
+
+    static class LinkedListNode<T> {
+        T data;
+        LinkedListNode<T> next;
+
+        public LinkedListNode(T data) {
+            this.data = data;
+        }
     }
 }

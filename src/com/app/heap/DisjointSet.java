@@ -1,8 +1,10 @@
 package com.app.heap;
+
 public class DisjointSet {
     int[] arr;
     int[] parent;
     int size;
+
     public DisjointSet(int size) {
         this.size = size;
         arr = new int[size];
@@ -11,10 +13,12 @@ public class DisjointSet {
             parent[i] = i;
         }
     }
+
     int find(int n) {
         if (n == parent[n]) return n;
         return find(parent[n]);
     }
+
     void union(int a, int b) {
         a = find(a);
         b = find(b);

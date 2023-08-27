@@ -1,6 +1,8 @@
 package com.app.search;
+
 public class Search {
     static int count = 1;
+
     // normal binary search program
     static boolean binarySearch(int[] arr, int item) {
         int start = 0;
@@ -17,16 +19,7 @@ public class Search {
         }
         return false;
     }
-    static class Bound {
-        static int lower = 0;
-        static int upper = 2;
-        public static void setBound(int[] arr, int item) {
-            while (arr[upper] < item) {
-                lower = upper;
-                upper <<= 1;
-            }
-        }
-    }
+
     // when arr.length is not allowed
     static boolean binarySearchInfinityArray(int[] arr, int item) {
         Bound.setBound(arr, item);
@@ -40,6 +33,7 @@ public class Search {
         }
         return false;
     }
+
     static boolean linearSearch(int[] arr, int key) {
         for (Integer item : arr) {
             if (item == key) return true;
@@ -57,6 +51,18 @@ public class Search {
             Search.count = 1;
         }
         System.out.println("Total comparison = " + sum / arr.length);
+    }
+
+    static class Bound {
+        static int lower = 0;
+        static int upper = 2;
+
+        public static void setBound(int[] arr, int item) {
+            while (arr[upper] < item) {
+                lower = upper;
+                upper <<= 1;
+            }
+        }
     }
     // // reverse order
     // static int linearSearch(int[] arr, int key) {

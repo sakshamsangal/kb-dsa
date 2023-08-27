@@ -6,7 +6,7 @@ public class RunLengthEncoding {
         char ch = str.charAt(0);
         int prev = 1;
         int i;
-        for (i = 1; i < str.length()-1; i++) {
+        for (i = 1; i < str.length() - 1; i++) {
             if (str.charAt(i - 1) == str.charAt(i)) {
                 prev += 1;
             } else {
@@ -18,7 +18,7 @@ public class RunLengthEncoding {
 
         }
 
-        if (i == str.length()-1){
+        if (i == str.length() - 1) {
             System.out.println("ch = " + ch);
             System.out.println(prev);
         }

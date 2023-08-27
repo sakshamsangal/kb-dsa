@@ -1,4 +1,5 @@
 package com.app.number_theory;
+
 public class BinaryExponentiation {
     private static int power(int base, int power) {
         int result = 1;
@@ -13,6 +14,7 @@ public class BinaryExponentiation {
         }
         return result;
     }
+
     public static void main(String[] args) {
         int i = power(3, 4);
         System.out.println("i = " + i);

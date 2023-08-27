@@ -4,68 +4,13 @@ import java.util.*;
 import java.util.stream.IntStream;
 
 public class SSSAPDijkstra {
-    private int V;
-    private List<List<Edge>> adj;
+    private final int V;
+    private final List<List<Edge>> adj;
 
     SSSAPDijkstra(int V) {
         this.V = V;
         adj = new ArrayList<>();
         IntStream.range(0, V).forEach(i -> adj.add(new ArrayList<>()));
-    }
-
-    // Edge class
-    static class Edge {
-        // Endpoints and weight of the edge.
-        int u, v, w;
-
-        // Constructor
-        Edge(int u, int v, int w) {
-            this.u = u;
-            this.v = v;
-            this.w = w;
-        }
-    }
-
-    static class Node {
-        int key;
-        int d;
-        public Node(int key, int d) {
-            this.key = key;
-            this.d = d;
-        }
-    }
-
-    void addEdge(int u, int v, int weight) {
-        adj.get(u).add(new Edge(u, v, weight));
-        adj.get(v).add(new Edge(v, u, weight));
-    }
-
-
-    void shortestPath(int src) {
-//        PriorityQueue<pair> pq = new PriorityQueue<>((a,b)-> a.weight - b.weight);
-        PriorityQueue<Node> pq = new PriorityQueue<>(V, Comparator.comparingInt(o -> o.d));
-        int[] currDis = new int[V];
-        boolean[] visited = new boolean[V];
-        Arrays.fill(currDis, Integer.MAX_VALUE);
-
-        pq.add(new Node(src, 0));
-        currDis[src] = 0;
-
-        while (!pq.isEmpty()) {
-            int u = pq.poll().key;
-            visited[u] = true;
-            for (Edge edge : adj.get(u)) {
-                if (!visited[edge.v] && currDis[edge.v] > currDis[u] + edge.w) {
-                    currDis[edge.v] = currDis[u] + edge.w;
-                    pq.add(new Node(edge.v, currDis[edge.v]));
-                }
-            }
-        }
-
-        System.out.println("Vertex Distance from Source");
-        for (int i = 0; i < V; i++) {
-            System.out.println(i + "\t\t" + currDis[i]);
-        }
     }
 
     static int[] dijkstra(int V, ArrayList<ArrayList<ArrayList<Integer>>> adj, int S) {
@@ -110,5 +55,61 @@ public class SSSAPDijkstra {
         g.addEdge(7, 8, 7);
 
         g.shortestPath(0);
+    }
+
+    void addEdge(int u, int v, int weight) {
+        adj.get(u).add(new Edge(u, v, weight));
+        adj.get(v).add(new Edge(v, u, weight));
+    }
+
+
+    void shortestPath(int src) {
+//        PriorityQueue<pair> pq = new PriorityQueue<>((a,b)-> a.weight - b.weight);
+        PriorityQueue<Node> pq = new PriorityQueue<>(V, Comparator.comparingInt(o -> o.d));
+        int[] currDis = new int[V];
+        boolean[] visited = new boolean[V];
+        Arrays.fill(currDis, Integer.MAX_VALUE);
+
+        pq.add(new Node(src, 0));
+        currDis[src] = 0;
+
+        while (!pq.isEmpty()) {
+            int u = pq.poll().key;
+            visited[u] = true;
+            for (Edge edge : adj.get(u)) {
+                if (!visited[edge.v] && currDis[edge.v] > currDis[u] + edge.w) {
+                    currDis[edge.v] = currDis[u] + edge.w;
+                    pq.add(new Node(edge.v, currDis[edge.v]));
+                }
+            }
+        }
+
+        System.out.println("Vertex Distance from Source");
+        for (int i = 0; i < V; i++) {
+            System.out.println(i + "\t\t" + currDis[i]);
+        }
+    }
+
+    // Edge class
+    static class Edge {
+        // Endpoints and weight of the edge.
+        int u, v, w;
+
+        // Constructor
+        Edge(int u, int v, int w) {
+            this.u = u;
+            this.v = v;
+            this.w = w;
+        }
+    }
+
+    static class Node {
+        int key;
+        int d;
+
+        public Node(int key, int d) {
+            this.key = key;
+            this.d = d;
+        }
     }
 }

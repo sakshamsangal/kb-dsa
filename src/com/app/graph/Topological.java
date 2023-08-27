@@ -1,6 +1,11 @@
 package com.app.graph;
+
 import java.util.*;
-public class Topological{
+
+public class Topological {
+    int size;
+    List<List<Integer>> adjacencyList = new ArrayList<>();
+
     void topologicalSortDFSUtil(int v, boolean[] visited, Stack<Integer> stack) {
         visited[v] = true;
         Integer i;
@@ -10,7 +15,8 @@ public class Topological{
         }
         stack.push(v);
     }
-// ## topologicalSortDFS
+
+    // ## topologicalSortDFS
     void topologicalSortDFS() {
         Stack<Integer> stack = new Stack<Integer>();
         boolean[] visited = new boolean[size];
@@ -22,8 +28,7 @@ public class Topological{
         while (!stack.empty())
             System.out.print(stack.pop() + " ");
     }
-    int size;
-    List<List<Integer>> adjacencyList = new ArrayList<>();
+
     // Kahn's Algo
     public void topologicalSortBFS() {
         int[] inDegree = new int[size];

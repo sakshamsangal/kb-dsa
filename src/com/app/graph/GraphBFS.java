@@ -32,7 +32,7 @@ public class GraphBFS {
 
     static void BFSDin(ArrayList<ArrayList<Integer>> adj, int V) {
         boolean[] visited = new boolean[V];
-		for (int i = 0; i < V; i++) {
+        for (int i = 0; i < V; i++) {
             if (!visited[i])
                 BFS(adj, i, visited);
         }

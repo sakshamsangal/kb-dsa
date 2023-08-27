@@ -23,10 +23,10 @@ public class StockSpan2 {
             while (stack.peek() < arr[i]) {
                 stack.pop();
             }
-            if (stack.isEmpty()){
-                ans[i] = i+1;
+            if (stack.isEmpty()) {
+                ans[i] = i + 1;
             } else {
-                ans[i]= i - stack.peek();
+                ans[i] = i - stack.peek();
             }
             stack.add(i);
         }

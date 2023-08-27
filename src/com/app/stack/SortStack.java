@@ -11,16 +11,16 @@ public class SortStack {
         }
         Integer item = stack.pop();
         sortStack(stack);
-        if (stack.isEmpty()||stack.peek() <= item) {
+        if (stack.isEmpty() || stack.peek() <= item) {
             stack.add(item);
         } else {
             Stack<Integer> aux = new Stack<>();
 
-            while (!stack.isEmpty() && item < stack.peek()){
+            while (!stack.isEmpty() && item < stack.peek()) {
                 aux.add(stack.pop());
             }
             stack.add(item);
-            while (!aux.isEmpty()){
+            while (!aux.isEmpty()) {
                 stack.add(aux.pop());
             }
         }

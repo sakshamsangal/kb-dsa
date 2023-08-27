@@ -24,7 +24,7 @@ public class StockSpan {
             if (arr[i] < arr[stack.peek()]) {
                 ans[i] = 1;
             } else {
-                while (arr[stack.peek()] < arr[i]){
+                while (arr[stack.peek()] < arr[i]) {
                     stack.pop();
                 }
                 ans[i] = i - stack.peek();

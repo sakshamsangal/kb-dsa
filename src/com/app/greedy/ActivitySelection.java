@@ -5,7 +5,7 @@ package com.app.greedy;// Java program for activity selection problem.
 public class ActivitySelection {
     // Prints a maximum set of activities that can be done
     // by a single person, one at a time.
-    public static void printMaxActivities(int s[], int f[], int n) {
+    public static void printMaxActivities(int[] s, int[] f, int n) {
         int i, j;
         System.out.println("Following activities are selected");
         // The first activity always gets selected
@@ -22,10 +22,11 @@ public class ActivitySelection {
             }
         }
     }
+
     // Driver code
     public static void main(String[] args) {
-        int s[] = {1, 3, 0, 5, 8, 5};
-        int f[] = {2, 4, 6, 7, 9, 9};
+        int[] s = {1, 3, 0, 5, 8, 5};
+        int[] f = {2, 4, 6, 7, 9, 9};
         int n = s.length;
         // Function call
         printMaxActivities(s, f, n);

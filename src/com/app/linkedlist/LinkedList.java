@@ -3,15 +3,6 @@ package com.app.linkedlist;
 public class LinkedList {
     static Node head;
 
-    static class Node {
-        int data;
-        Node next;
-
-        public Node(int data) {
-            this.data = data;
-        }
-    }
-
     static void addAtEnd(int k) {
         if (head == null) { // if list is empty
             head = new Node(k);
@@ -88,6 +79,15 @@ public class LinkedList {
             current = next; // new current
         }
         head = prev; // since curr is null so prev is head now
+    }
+
+    static class Node {
+        int data;
+        Node next;
+
+        public Node(int data) {
+            this.data = data;
+        }
     }
 
     static class Main {

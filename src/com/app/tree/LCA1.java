@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class LCA1 {
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         Node root = new Node(10);
         root.left = new Node(20);
         root.right = new Node(30);

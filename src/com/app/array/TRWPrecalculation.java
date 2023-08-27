@@ -2,18 +2,18 @@ package com.app.array;// Java program to find maximum amount of water that can
 // be trapped within given set of bars.
 
 public class TRWPrecalculation {
-    static int arr[]
+    static int[] arr
             = new int[]{0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1};
 
     // Method for maximum amount of water
     static int findWater(int n) {
         // left[i] contains height of tallest bar to the
         // left of i'th bar including itself
-        int left[] = new int[n];
+        int[] left = new int[n];
 
         // Right [i] contains height of tallest bar to
         // the right of ith bar including itself
-        int right[] = new int[n];
+        int[] right = new int[n];
 
         // Initialize result
         int water = 0;
@@ -33,8 +33,8 @@ public class TRWPrecalculation {
         // the amount of water accumulated on this
         // particular bar will be equal to min(left[i],
         // right[i]) - arr[i] .
-        int[] ans= new int[12];
-        for (int i = 0; i < n; i++){
+        int[] ans = new int[12];
+        for (int i = 0; i < n; i++) {
             water += Math.min(left[i], right[i]) - arr[i];
             ans[i] = water;
         }

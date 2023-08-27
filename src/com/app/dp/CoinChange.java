@@ -5,7 +5,7 @@ public class CoinChange {
 
     // Returns the count of ways we can
     // sum coins[0...n-1] coins to get sum "sum"
-    static int count(int coins[], int n, int sum) {
+    static int count(int[] coins, int n, int sum) {
 
         // If sum is 0 then there is 1 solution
         // (do not include any coin)
@@ -31,8 +31,8 @@ public class CoinChange {
     }
 
     // Driver code
-    public static void main(String args[]) {
-        int coins[] = {1, 2, 3};
+    public static void main(String[] args) {
+        int[] coins = {1, 2, 3};
         int n = coins.length;
 
         System.out.println(count(coins, n, 4));

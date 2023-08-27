@@ -3,11 +3,12 @@ package com.app.tree;
 public class CheckBST {
 
     static int prev = Integer.MIN_VALUE;
+
     static boolean isBST(Node root) {
         if (root == null)
             return true;
         if (!isBST(root.left)) return false;
-        if (root.data<prev) return false;
+        if (root.data < prev) return false;
         prev = root.data;
         return isBST(root.right);
     }

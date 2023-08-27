@@ -2,7 +2,7 @@ package com.app.tree;
 
 public class MirrorTree {
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         Node root = new Node(10);
         root.left = new Node(20);
         root.right = new Node(30);
@@ -18,12 +18,12 @@ public class MirrorTree {
 
     public static Node dll(Node root, Node prev) {
 
-        if (root == null){
+        if (root == null) {
             return null;
         }
 
-        Node head = dll(root.left,prev);
-        if (prev == null){
+        Node head = dll(root.left, prev);
+        if (prev == null) {
             head = prev;
         } else {
             root.left = prev;
@@ -32,12 +32,9 @@ public class MirrorTree {
         prev = root;
 
 
-
-        dll(root.right,prev);
+        dll(root.right, prev);
         return head;
     }
-
-
 
 
     static class Node {

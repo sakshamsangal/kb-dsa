@@ -7,7 +7,11 @@ import java.util.Queue;
 
 public class Burn2 {
 
-    public static void main(String args[]) {
+    static Node targetNode;
+    static Map<Node, Node> map = new HashMap<>();
+    static Map<Integer, Boolean> visited = new HashMap<>();
+
+    public static void main(String[] args) {
         Node root = new Node(10);
         root.left = new Node(20);
         root.right = new Node(30);
@@ -20,11 +24,6 @@ public class Burn2 {
         System.out.println("i = " + i);
 
     }
-
-
-    static Node targetNode;
-    static Map<Node, Node> map = new HashMap<>();
-    static Map<Integer, Boolean> visited = new HashMap<>();
 
     public static Node inOrderTraversal(Node root, Node parent, int target) {
         if (root == null) {
@@ -47,7 +46,7 @@ public class Burn2 {
         visited.put(targetNode.data, true);
 
         int time = 0;
-        while (!queue.isEmpty()){
+        while (!queue.isEmpty()) {
             boolean doesAnyNodeBurn = false;
             int qSize = queue.size();
             for (int i = 0; i < qSize; i++) {
@@ -73,7 +72,7 @@ public class Burn2 {
                     doesAnyNodeBurn = true;
                 }
             }
-            if (doesAnyNodeBurn){
+            if (doesAnyNodeBurn) {
                 time++;
             }
         }
@@ -82,8 +81,6 @@ public class Burn2 {
 
         return time;
     }
-
-
 
 
     static class Node {

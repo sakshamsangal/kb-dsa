@@ -7,6 +7,7 @@ import java.util.Stack;
 public class ShortestPathDAG {
     private final int V;
     private final LinkedList<AdjListNode>[] adj;
+
     ShortestPathDAG(int v) {
         V = v;
         adj = new LinkedList[V];

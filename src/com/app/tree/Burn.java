@@ -2,7 +2,9 @@ package com.app.tree;
 
 public class Burn {
 
-    public static void main(String args[]) {
+    static int res = 0;
+
+    public static void main(String[] args) {
         Node root = new Node(10);
         root.left = new Node(20);
         root.right = new Node(30);
@@ -16,8 +18,6 @@ public class Burn {
         burnTime(root, leaf, dist);
         System.out.print(res);
     }
-
-    static int res = 0;
 
     public static int burnTime(Node root, int leaf, Distance dist) {
         if (root == null) return 0;

@@ -6,7 +6,7 @@ public class PivotIndex {
 
     // Driver code
     public static void main(String[] args) {
-        int[] arr = {1,7,3,6,5,6};
+        int[] arr = {1, 7, 3, 6, 5, 6};
         int n = arr.length;
         solve(arr);
 //        System.out.print(solve(arr, n));

@@ -1,6 +1,8 @@
 package com.app.tree;
 
 public class ToDLL {
+    static Node prev = null;
+
     public static void traverseDLL(Node root) {
         Node temp = root;
         while (temp != null) {
@@ -21,8 +23,6 @@ public class ToDLL {
         traverseDLL(head);
 //        System.out.print(toDLL(root));
     }
-
-    static Node prev = null;
 
     public static Node toDLL(Node root) {
         if (root == null)

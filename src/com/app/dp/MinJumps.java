@@ -11,14 +11,14 @@ public class MinJumps {
     }
 
     private static int getMinJumps(int[] arr, int end) {
-        if (end == 0){
+        if (end == 0) {
             return 0;
         }
         int ans = Integer.MAX_VALUE;
         for (int i = 0; i < end; i++) {
             if (arr[i] + i >= end) {
                 int minJumps = getMinJumps(arr, i); // potential ans
-                if (minJumps != Integer.MAX_VALUE){
+                if (minJumps != Integer.MAX_VALUE) {
                     ans = Math.min(minJumps + 1, ans);
                 }
             }

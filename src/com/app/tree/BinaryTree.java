@@ -1,7 +1,15 @@
 package com.app.tree;
+
 import java.util.LinkedList;
 import java.util.Queue;
+
 public class BinaryTree {
+    Node root;
+
+    public BinaryTree(Node root) {
+        this.root = root;
+    }
+
     public void inOrder(Node parent) {
         if (parent != null) {
             inOrder(parent.left);
@@ -9,18 +17,7 @@ public class BinaryTree {
             inOrder(parent.right);
         }
     }
-    static class Node {
-        Node left;
-        int data;
-        Node right;
-        public Node(int data) {
-            this.data = data;
-        }
-    }
-    Node root;
-    public BinaryTree(Node root) {
-        this.root = root;
-    }
+
     // empty tree height = 0
     // max number of nodes from root to leaf
     void toDLL(Node prev, Node curr) {
@@ -34,10 +31,12 @@ public class BinaryTree {
             toDLL(prev, curr.right);
         }
     }
+
     int height(Node parent) {
         if (parent != null) return Math.max(height(parent.left), height(parent.right)) + 1;
         return 0;
     }
+
     void bfs() {
         if (root != null) {
             Queue<Node> queue = new LinkedList<>();
@@ -49,6 +48,16 @@ public class BinaryTree {
                 if (curr.left != null) queue.add(curr.left);
                 if (curr.right != null) queue.add(curr.right);
             }
+        }
+    }
+
+    static class Node {
+        Node left;
+        int data;
+        Node right;
+
+        public Node(int data) {
+            this.data = data;
         }
     }
 }

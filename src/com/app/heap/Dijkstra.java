@@ -3,9 +3,11 @@ package com.app.heap;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 public class Dijkstra {
     // Dijkstra algorithm
     int size;
+
     public void dijkstra(int[][] graph, int source) {
         boolean[] visited = new boolean[size];
         int[] distance = new int[size];
@@ -24,6 +26,7 @@ public class Dijkstra {
         System.out.println(Arrays.toString(distance));
         printPath(source, previous);
     }
+
     // Get minimum vertex
     private int getMinimumVertex(int[] distance, boolean[] visited) {
         int minIndex = -1;
@@ -34,6 +37,7 @@ public class Dijkstra {
         }
         return minIndex;
     }
+
     // Get adjacent index
     public List<Integer> getAdjacentIndex(int[][] graph, int fixedIndex, boolean[] visited) {
         List<Integer> adjacentIndex = new ArrayList<>();
@@ -44,6 +48,7 @@ public class Dijkstra {
         }
         return adjacentIndex;
     }
+
     // Relax
     public void relax(int[] distance, int fixedIndex, int gapBetween, int adjacentIndex, int[] previous) {
         if (distance[fixedIndex] + gapBetween < distance[adjacentIndex]) {
@@ -51,6 +56,7 @@ public class Dijkstra {
             previous[adjacentIndex] = fixedIndex;
         }
     }
+
     // Print path
     private void printPath(int source, int[] previous) {
         for (int i = 0; i < size; i++) {

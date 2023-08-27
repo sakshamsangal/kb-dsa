@@ -5,6 +5,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.Scanner;
 import java.util.StringTokenizer;
+
 public class CodeChef {
     static void solve(BufferedReader bufferedReader) throws IOException {
         int size = Integer.parseInt(bufferedReader.readLine());
@@ -14,6 +15,7 @@ public class CodeChef {
             arr[i] = Integer.parseInt(stringTokenizer.nextToken());
         }
     }
+
     static void solve(Scanner scanner) {
         int size = scanner.nextInt();
         int[] arr = new int[size];
