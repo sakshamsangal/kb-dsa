@@ -4,55 +4,80 @@ public class Solution {
 
     public static void main(String[] args) {
         Main main = new Main();
-        int[] arr = {3, 1};
-        int search = main.search(arr, 1);
-        System.out.println("search = " + search);
+        int[] arr = {1, 2};
+
+        long startTime = System.currentTimeMillis();
+       main.firstBadVersion(100);
+        long stopTime = System.currentTimeMillis();
+        long timeTaken = stopTime - startTime;
+        System.out.println("timeTaken = " + timeTaken);
+
+
+
+        startTime = System.currentTimeMillis();
+        main.firstBadVersion2(100);
+        stopTime = System.currentTimeMillis();
+
+        timeTaken = stopTime - startTime;
+        System.out.println("timeTaken = " + timeTaken);
+
+
+
     }
+
+
 }
 
 class Main {
-    public int search(int[] arr, int target) {
-        int start = 0;
-        int end = arr.length - 1;
+    boolean isBadVersion(int version) {
+        if (version < 25) {
+            return false;
+        }
+        return true;
+    }
+
+    public int firstBadVersion2(int n) {
+        int i = 0;
+        int j = n;
+        int ans = -1;
+        while (i <= j) {
+            int mid = i + (j - i) / 2;
+            boolean badVersion = isBadVersion(mid-1);
+            System.out.println("mid = " + mid);
+            if (isBadVersion(mid)) {
+                ans = mid;
+                j = mid - 1;
+            } else
+                i = mid + 1;
+        }
+
+
+        return ans;
+    }
+
+    public int firstBadVersion(int n) {
+
+        int start = 1;
+        int end = n;
         while (start <= end) {
-            int mid = (start + end) / 2;
+            int mid = start + (end - start) / 2;
+            System.out.println("mid = " + mid);
 
-            if (arr[mid] == target) return mid;
-
-            // chances in which range target belongs to
-            if (arr[start] < arr[mid]) {
-
-                // 1st part is sorted
-                // if target is in this range
-                if (arr[start] <= target && target <= arr[mid]) {
-
-                    // change end
-                    end = mid - 1;
-                }
-
-                // may be target is in 2nd range
-                else {
-                    start = mid + 1;
-                }
+            boolean badVersion = isBadVersion(mid);
+            // success
+            if (!isBadVersion(mid - 1) && badVersion) {
+                return mid;
             }
 
-            // 2nd part is sorted
-            else {
-
-                // check if target lies in this range
-                if (arr[mid] <= target && target <= arr[end]) {
-                    start = mid + 1;
-                }
-
-                // target not lie in sorted range
-                else {
-                    end = mid - 1;
-                }
+            // shift domain
+            // good version
+            // remove left
+            if (!badVersion) {
+                start = mid + 1;
+            } else {
+                end = mid - 1;
             }
-
         }
         return -1;
     }
-
-
 }
