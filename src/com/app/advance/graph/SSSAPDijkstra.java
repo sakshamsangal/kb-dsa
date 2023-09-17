@@ -14,12 +14,12 @@ public class SSSAPDijkstra {
     }
 
     static int[] dijkstra(int V, ArrayList<ArrayList<ArrayList<Integer>>> adj, int S) {
-        PriorityQueue<Node> pq = new PriorityQueue<>(V, Comparator.comparingInt(o -> o.d));
+        PriorityQueue<Pair> pq = new PriorityQueue<>(V, Comparator.comparingInt(o -> o.d));
         int[] currDis = new int[V];
         boolean[] visited = new boolean[V];
         Arrays.fill(currDis, Integer.MAX_VALUE);
 
-        pq.add(new Node(S, 0));
+        pq.add(new Pair(S, 0));
         currDis[S] = 0;
 
         while (!pq.isEmpty()) {
@@ -28,7 +28,7 @@ public class SSSAPDijkstra {
             for (ArrayList<Integer> item : adj.get(u)) {
                 if (!visited[item.get(0)] && currDis[item.get(0)] > currDis[u] + item.get(1)) {
                     currDis[item.get(0)] = currDis[u] + item.get(1);
-                    pq.add(new Node(item.get(0), currDis[item.get(0)]));
+                    pq.add(new Pair(item.get(0), currDis[item.get(0)]));
                 }
             }
         }
@@ -65,12 +65,12 @@ public class SSSAPDijkstra {
 
     void shortestPath(int src) {
 //        PriorityQueue<pair> pq = new PriorityQueue<>((a,b)-> a.weight - b.weight);
-        PriorityQueue<Node> pq = new PriorityQueue<>(V, Comparator.comparingInt(o -> o.d));
+        PriorityQueue<Pair> pq = new PriorityQueue<>(V, Comparator.comparingInt(o -> o.d));
         int[] currDis = new int[V];
         boolean[] visited = new boolean[V];
         Arrays.fill(currDis, Integer.MAX_VALUE);
 
-        pq.add(new Node(src, 0));
+        pq.add(new Pair(src, 0));
         currDis[src] = 0;
 
         while (!pq.isEmpty()) {
@@ -79,7 +79,7 @@ public class SSSAPDijkstra {
             for (Edge edge : adj.get(u)) {
                 if (!visited[edge.v] && currDis[edge.v] > currDis[u] + edge.w) {
                     currDis[edge.v] = currDis[u] + edge.w;
-                    pq.add(new Node(edge.v, currDis[edge.v]));
+                    pq.add(new Pair(edge.v, currDis[edge.v]));
                 }
             }
         }
@@ -103,11 +103,11 @@ public class SSSAPDijkstra {
         }
     }
 
-    static class Node {
+    static class Pair {
         int key;
         int d;
 
-        public Node(int key, int d) {
+        public Pair(int key, int d) {
             this.key = key;
             this.d = d;
         }

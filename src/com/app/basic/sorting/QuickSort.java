@@ -71,6 +71,7 @@ public class QuickSort {
         System.out.println("Sorted array:");
         printArr(arr);
     }
+
 }
 
 // This code is contributed by Ayush Choudhary

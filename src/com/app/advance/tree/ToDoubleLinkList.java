@@ -1,6 +1,6 @@
 package com.app.advance.tree;
 
-public class ToDLL {
+public class ToDoubleLinkList {
     static Node prev = null;
 
     public static void traverseDLL(Node root) {
@@ -19,16 +19,16 @@ public class ToDLL {
         root.right.left = new Node(3);
         root.right.right = new Node(9);
 
-        Node head = toDLL(root);
+        Node head = toDoublyLL(root);
         traverseDLL(head);
 //        System.out.print(toDLL(root));
     }
 
-    public static Node toDLL(Node root) {
+    public static Node toDoublyLL(Node root) {
         if (root == null)
             return null;
 
-        Node head = toDLL(root.left);
+        Node head = toDoublyLL(root.left);
 
         if (prev == null) {
             head = root;
@@ -38,7 +38,7 @@ public class ToDLL {
         }
         prev = root;
         System.out.println("root = " + root.key);
-        toDLL(root.right);
+        toDoublyLL(root.right);
         return head;
     }
 

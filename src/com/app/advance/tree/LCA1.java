@@ -19,12 +19,16 @@ public class LCA1 {
 
     public static boolean findPath(Node root, ArrayList<Node> p, int n) {
         if (root == null) return false;
+
+        // first take action
+        // then check if action taken was correct or not
         p.add(root);
         if (root.key == n) return true;
 
         if (findPath(root.left, p, n) || findPath(root.right, p, n)) return true;
 
         p.remove(p.size() - 1);
+
         return false;
     }
 
