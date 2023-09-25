@@ -1,6 +1,56 @@
 package com.app.basic.array;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Stack;
+
 public class Array {
+    Map<Integer, Integer> getFrequencyFromArray(int[] arr) {
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int item : arr) {
+            Integer freq = map.getOrDefault(item, 0);
+            map.put(item, freq + 1);
+        }
+        return map;
+    }
+    public String simplifyPath(String path) {
+        Stack<Character> stack = new Stack<>();
+
+        for (int i = 0; i < path.length(); i++) {
+            if (path.charAt(i) == '.'){
+                int countOfSlash = 0;
+                while (!stack.isEmpty() && countOfSlash != 2){
+                    if (path.charAt(i) == '/') {
+                        countOfSlash ++;
+                    }
+                    stack.pop();
+                }
+                stack.push('/');
+            } else if (path.charAt(i) == '/'){
+                if (!stack.isEmpty() &&stack.peek() != '/' && i != path.length()-1){
+                    stack.push(path.charAt(i));
+                }
+            } else {
+                stack.push(path.charAt(i));
+            }
+        }
+        StringBuilder ans = new StringBuilder();
+        for (Character character : stack) {
+            ans.append(character);
+        }
+        return ans.toString();
+    }
+
+
+    public boolean isAnagram(String s1, String s2) {
+        char[] charArray1 = s1.toCharArray();
+        char[] charArray2 = s2.toCharArray();
+        Arrays.sort(charArray1);
+        Arrays.sort(charArray2);
+        return Arrays.equals(charArray1, charArray2);
+    }
+
 
 
     static void powerSet(int[] arr, int size) {

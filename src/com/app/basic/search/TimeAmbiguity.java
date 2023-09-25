@@ -3,15 +3,14 @@ package com.app.basic.search;
 public class TimeAmbiguity {
 
     public static void main(String[] args) {
-        Main main = new Main();
+        TimeAmbiguity main = new TimeAmbiguity();
         int[] arr = {1, 2};
 
         long startTime = System.currentTimeMillis();
-       main.firstBadVersion(100);
+        main.firstBadVersion(100);
         long stopTime = System.currentTimeMillis();
         long timeTaken = stopTime - startTime;
         System.out.println("timeTaken = " + timeTaken);
-
 
 
         startTime = System.currentTimeMillis();
@@ -22,13 +21,9 @@ public class TimeAmbiguity {
         System.out.println("timeTaken = " + timeTaken);
 
 
-
     }
 
 
-}
-
-class Main {
     boolean isBadVersion(int version) {
         if (version < 25) {
             return false;
@@ -42,13 +37,12 @@ class Main {
         int ans = -1;
         while (i <= j) {
             int mid = i + (j - i) / 2;
-            boolean badVersion = isBadVersion(mid-1);
+            boolean badVersion = isBadVersion(mid - 1);
             System.out.println("mid = " + mid);
             if (isBadVersion(mid)) {
                 ans = mid;
                 j = mid - 1;
-            } else
-                i = mid + 1;
+            } else i = mid + 1;
         }
 
 

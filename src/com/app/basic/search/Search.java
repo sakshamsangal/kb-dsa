@@ -90,6 +90,7 @@ public class Search {
         }
         return -1;
     }
+
     int searchInsert(int[] arr, int item) {
         int start = 0;
         int end = arr.length - 1;
@@ -146,11 +147,12 @@ public class Search {
         }
         return start;
     }
+
     public int findMin(int[] arr) {
 
         int start = 0;
         int end = arr.length - 1;
-        if (arr[start]<arr[end]) return arr[start];
+        if (arr[start] < arr[end]) return arr[start];
         while (start < end) {
             int mid = start + (end - start) / 2;
 
@@ -162,6 +164,7 @@ public class Search {
         }
         return start;
     }
+
     // normal binary search program
     static int binarySearch(int[] arr, int item) {
         int start = 0;
@@ -179,6 +182,7 @@ public class Search {
         }
         return -1;
     }
+
     static boolean binarySearch2(int[] arr, int item) {
         int start = 0;
         int end = arr.length - 1;
@@ -194,6 +198,82 @@ public class Search {
             }
         }
         return false;
+    }
+
+    class Pair {
+        int ceil;
+        int floor;
+
+        public Pair() {
+        }
+
+        public Pair(int ceil, int floor) {
+            this.ceil = ceil;
+            this.floor = floor;
+        }
+
+        public int getCeil() {
+            return ceil;
+        }
+
+        public void setCeil(int ceil) {
+            this.ceil = ceil;
+        }
+
+        public int getFloor() {
+            return floor;
+        }
+
+        public void setFloor(int floor) {
+            this.floor = floor;
+        }
+    }
+
+    public Pair ceilFloor(int[] arr, int item) {
+        int start = 0;
+        int end = arr.length - 1;
+
+        Pair pair = new Pair(-1,-1);
+
+        while (start <= end) {
+            int mid = start + (end - start) / 2;
+
+            // hit
+            if (arr[mid] == item) {
+                pair.ceil = arr[mid];
+                pair.floor = arr[mid];
+                return pair;
+            }
+
+            // miss
+            if (item < arr[mid]) {
+                pair.ceil = arr[mid];
+                end = mid - 1;
+            } else {
+                pair.floor = arr[mid];
+                start = mid + 1;
+            }
+        }
+        return pair;
+    }
+
+
+    public int getStrictCeilIndex(char[] arr, char item) {
+        int ceil = -1;
+        int start = 0;
+        int end = arr.length - 1;
+
+        while (start <= end) {
+            int mid = start + (end - start) / 2;
+            // miss
+            if (item < arr[mid]) {
+                ceil = mid;
+                end = mid - 1;
+            } else {
+                start = mid + 1;
+            }
+        }
+        return ceil;
     }
 
     // when arr.length is not allowed
