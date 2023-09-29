@@ -1,5 +1,7 @@
 package com.app.advance.tree;
 
+import com.app.util.Node;
+
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
@@ -83,14 +85,4 @@ public class Burn2 {
     }
 
 
-    static class Node {
-        int data;
-        Node left;
-        Node right;
-
-        Node(int k) {
-            data = k;
-            left = right = null;
-        }
-    }
 }

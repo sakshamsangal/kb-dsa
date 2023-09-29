@@ -1,7 +1,16 @@
-package com.app.basic.array.two_pointer;
+package com.app.basic.array;
 
 
-class Sample4_59_39 {
+public class TwoPointer {
+    public int maxArea(int[] height) {
+        int sum = 0;
+        for (int i = 0; i < height.length; i++) {
+
+        }
+        return sum;
+
+    }
+
     public int minSubArrayLen(int target, int[] nums) {
         int n = nums.length;
         int start = 0;
@@ -25,13 +34,9 @@ class Sample4_59_39 {
         }
         return answer == n + 1 ? 0 : answer;
     }
-}
-
-
-public class MinSubArrayLen {
 
     public static void main(String[] args) {
-        Sample4_59_39 main = new Sample4_59_39();
+        TwoPointer main = new TwoPointer();
         int[] arr = {2, 3, 1, 2, 4, 3};
         // int[] arr = {1, 1, 1};
         int i = main.minSubArrayLen(7, arr);

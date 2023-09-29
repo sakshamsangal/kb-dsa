@@ -6,6 +6,30 @@ import java.util.Map;
 import java.util.Stack;
 
 public class Array {
+
+
+    public int maxProfit(int[] prices) {
+
+        int sum = 0;
+        for (int i = 1; i < prices.length; i++) {
+            sum += Math.max(0, prices[i] - prices[i - 1]);
+        }
+        return sum;
+
+    }
+
+    public void rotate(int[] nums, int k) {
+        int[] arr = new int[nums.length];
+        for (int i = 0; i < nums.length; i++) {
+            arr[i] = nums[(i + k) % nums.length];
+        }
+
+        for (int i = 0; i < arr.length; i++) {
+            nums[i] = arr[i];
+        }
+
+    }
+
     Map<Integer, Integer> getFrequencyFromArray(int[] arr) {
         Map<Integer, Integer> map = new HashMap<>();
         for (int item : arr) {
@@ -14,21 +38,22 @@ public class Array {
         }
         return map;
     }
+
     public String simplifyPath(String path) {
         Stack<Character> stack = new Stack<>();
 
         for (int i = 0; i < path.length(); i++) {
-            if (path.charAt(i) == '.'){
+            if (path.charAt(i) == '.') {
                 int countOfSlash = 0;
-                while (!stack.isEmpty() && countOfSlash != 2){
+                while (!stack.isEmpty() && countOfSlash != 2) {
                     if (path.charAt(i) == '/') {
-                        countOfSlash ++;
+                        countOfSlash++;
                     }
                     stack.pop();
                 }
                 stack.push('/');
-            } else if (path.charAt(i) == '/'){
-                if (!stack.isEmpty() &&stack.peek() != '/' && i != path.length()-1){
+            } else if (path.charAt(i) == '/') {
+                if (!stack.isEmpty() && stack.peek() != '/' && i != path.length() - 1) {
                     stack.push(path.charAt(i));
                 }
             } else {
@@ -50,7 +75,6 @@ public class Array {
         Arrays.sort(charArray2);
         return Arrays.equals(charArray1, charArray2);
     }
-
 
 
     static void powerSet(int[] arr, int size) {
