@@ -220,12 +220,20 @@ public class BinaryTree {
             return lca2;
     }
 
+    public boolean hasPathSum(TreeNode root, int targetSum) {
+        if (Objects.isNull(root)) {
+            return false;
+        }
+        TreeTraversal treeTraversal = new TreeTraversal();
+        return treeTraversal.inOrderWithSum(root, 0, targetSum);
+    }
+
     public static void main(String[] args) {
         BinaryTree binaryTree = new BinaryTree();
 
-        int[] arr = {1, 2, 3, 4, 5, 6, 7,10,9,8};
+        int[] arr = {1, 2, 3, 4, 5, 6, 7, 10, 9, 8};
         Node root = binaryTree.insertLevelOrder(arr, 0);
-        binaryTree.kthSmallest(root,3);
+        binaryTree.kthSmallest(root, 3);
     }
     //    public static void main(String[] args) {
     //        Node root = new Node(10);

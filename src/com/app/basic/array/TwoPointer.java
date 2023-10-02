@@ -1,14 +1,49 @@
 package com.app.basic.array;
 
 
+import java.util.Arrays;
+
 public class TwoPointer {
-    public int maxArea(int[] height) {
-        int sum = 0;
-        for (int i = 0; i < height.length; i++) {
+    public int[] twoSum2(int[] arr, int target) {
 
+        int start = 0;
+        int end = arr.length - 1;
+        int[] ans = new int[2];
+
+        while (start < end) {
+            // success
+            if (arr[start] + arr[end] == target) {
+                ans[0] = start + 1;
+                ans[1] = end + 1;
+                return ans;
+            }
+            // movement
+            if (arr[start] + arr[end] < target) {
+                start++;
+            } else {
+                end--;
+            }
         }
-        return sum;
 
+        return ans;
+    }
+
+    public int maxArea(int[] height) {
+        int currMax = Integer.MIN_VALUE;
+
+        int start = 0;
+        int end = height.length - 1;
+        while (start < end) {
+            int area = Math.min(height[start], height[end]) * (end - start);
+            currMax = Math.max(currMax, area);
+
+            if (height[start] < height[end]) {
+                start++;
+            } else {
+                end--;
+            }
+        }
+        return currMax;
     }
 
     public int minSubArrayLen(int target, int[] nums) {
@@ -36,10 +71,14 @@ public class TwoPointer {
     }
 
     public static void main(String[] args) {
-        TwoPointer main = new TwoPointer();
-        int[] arr = {2, 3, 1, 2, 4, 3};
+        TwoPointer twoPointer = new TwoPointer();
+        int[] arr = {2,7,11,15};
         // int[] arr = {1, 1, 1};
-        int i = main.minSubArrayLen(7, arr);
-        System.out.println("i = " + i);
+//        int i = main.minSubArrayLen(7, arr);
+//        System.out.println("i = " + i);
+
+        int[] ints = twoPointer.twoSum2(arr, 13);
+        System.out.println("ints = " + Arrays.toString(ints));
+
     }
 }

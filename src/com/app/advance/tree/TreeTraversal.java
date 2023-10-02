@@ -1,6 +1,7 @@
 package com.app.advance.tree;
 
 import com.app.util.Node;
+import com.app.util.TreeNode;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -8,6 +9,15 @@ import java.util.Queue;
 import java.util.Stack;
 
 public class TreeTraversal {
+    public boolean inOrderWithSum(TreeNode root, int sum, int target) {
+        if (root == null) {
+            return target == sum;
+        }
+        if (inOrderWithSum(root.left, sum + root.val, target)) {
+            return true;
+        }
+        return inOrderWithSum(root.right, sum + root.val, target);
+    }
 
     public void printLevel(Node root) {
         if (root == null) return;

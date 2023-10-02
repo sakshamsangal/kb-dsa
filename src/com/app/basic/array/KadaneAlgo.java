@@ -1,7 +1,6 @@
 package com.app.basic.array;
 
-public class KadanesAlgorithm {
-
+public class KadaneAlgo {
     // 9
     // -2 1 -3 4 -1 2 1 -5 4
     // sub-array with maximum sum.
@@ -15,7 +14,7 @@ public class KadanesAlgorithm {
     // choice 1: we can start a new sub-array
     // choice 2: add to existing sub-array
 
-    private static int kadaneAlgo(int[] arr, int size) {
+    public int kadaneAlgo(int[] arr, int size) {
         int[] max = new int[size];
         max[0] = arr[0];
         int maximum = max[0];
@@ -26,7 +25,7 @@ public class KadanesAlgorithm {
         return maximum;
     }
 
-    public static int maximumSubarraySum(int[] arr) {
+    public int kadaneAlgo2(int[] arr) {
         int n = arr.length;
         int maxSum = Integer.MIN_VALUE;
         int currSum = 0;
@@ -50,7 +49,7 @@ public class KadanesAlgorithm {
         return maxSum;
     }
 
-    public static int solveMaxSubArrayProblem(int[] input) {
+    public int kadaneAlgo3(int[] input) {
         int n = input.length;
         int globalMaxSum = Integer.MIN_VALUE;
         int localMaxSum = 0;
@@ -66,11 +65,5 @@ public class KadanesAlgorithm {
         }
 
         return globalMaxSum;
-    }
-
-    public static void main(String[] args) {
-        int[] input = {1, -2, 5, -3, 4};
-        int result = solveMaxSubArrayProblem(input);
-        System.out.println(result);
     }
 }
