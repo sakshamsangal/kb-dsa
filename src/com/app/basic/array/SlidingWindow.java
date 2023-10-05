@@ -1,6 +1,12 @@
 package com.app.basic.array;
 
 public class SlidingWindow {
+/*
+string
+    substring
+        filter
+*/
+
 
     public int minSubArrayLen(int target, int[] nums) {
         int start = 0;

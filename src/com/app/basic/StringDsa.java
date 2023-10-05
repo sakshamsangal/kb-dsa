@@ -1,6 +1,7 @@
 package com.app.basic;
 
 import java.util.Arrays;
+import java.util.StringJoiner;
 
 public class StringDsa {
     public boolean isIsomorphic(String s, String t) {
@@ -69,9 +70,19 @@ public class StringDsa {
         return true;
     }
 
+    public String reverseWords(String s) {
+        String[] arr = s.trim().split("\\s+");
+        String[] ans = new String[arr.length];
+        int j = 0;
+        for (int i = arr.length - 1; i > -1; i--) {
+            ans[j++] = arr[i];
+        }
+        return String.join(" ", ans);
+    }
+
     public static void main(String[] args) {
         StringDsa stringDsa = new StringDsa();
-        boolean b = stringDsa.canConstruct("aa", "aab");
-        System.out.println("b = " + b);
+        String s = stringDsa.reverseWords("    hello     wordl    ");
+        System.out.println("s = " + s);
     }
 }

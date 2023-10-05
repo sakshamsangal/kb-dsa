@@ -2,10 +2,7 @@ package com.app.basic.array;
 
 import com.app.util.LinkedListNode;
 
-import java.time.Duration;
-import java.time.Instant;
 import java.util.*;
-import java.util.stream.IntStream;
 
 public class Array {
 
@@ -322,10 +319,38 @@ public class Array {
         return -1;
     }
 
+    public boolean canJumpRecur(int[] nums, int end) {
+        if (end == 0) {
+            return true;
+        }
+        for (int i = 0; i < end; i++) {
+            if (nums[i] + i >= end) {
+                return canJumpRecur(nums, i);
+            }
+        }
+        return false;
+    }
+
+    public boolean canJump(int[] nums) {
+        return canJumpRecur(nums, nums.length-1);
+    }
+
+//    public boolean canJump(int[] nums) {
+//        int reachable = 0;
+//        for (int i = 0; i < nums.length; i++) {
+//            if (i > reachable) {
+//                return false;
+//            }
+//            reachable = Math.max(reachable, i + nums[i]);
+//        }
+//        return true;
+//    }
+
     public static void main(String[] args) {
         Array array = new Array();
-        int[] arr = {2, 7, 11, 15};
-        array.canCompleteCircuit(arr, arr);
+        int[] arr = {1,0,0,0, 2, 3, 4};
+        boolean b = array.canJump(arr);
+        System.out.println("b = " + b);
     }
 
 }

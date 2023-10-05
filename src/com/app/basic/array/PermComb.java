@@ -30,4 +30,35 @@ public class PermComb {
         return ans;
     }
 
+
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        ans.clear();
+        List<Integer> list = new ArrayList<>();
+        combinationSumRecur(candidates, target, 0,list);
+        return ans;
+
+    }
+
+    private void combinationSumRecur(int[] candidates, int target, int start, List<Integer> ls) {
+        if (target == 0) {
+            ans.add(ls);
+            return;
+        }
+
+        if (candidates[start] <= target) {
+            // pick
+            ls.add(candidates[start]);
+            combinationSumRecur(candidates, target - candidates[start], start + 1, ls);
+        }
+
+        // ignore
+        ls.remove(ls.size() - 1);
+        combinationSumRecur(candidates, target, start + 1, ls);
+    }
+
+    public static void main(String[] args) {
+        PermComb permComb = new PermComb();
+        int[] arr = {2,3,6,7};
+        permComb.combinationSum(arr, 7);
+    }
 }
