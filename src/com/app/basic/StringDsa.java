@@ -70,7 +70,29 @@ public class StringDsa {
         return true;
     }
 
+
     public String reverseWords(String s) {
+        int start = s.length() - 1;
+        int end = start;
+        StringBuilder stringBuilder = new StringBuilder();
+        while (-1 < start) {
+            // success
+            while (s.charAt(end) == ' '){
+                start--;
+                end--;
+            }
+
+            while (s.charAt(start) != ' '){
+                start--;
+            }
+            for (int i = start+1; i <= end; i++) {
+                stringBuilder.append(s.charAt(i));
+            }
+        }
+        return s;
+    }
+
+    public String reverseWords2(String s) {
         String[] arr = s.trim().split("\\s+");
         String[] ans = new String[arr.length];
         int j = 0;
