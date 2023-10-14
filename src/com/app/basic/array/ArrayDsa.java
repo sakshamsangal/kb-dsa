@@ -312,6 +312,7 @@ public class ArrayDsa {
         }
 
 
+
         for (int i = 0; i < gas.length; i++) {
             // choose starting point
             if (-1 < gas[i] - cost[i]) {
