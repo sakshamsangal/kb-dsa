@@ -4,7 +4,7 @@ import com.app.util.LinkedListNode;
 
 import java.util.*;
 
-public class Array {
+public class ArrayDsa {
 
 
     public int maxProfit(int[] prices) {
@@ -296,22 +296,24 @@ public class Array {
 
 
     public int canCompleteCircuit(int[] gas, int[] cost) {
-        int gasInSum = 0;
+        int gasSum = 0;
         for (int item : gas) {
-            gasInSum += item;
+            gasSum += item;
         }
 
-        int gasOutSum = 0;
+        int costSum = 0;
         for (int item : cost) {
-            gasOutSum += item;
+            costSum += item;
         }
 
 
-        if (gasInSum < gasOutSum) {
+        if (gasSum < costSum) {
             return -1;
         }
 
+
         for (int i = 0; i < gas.length; i++) {
+            // choose starting point
             if (-1 < gas[i] - cost[i]) {
                 return i;
             }
@@ -319,38 +321,56 @@ public class Array {
         return -1;
     }
 
-    public boolean canJumpRecur(int[] nums, int end) {
-        if (end == 0) {
-            return true;
-        }
-        for (int i = 0; i < end; i++) {
-            if (nums[i] + i >= end) {
-                return canJumpRecur(nums, i);
+    public int removeDuplicates(int[] nums) {
+        int j = 2;
+        for (int i = 2; i < nums.length; i++) {
+            // prev different= add
+            // prev 1 same = add
+            // prev 2 same = ignore
+            if (nums[i - 2] == nums[i]) {
+                // ignore
+            } else {
+                nums[j++] = nums[i];
             }
         }
-        return false;
+        return j;
     }
 
-    public boolean canJump(int[] nums) {
-        return canJumpRecur(nums, nums.length-1);
-    }
-
-//    public boolean canJump(int[] nums) {
-//        int reachable = 0;
-//        for (int i = 0; i < nums.length; i++) {
-//            if (i > reachable) {
-//                return false;
-//            }
-//            reachable = Math.max(reachable, i + nums[i]);
+//    public boolean canJumpRecur(int[] nums, int end) {
+//        if (end == 0) {
+//            return true;
 //        }
-//        return true;
+//        for (int i = 0; i < end; i++) {
+//            if (nums[i] + i >= end) {
+//                return canJumpRecur(nums, i);
+//            }
+//        }
+//        return false;
 //    }
 
+//    public boolean canJump(int[] nums) {
+//        return canJumpRecur(nums, nums.length-1);
+//    }
+
+    public boolean canJump(int[] nums) {
+        int reachable = 0;
+        for (int i = 0; i < nums.length; i++) {
+            if (i > reachable) {
+                return false;
+            }
+            reachable = Math.max(reachable, i + nums[i]);
+        }
+        return true;
+    }
+
     public static void main(String[] args) {
-        Array array = new Array();
-        int[] arr = {1,0,0,0, 2, 3, 4};
-        boolean b = array.canJump(arr);
-        System.out.println("b = " + b);
+        ArrayDsa arrayDsa = new ArrayDsa();
+        int[] arr = {0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 3};
+        int i = arrayDsa.removeDuplicates(arr);
+        System.out.println("arr = " + Arrays.toString(arr));
+        System.out.println("i = " + i);
+//        boolean b = arrayDsa.canJump(arr);
+//        System.out.println("b = " + b);
     }
 
 }
