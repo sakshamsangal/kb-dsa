@@ -1,7 +1,7 @@
 package com.app.advance.tree;
 
 import com.app.util.Node;
-import com.app.util.Pair;
+import com.app.util.PairTree;
 
 import java.util.LinkedList;
 import java.util.Map;
@@ -28,18 +28,18 @@ public class View {
 
 
     public void bv(Node root) {
-        Queue<Pair> q = new LinkedList<>();
+        Queue<PairTree> q = new LinkedList<>();
         Map<Integer, Integer> mp = new TreeMap<>();
-        q.add(new Pair(root, 0));
+        q.add(new PairTree(root, 0));
         while (!q.isEmpty()) {
-            Pair p = q.poll();
+            PairTree p = q.poll();
             Node curr = p.node;
             int hd = p.hd;
             mp.put(hd, curr.data);
             if (curr.left != null)
-                q.add(new Pair(curr.left, hd - 1));
+                q.add(new PairTree(curr.left, hd - 1));
             if (curr.right != null)
-                q.add(new Pair(curr.right, hd + 1));
+                q.add(new PairTree(curr.right, hd + 1));
         }
         for (Map.Entry<Integer, Integer> x : mp.entrySet()) {
             System.out.print(x.getValue() + " ");
@@ -47,19 +47,19 @@ public class View {
     }
 
     public  void topView(Node root) {
-        Queue<Pair> q = new LinkedList<>();
+        Queue<PairTree> q = new LinkedList<>();
         Map<Integer, Integer> mp = new TreeMap<>();
-        q.add(new Pair(root, 0));
+        q.add(new PairTree(root, 0));
         while (!q.isEmpty()) {
-            Pair p = q.poll();
+            PairTree p = q.poll();
             Node curr = p.node;
             int hd = p.hd;
             if (!mp.containsKey(hd))
                 mp.put(hd, curr.data);
             if (curr.left != null)
-                q.add(new Pair(curr.left, hd - 1));
+                q.add(new PairTree(curr.left, hd - 1));
             if (curr.right != null)
-                q.add(new Pair(curr.right, hd + 1));
+                q.add(new PairTree(curr.right, hd + 1));
         }
         for (Map.Entry<Integer, Integer> x : mp.entrySet()) {
             System.out.print(x.getValue() + " ");

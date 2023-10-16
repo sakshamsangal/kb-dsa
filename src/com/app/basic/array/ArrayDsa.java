@@ -312,7 +312,6 @@ public class ArrayDsa {
         }
 
 
-
         for (int i = 0; i < gas.length; i++) {
             // choose starting point
             if (-1 < gas[i] - cost[i]) {
@@ -320,6 +319,44 @@ public class ArrayDsa {
             }
         }
         return -1;
+    }
+
+
+    public int[] productExceptSelf(int[] nums) {
+        int[] left = new int[nums.length];
+        int[] right = new int[nums.length];
+        int[] ans = new int[nums.length];
+
+        left[0] = 1;
+        right[nums.length-1] = 1;
+
+        for (int i = 1; i < nums.length; i++) {
+            left[i] = nums[i - 1] * left[i - 1];
+        }
+
+        for (int i = nums.length - 2; i > -1; i--) {
+            right[i] = nums[i + 1] * right[i + 1];
+        }
+
+        for (int i = 0; i < nums.length; i++) {
+            ans[i] = left[i] * right[i];
+        }
+
+        return ans;
+    }
+
+    public int differenceOfSums(int n, int m) {
+        int sum1 = 0;
+        int sum2 = 0;
+        for (int i = 1; i <= n; i++) {
+            if (i % m == 0) {
+                sum1 += i;
+            } else {
+                sum2 += i;
+            }
+        }
+
+        return sum2 - sum1;
     }
 
     public int removeDuplicates(int[] nums) {
@@ -366,12 +403,18 @@ public class ArrayDsa {
 
     public static void main(String[] args) {
         ArrayDsa arrayDsa = new ArrayDsa();
-        int[] arr = {0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 3};
-        int i = arrayDsa.removeDuplicates(arr);
-        System.out.println("arr = " + Arrays.toString(arr));
-        System.out.println("i = " + i);
+//        int[] arr = {0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 3};
+//        int i = arrayDsa.removeDuplicates(arr);
+//        System.out.println("arr = " + Arrays.toString(arr));
+//        System.out.println("i = " + i);
 //        boolean b = arrayDsa.canJump(arr);
 //        System.out.println("b = " + b);
+
+        int[] arr = {-1,1,0,-3,3};
+        int[] ints = arrayDsa.productExceptSelf(arr);
+        System.out.println("ints = " + Arrays.toString(ints));
+//        System.out.println("i = " + i);
+//        int i = arrayDsa.differenceOfSums(10, 3);
     }
 
 }

@@ -1,5 +1,6 @@
 package com.app.basic.array;
 
+import java.util.HashMap;
 import java.util.HashSet;
 
 public class SlidingWindow {
@@ -34,6 +35,28 @@ public class SlidingWindow {
         return currMax + 1;
     }
 
+    public int totalFruit(int[] fruits) {
+        int start = 0;
+        int currMax = Integer.MIN_VALUE;
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < fruits.length; i++) {
+            int val = map.getOrDefault(fruits[i], 0);
+            map.put(fruits[i], val + 1);
+            if (2 < map.size()) {
+                while (2 < map.size()) {
+                    if (map.get(fruits[start]) == 1) {
+                        map.remove(fruits[start]);
+                    } else {
+                        map.put(fruits[start], val - 1);
+                    }
+                    start++;
+                }
+            }
+            currMax = Math.max(currMax, i - start);
+        }
+        return currMax + 1;
+    }
+
     public int minSubArrayLen(int target, int[] nums) {
         int start = 0;
         int sum = 0;
@@ -53,9 +76,10 @@ public class SlidingWindow {
     public static void main(String[] args) {
         SlidingWindow slidingWindow = new SlidingWindow();
 
-        int i = slidingWindow.lengthOfLongestSubstring("pwwkew");
+//        int[] arr = {1,2,3,2,2};
+        int[] arr = {0, 1, 2, 2};
+        int i = slidingWindow.totalFruit(arr);
         System.out.println("i = " + i);
-//        int[] arr = {2, 3, 1, 2, 4, 3};
 //
 //        int len = slidingWindow.minSubArrayLen(7, arr);
 //        System.out.println("len = " + len);
