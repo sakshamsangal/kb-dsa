@@ -4,6 +4,23 @@ import java.util.Arrays;
 import java.util.StringJoiner;
 
 public class StringDsa {
+
+    public String convert(String s, int numRows) {
+//
+//        for (int i = 0; i < s.length(); i=i+6) {
+//            System.out.println("s.charAt(i) = " + s.charAt(i));
+//        }
+//
+        for (int i = 1; i < s.length(); i=i+4) {
+            System.out.println("s.charAt(i) = " + s.charAt(i));
+        }
+
+//        for (int i = 2; i < s.length(); i=i+4) {
+//            System.out.println("s.charAt(i) = " + s.charAt(i));
+//        }
+
+        return s;
+    }
     public boolean isIsomorphic(String s, String t) {
         // Base case: for different length of two strings...
         if (s.length() != t.length())
@@ -104,7 +121,7 @@ public class StringDsa {
 
     public static void main(String[] args) {
         StringDsa stringDsa = new StringDsa();
-        String s = stringDsa.reverseWords("    hello     wordl    ");
+        String s = stringDsa.convert("PAYPALISHIRING", 3);
         System.out.println("s = " + s);
     }
 }

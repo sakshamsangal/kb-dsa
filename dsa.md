@@ -11,3 +11,11 @@
         12
     4
         10
+AL=3
+LS=1
+SI=3
+IG=1
+
+YA=1
+AH=3
+PAYPALISHIRING
