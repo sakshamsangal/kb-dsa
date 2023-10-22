@@ -6,26 +6,26 @@ import java.util.Queue;
 
 public class GraphTraversal {
 
-     void DFSRec(ArrayList<ArrayList<Integer>> adj, int s, boolean[] visited) {
+     void dfs(ArrayList<ArrayList<Integer>> adj, int s, boolean[] visited) {
         visited[s] = true;
         System.out.print(s + " ");
 
         for (int u : adj.get(s)) {
             if (!visited[u])
-                DFSRec(adj, u, visited);
+                dfs(adj, u, visited);
         }
     }
 
-     void DFS(ArrayList<ArrayList<Integer>> adj, int V) {
+     void dfsForest(ArrayList<ArrayList<Integer>> adj, int V) {
         boolean[] visited = new boolean[V];
 
         for (int i = 0; i < V; i++) {
             if (!visited[i])
-                DFSRec(adj, i, visited);
+                dfs(adj, i, visited);
         }
     }
 
-    void BFS(ArrayList<ArrayList<Integer>> adj, int s, boolean[] visited) {
+    void bfs(ArrayList<ArrayList<Integer>> adj, int s, boolean[] visited) {
         Queue<Integer> q = new LinkedList<>();
 
         visited[s] = true;
@@ -44,11 +44,11 @@ public class GraphTraversal {
         }
     }
 
-    void BFSForest(ArrayList<ArrayList<Integer>> adj, int V) {
+    void bfsForest(ArrayList<ArrayList<Integer>> adj, int V) {
         boolean[] visited = new boolean[V];
         for (int i = 0; i < V; i++) {
             if (!visited[i])
-                BFS(adj, i, visited);
+                bfs(adj, i, visited);
         }
     }
 

@@ -5,6 +5,42 @@ import com.app.util.ListNode;
 public class LinkedList {
     ListNode head;
 
+    public ListNode reverseKGroup(ListNode head, int k) {
+        return reverse(head, k, getLength(head));
+    }
+
+    public int getLength(ListNode head) {
+        ListNode curr = head;
+        int count = 0;
+        while (curr != null) {
+            curr = curr.next;
+            count++;
+        }
+        return count;
+    }
+
+    public ListNode reverse(ListNode head, int k, int length) {
+        if (length < k || head == null) {
+            return head;
+        }
+        ListNode curr = head;
+        ListNode prev = null;
+        ListNode next = null;
+        int count = 0;
+        while (curr != null && count < k) {
+            next = curr.next;
+
+            curr.next = prev;
+            prev = curr;
+
+            curr = next;
+            count++;
+        }
+        head.next = reverse(next, k, length - k);
+        return prev;
+    }
+
+
     void append(int k) {
         if (head == null) { // if list is empty
             head = new ListNode(k);
@@ -96,7 +132,7 @@ public class LinkedList {
         while (curr != null) {
 
             ListNode next = curr.next;
-            curr.next=null;
+            curr.next = null;
 
             if (curr.val < x) {
                 p1.next = curr;
