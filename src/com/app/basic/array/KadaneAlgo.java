@@ -25,6 +25,20 @@ public class KadaneAlgo {
         return maximum;
     }
 
+    public int kadaneAlgo2(int[] arr, int size) {
+        int[] max = new int[size*2];
+        max[0] = arr[0];
+        int maximum = max[0];
+        for (int i = 1; i < size; i++) {
+            max[i] = Math.max(arr[i], arr[i] + max[i - 1]);
+            if (maximum < max[i]) maximum = max[i];
+        }
+        for (int i = 1; i < size; i++) {
+            max[i] = Math.max(arr[i], arr[i] + max[i - 1]);
+            if (maximum < max[i]) maximum = max[i];
+        }
+        return maximum;
+    }
     public int kadaneAlgo2(int[] arr) {
         int n = arr.length;
         int maxSum = Integer.MIN_VALUE;

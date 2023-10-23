@@ -42,15 +42,13 @@ public class SlidingWindow {
         for (int i = 0; i < fruits.length; i++) {
             int val = map.getOrDefault(fruits[i], 0);
             map.put(fruits[i], val + 1);
-            if (2 < map.size()) {
-                while (2 < map.size()) {
-                    if (map.get(fruits[start]) == 1) {
-                        map.remove(fruits[start]);
-                    } else {
-                        map.put(fruits[start], val - 1);
-                    }
-                    start++;
+            while (2 < map.size()) {
+                if (map.get(fruits[start]) == 1) {
+                    map.remove(fruits[start]);
+                } else {
+                    map.put(fruits[start], val - 1);
                 }
+                start++;
             }
             currMax = Math.max(currMax, i - start);
         }

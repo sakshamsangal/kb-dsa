@@ -1,10 +1,12 @@
 package com.app.basic.search;
 
+import com.app.util.Pair;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Search {
-    static int count = 1;
+    public int count = 1;
 
     public int getPivot(int[] arr) {
         int start = 0;
@@ -27,7 +29,7 @@ public class Search {
         return start;
     }
 
-    int binarySearch2(int start, int end, int num) {
+    int getFirst(int start, int end, int num) {
         int ans = 0;
         while (start <= end) {
             int mid = start + (end - start) / 2;
@@ -45,7 +47,7 @@ public class Search {
 
 
     public int mySqrt(int num) {
-        return binarySearch2(0, num, num);
+        return getFirst(0, num, num);
     }
 
     public int searchRotatedArray(int[] arr, int target) {
@@ -166,15 +168,14 @@ public class Search {
     }
 
     // normal binary search program
-    static int binarySearch(int[] arr, int item) {
+    public int binarySearch(int[] arr, int item) {
         int start = 0;
         int end = arr.length - 1;
         while (start <= end) {
             int mid = start + (end - start) / 2;
             if (arr[mid] == item) {
                 return mid;
-            }
-            if (item < arr[mid]) {
+            } else if (item < arr[mid]) {
                 end = mid - 1;
             } else {
                 start = mid + 1;
@@ -183,57 +184,51 @@ public class Search {
         return -1;
     }
 
-    static boolean binarySearch2(int[] arr, int item) {
+    public int getFirst(int[] arr, int item) {
         int start = 0;
+        int first = -1;
         int end = arr.length - 1;
         while (start <= end) {
             int mid = start + (end - start) / 2;
             if (arr[mid] == item) {
-                return true;
-            }
-            if (item < arr[mid]) {
+                first = mid;
+                end = mid - 1;
+            } else if (item < arr[mid]) {
                 end = mid - 1;
             } else {
                 start = mid + 1;
             }
         }
-        return false;
+        return first;
     }
 
-    class Pair {
-        int ceil;
-        int floor;
-
-        public Pair() {
+    public int getLast(int[] arr, int item) {
+        int start = 0;
+        int last = -1;
+        int end = arr.length - 1;
+        while (start <= end) {
+            int mid = start + (end - start) / 2;
+            if (arr[mid] == item) {
+                last = mid;
+                start = mid + 1;
+            } else if (item < arr[mid]) {
+                end = mid - 1;
+            } else {
+                start = mid + 1;
+            }
         }
+        return last;
+    }
 
-        public Pair(int ceil, int floor) {
-            this.ceil = ceil;
-            this.floor = floor;
-        }
-
-        public int getCeil() {
-            return ceil;
-        }
-
-        public void setCeil(int ceil) {
-            this.ceil = ceil;
-        }
-
-        public int getFloor() {
-            return floor;
-        }
-
-        public void setFloor(int floor) {
-            this.floor = floor;
-        }
+    public int[] searchRange(int[] nums, int target) {
+        return new int[]{getFirst(nums, target), getLast(nums, target)};
     }
 
     public Pair ceilFloor(int[] arr, int item) {
         int start = 0;
         int end = arr.length - 1;
 
-        Pair pair = new Pair(-1,-1);
+        Pair pair = new Pair(-1, -1);
 
         while (start <= end) {
             int mid = start + (end - start) / 2;
@@ -277,7 +272,7 @@ public class Search {
     }
 
     // when arr.length is not allowed
-    static boolean binarySearchInfinityArray(int[] arr, int item) {
+    public boolean binarySearchInfinityArray(int[] arr, int item) {
         Bound.setBound(arr, item);
         int start = Bound.lower;
         int end = Bound.upper;
@@ -290,7 +285,7 @@ public class Search {
         return false;
     }
 
-    static boolean linearSearch(int[] arr, int key) {
+    public boolean linearSearch(int[] arr, int key) {
         for (Integer item : arr) {
             if (item == key) return true;
         }
@@ -298,20 +293,15 @@ public class Search {
     }
 
     public static void main(String[] args) {
-        int[] arr = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
-        double sum = 0;
-        for (int i = 0; i < arr.length; i++) {
-            Search.binarySearch2(arr, arr[i]);
-            System.out.println(arr[i] + " = " + Search.count);
-            sum += Search.count;
-            Search.count = 1;
-        }
-        System.out.println("Total comparison = " + sum / arr.length);
+        Search search = new Search();
+        int[] arr = new int[]{0, 1, 5, 5, 5, 12};
+        int first = search.getFirst(arr, 5);
+        System.out.println("first = " + first);
     }
 
-    static class Bound {
-        static int lower = 0;
-        static int upper = 2;
+    public class Bound {
+        public static int lower = 0;
+        public static int upper = 2;
 
         public static void setBound(int[] arr, int item) {
             while (arr[upper] < item) {
@@ -320,16 +310,19 @@ public class Search {
             }
         }
     }
-    // // reverse order
-    // static int linearSearch(int[] arr, int key) {
+
+    // reverse order
+    // public int linearSearch(int[] arr, int key) {
     //     for (int i = arr.length - 1; i > -1; i--) {
     //         if (arr[i] == key) return arr.length - 1 - i;
     //     }
     //     return -1;
     // }
-    //
-    // // reverse traversal
-    // static boolean linearSearch(int[] arr, int key) {
+
+
+
+    // reverse traversal
+    // public boolean linearSearch(int[] arr, int key) {
     //     for(int i = arr.length - 1; i > -1; i--) {
     //         if (arr[i] == key) return true;
     //     }
