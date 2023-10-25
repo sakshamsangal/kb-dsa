@@ -4,12 +4,34 @@ import com.app.util.Distance;
 import com.app.util.Node;
 import com.app.util.TreeNode;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 public class BinaryTree {
     static int res = 0;
     static Node prev1 = null;
     static int prev = Integer.MIN_VALUE;
+
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        if (Objects.isNull(root)) {
+            return null;
+        }
+        if (root.val == p.val || root.val == q.val) {
+            return root;
+        }
+
+        TreeNode left = lowestCommonAncestor(root.left, p, q);
+        TreeNode right = lowestCommonAncestor(root.right, p, q);
+
+        if (Objects.nonNull(left) && Objects.isNull(right)) {
+            return null;
+        } else if (Objects.isNull(left)) {
+            return right;
+        } else {
+            return left;
+        }
+    }
 
     public boolean isCSum(Node root) {
         if (root == null)

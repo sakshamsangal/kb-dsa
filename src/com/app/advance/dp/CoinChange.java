@@ -1,6 +1,8 @@
 package com.app.advance.dp;// Recursive JAVA program for
 // coin change problem.
 
+import java.util.Arrays;
+
 public class CoinChange {
 
     // Returns the count of ways we can
@@ -30,12 +32,45 @@ public class CoinChange {
         return i + j;
     }
 
+
+    public int coinChangeRecur(int[] coins, int amount, int[] dp) {
+
+        if (amount == 0) {
+            return 0;
+        }
+        if (amount < 0) {
+            return Integer.MAX_VALUE;
+        }
+
+        if (dp[amount] != -1) {
+            return dp[amount];
+        }
+
+        int currMin = Integer.MAX_VALUE;
+        for (int coin : coins) {
+            int ans = coinChangeRecur(coins, amount - coin, dp);
+            if (ans != Integer.MAX_VALUE) {
+                currMin = Math.min(currMin, 1 + ans);
+            }
+        }
+        dp[amount] = currMin;
+        return currMin;
+    }
+
+    public int coinChange(int[] coins, int amount) {
+        int[] dp = new int[amount + 1];
+        Arrays.fill(dp, -1);
+        int i = coinChangeRecur(coins, 11, dp);
+        if (i == Integer.MAX_VALUE) {
+            return -1;
+        }
+        return i;
+    }
+
     // Driver code
     public static void main(String[] args) {
-        int[] coins = {1, 2, 3};
-        int n = coins.length;
-
-        System.out.println(count(coins, n, 4));
+        CoinChange coinChange = new CoinChange();
+        int[] coins = {1, 2, 5};
     }
 }
 

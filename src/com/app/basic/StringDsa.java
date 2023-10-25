@@ -1,26 +1,27 @@
 package com.app.basic;
 
-import java.util.Arrays;
-import java.util.StringJoiner;
-
 public class StringDsa {
 
     public String convert(String s, int numRows) {
-//
-//        for (int i = 0; i < s.length(); i=i+6) {
-//            System.out.println("s.charAt(i) = " + s.charAt(i));
-//        }
-//
-        for (int i = 1; i < s.length(); i=i+4) {
-            System.out.println("s.charAt(i) = " + s.charAt(i));
+        StringBuilder ans = new StringBuilder();
+
+        int jump = (numRows - 1) * 2;
+        for (int i = 0; i < numRows; i++) {
+            for (int j = i; j < s.length(); j += jump) {
+                ans.append(s.charAt(j));
+                if (0 < i && i < numRows - 1) {
+                    int jump2 = j + jump - 2 * i;
+                    if (jump2 < s.length()) {
+                        ans.append(s.charAt(jump2));
+                    }
+                }
+            }
         }
 
-//        for (int i = 2; i < s.length(); i=i+4) {
-//            System.out.println("s.charAt(i) = " + s.charAt(i));
-//        }
 
-        return s;
+        return ans.toString();
     }
+
     public boolean isIsomorphic(String s, String t) {
         // Base case: for different length of two strings...
         if (s.length() != t.length())
@@ -94,15 +95,15 @@ public class StringDsa {
         StringBuilder stringBuilder = new StringBuilder();
         while (-1 < start) {
             // success
-            while (s.charAt(end) == ' '){
+            while (s.charAt(end) == ' ') {
                 start--;
                 end--;
             }
 
-            while (s.charAt(start) != ' '){
+            while (s.charAt(start) != ' ') {
                 start--;
             }
-            for (int i = start+1; i <= end; i++) {
+            for (int i = start + 1; i <= end; i++) {
                 stringBuilder.append(s.charAt(i));
             }
         }
@@ -121,7 +122,7 @@ public class StringDsa {
 
     public static void main(String[] args) {
         StringDsa stringDsa = new StringDsa();
-        String s = stringDsa.convert("PAYPALISHIRING", 3);
+        String s = stringDsa.convert("PAYPALISHIRING", 4);
         System.out.println("s = " + s);
     }
 }

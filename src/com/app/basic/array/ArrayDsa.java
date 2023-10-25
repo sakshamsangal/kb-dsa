@@ -328,7 +328,7 @@ public class ArrayDsa {
         int[] ans = new int[nums.length];
 
         left[0] = 1;
-        right[nums.length-1] = 1;
+        right[nums.length - 1] = 1;
 
         for (int i = 1; i < nums.length; i++) {
             left[i] = nums[i - 1] * left[i - 1];
@@ -401,6 +401,36 @@ public class ArrayDsa {
         return true;
     }
 
+    public int candy(int[] ratings) {
+        int sum = 0;
+        int[] left = new int[ratings.length];
+        int[] right = new int[ratings.length];
+        left[0] = 1;
+        right[right.length - 1] = 1;
+
+        for (int i = 1; i < ratings.length; i++) {
+            if (ratings[i - 1] < ratings[i]) {
+                left[i] = left[i - 1] + 1;
+            } else {
+                left[i] = 1;
+            }
+        }
+
+        for (int i = ratings.length - 2; i > -1; i--) {
+            if (ratings[i] > ratings[i + 1]) {
+                right[i] = right[i + 1] + 1;
+            } else {
+                right[i] = 1;
+            }
+        }
+
+        for (int i = 0; i < ratings.length; i++) {
+            sum += Math.max(left[i], right[i]);
+        }
+
+        return sum;
+    }
+
     public static void main(String[] args) {
         ArrayDsa arrayDsa = new ArrayDsa();
 //        int[] arr = {0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 3};
@@ -410,11 +440,16 @@ public class ArrayDsa {
 //        boolean b = arrayDsa.canJump(arr);
 //        System.out.println("b = " + b);
 
-        int[] arr = {-1,1,0,-3,3};
-        int[] ints = arrayDsa.productExceptSelf(arr);
-        System.out.println("ints = " + Arrays.toString(ints));
+//        int[] arr = {-1, 1, 0, -3, 3};
+//        int[] ints = arrayDsa.productExceptSelf(arr);
+//        System.out.println("ints = " + Arrays.toString(ints));
 //        System.out.println("i = " + i);
 //        int i = arrayDsa.differenceOfSums(10, 3);
+
+        int[] arr = {1, 0,2};
+
+        int candy = arrayDsa.candy(arr);
+        System.out.println("candy = " + candy);
     }
 
 }
