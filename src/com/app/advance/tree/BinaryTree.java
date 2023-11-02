@@ -33,6 +33,16 @@ public class BinaryTree {
         }
     }
 
+    public TreeNode invertTree(TreeNode root) {
+        if (Objects.isNull(root)) {
+            return root;
+        }
+        TreeNode temp = root.left;
+        root.left = invertTree(root.right);
+        root.right = invertTree(temp);
+        return root;
+    }
+
     public boolean isCSum(Node root) {
         if (root == null)
             return true;

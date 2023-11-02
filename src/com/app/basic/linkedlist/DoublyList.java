@@ -17,7 +17,7 @@ public class DoublyList {
 
     // Function to add the node
     // next to the head of the List.
-    public void addNode(DLLNode node) {
+    public void addToHead(DLLNode node) {
         // Assigning the address of head
         // to node's previous pointer.
         node.prev = head;
@@ -32,7 +32,7 @@ public class DoublyList {
     }
 
     // Function to remove the 'node' from the list.
-    void removeNode(DLLNode node) {
+    public void removeNode(DLLNode node) {
         // Changing address of previous and
         // next pointer.
         node.prev.next = node.next;
@@ -46,12 +46,12 @@ public class DoublyList {
         removeNode(node);
 
         // Add it to head.
-        addNode(node);
+        addToHead(node);
     }
 
     // Function to remove node at
     // the tail of the List.
-    public DLLNode popTail() {
+    public DLLNode removeFromTail() {
         // Store the result in 'ret'.
         DLLNode ret = tail.prev;
         // Remove 'ret'

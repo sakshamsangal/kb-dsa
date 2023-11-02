@@ -14,9 +14,9 @@ public class LRUCache {
     // maximum size list is allowed to take.
     int size, capacity;
 
-
     // 'map' is the Hash that will map
     // the 'key' to 'Nodes'.
+
     public Map<Integer, DLLNode> map;
 
     DoublyList list;
@@ -56,7 +56,7 @@ public class LRUCache {
             // Putting in 'map'.
             map.put(key, newNode);
             // Adding it to head of list.
-            list.addNode(newNode);
+            list.addToHead(newNode);
 
             // Increasing the size of the list.
             size++;
@@ -66,7 +66,7 @@ public class LRUCache {
             if (size > capacity) {
                 // Remove the node at tail, because
                 // it is the least recently used.
-                DLLNode temp = list.popTail();
+                DLLNode temp = list.removeFromTail();
                 map.remove(temp.key);
 
                 // Reducing the size by 1.

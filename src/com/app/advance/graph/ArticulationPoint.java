@@ -1,39 +1,28 @@
 package com.app.advance.graph;
 
-import java.util.LinkedList;
+import java.util.List;
 
 public class ArticulationPoint {
     static final int NIL = -1;
-    private final int V;
-    private final LinkedList<Integer>[] adj;
     int time = 0;
 
-    ArticulationPoint(int v) {
-        V = v;
-        adj = new LinkedList[v];
-        for (int i = 0; i < v; ++i)
-            adj[i] = new LinkedList();
-    }
 
     public static void main(String[] args) {
         System.out.println("Articulation points in first graph ");
-        ArticulationPoint g = new ArticulationPoint(5);
-        g.addEdge(1, 0);
-        g.addEdge(0, 2);
-        g.addEdge(2, 1);
-        g.addEdge(0, 3);
-        g.addEdge(3, 4);
-        g.AP();
+        Graph g = new Graph(5);
+        g.addEdgeBothDirection(g.adj, 1, 0);
+        g.addEdgeBothDirection(g.adj, 0, 2);
+        g.addEdgeBothDirection(g.adj, 2, 1);
+        g.addEdgeBothDirection(g.adj, 0, 3);
+        g.addEdgeBothDirection(g.adj, 3, 4);
+
+        ArticulationPoint articulationPoint = new ArticulationPoint();
+        articulationPoint.AP(g.adj, g.size);
         System.out.println();
     }
 
-    void addEdge(int v, int w) {
-        adj[v].add(w);
-        adj[w].add(v);
-    }
 
-    void APUtil(int u, boolean[] visited, int[] disc,
-                int[] low, int[] parent, boolean[] ap) {
+    public void APUtil(List<List<Integer>> adj, int u, boolean[] visited, int[] disc, int[] low, int[] parent, boolean[] ap) {
 
         int children = 0;
 
@@ -41,15 +30,13 @@ public class ArticulationPoint {
 
         disc[u] = low[u] = ++time;
 
-        for (int v : adj[u]) {
+        for (int v : adj.get(u)) {
             if (!visited[v]) {
                 children++;
                 parent[v] = u;
-                APUtil(v, visited, disc, low, parent, ap);
-
+                APUtil(adj, v, visited, disc, low, parent, ap);
 
                 low[u] = Math.min(low[u], low[v]);
-
 
                 if (parent[u] == NIL && children > 1)
                     ap[u] = true;
@@ -61,7 +48,7 @@ public class ArticulationPoint {
         }
     }
 
-    void AP() {
+    public void AP(List<List<Integer>> adj, int V) {
 
         boolean[] visited = new boolean[V];
         int[] disc = new int[V];
@@ -78,7 +65,7 @@ public class ArticulationPoint {
 
         for (int i = 0; i < V; i++)
             if (!visited[i])
-                APUtil(i, visited, disc, low, parent, ap);
+                APUtil(adj, i, visited, disc, low, parent, ap);
 
         for (int i = 0; i < V; i++)
             if (ap[i])

@@ -2,6 +2,24 @@ package com.app.basic;
 
 public class StringDsa {
 
+    public boolean isSubsequence(String s, String t) {
+        int start = 0;
+        for (int i = start; i < s.length(); i++) {
+            start = isPresent(start, s.charAt(i), t);
+            if (start == -1) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private int isPresent(int start, char c, String t) {
+        for (int i = start; i < t.length(); i++) {
+            if (c == t.charAt(i)) return i+1;
+        }
+        return -1;
+    }
+
     public String convert(String s, int numRows) {
         StringBuilder ans = new StringBuilder();
 
@@ -122,7 +140,7 @@ public class StringDsa {
 
     public static void main(String[] args) {
         StringDsa stringDsa = new StringDsa();
-        String s = stringDsa.convert("PAYPALISHIRING", 4);
-        System.out.println("s = " + s);
+        boolean subsequence = stringDsa.isSubsequence("abc", "acb");
+        System.out.println("subsequence = " + subsequence);
     }
 }

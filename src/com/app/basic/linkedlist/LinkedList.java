@@ -76,12 +76,12 @@ public class LinkedList {
     }
 
     void traverse() {
-        // copy head in temp
-        ListNode temp = head;
+        // copy head in curr
+        ListNode curr = head;
         // iterate over the list
-        while (temp != null) {
-            System.out.print(temp.val + " ");
-            temp = temp.next;
+        while (curr != null) {
+            System.out.print(curr.val + " ");
+            curr = curr.next;
         }
         System.out.println();
     }
@@ -107,16 +107,27 @@ public class LinkedList {
     // iterative solution
     // we will traverse the list, and while traversing we keep changing pointers
     // using the current node and previous node.
-    private void reverse() {
-        ListNode prev = null; // declaring previous of head
-        ListNode current = head; // storing head in current
-        while (current != null) { // traversing the list
-            ListNode next = current.next; // getting hold of next of current
-            current.next = prev; // making current next as previous
-            prev = current; // new prev
-            current = next; // new current
+    private ListNode reverse(ListNode head) {
+        ListNode curr = head;
+        ListNode prev = null;
+
+        // traversing the list
+        while (curr != null) {
+
+            // getting hold of next of curr
+            ListNode next = curr.next;
+
+            // making curr next as previous
+            curr.next = prev;
+
+            // new prev
+            prev = curr;
+
+            // new curr
+            curr = next;
         }
-        head = prev; // since curr is null so prev is head now
+        // since curr is null so prev is head now
+        return prev;
     }
 
 
@@ -149,13 +160,89 @@ public class LinkedList {
 
     }
 
+    public ListNode reverseBetween(ListNode head, int left, int right) {
+        ListNode curr = head;
+        ListNode leftNode = null;
+        ListNode rightNode;
+        ListNode list1Tail = null;
+        ListNode list3Head = null;
+
+
+        int count = 1;
+        while (curr != null) {
+            if (count == left - 1) {
+                leftNode = curr.next;
+                list1Tail = curr;
+            } else if (count == right) {
+                list3Head = curr.next;
+                curr.next = null;
+                break;
+            }
+            curr = curr.next;
+            count++;
+        }
+
+        rightNode = leftNode;
+        leftNode = reverse(leftNode);
+
+        list1Tail.next = leftNode;
+        rightNode.next = list3Head;
+
+        if (left == 1) {
+            return leftNode;
+        }
+        return head;
+    }
+
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        int length = getLength(head);
+        int i = length - n;
+        if (i == 0) {
+            head = head.next;
+            return head;
+        }
+
+
+        ListNode curr = head;
+        int count = 1;
+        while (curr != null) {
+            if (count == i) {
+                curr.next = curr.next.next;
+                break;
+            }
+            curr = curr.next;
+            count++;
+        }
+
+
+        return head;
+    }
+
+
+    public boolean hasCycle(ListNode head) {
+        ListNode slow = head;
+        ListNode fast = head;
+
+        while (slow != null && fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+            if (slow == fast) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public static void main(String[] args) {
 
         LinkedList linkedList = new LinkedList();
-        linkedList.append(2);
-        linkedList.append(1);
-
-        linkedList.head = linkedList.partition(linkedList.head, 2);
+        linkedList.append(10);
+        linkedList.append(20);
+        linkedList.append(30);
+        linkedList.append(40);
+        linkedList.append(50);
+        linkedList.head = linkedList.removeNthFromEnd(linkedList.head, 5);
         linkedList.traverse();
     }
 }

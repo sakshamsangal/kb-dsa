@@ -21,15 +21,19 @@ public class NumberTheory {
     }
 
     public double power(double base, int power) {
+        int n = Math.abs(power);
         double result = 1;
-        while (power != 0) {
-            if ((power & 1) == 1) {
-                power--;
+        while (n != 0) {
+            if ((n & 1) == 1) {
+                n--;
                 result *= base;
             }
-            // we have even power now
-            power = power >> 1; // divide by 2
+            // we have even n now
+            n = n >> 1; // divide by 2
             base *= base;
+        }
+        if (power < 0) {
+            return 1 / result;
         }
         return result;
     }
@@ -91,7 +95,7 @@ public class NumberTheory {
 
     public static void main(String[] args) {
         NumberTheory numberTheory = new NumberTheory();
-        double power = numberTheory.power(2.1, 3);
+        double power = numberTheory.power(2, -2147483648);
         System.out.println("power = " + power);
     }
 }

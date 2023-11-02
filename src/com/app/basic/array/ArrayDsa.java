@@ -312,13 +312,17 @@ public class ArrayDsa {
         }
 
 
+        int start = 0;
+        int sum = 0;
         for (int i = 0; i < gas.length; i++) {
             // choose starting point
-            if (-1 < gas[i] - cost[i]) {
-                return i;
+            sum += gas[i] - cost[i];
+            if (sum < 0) {
+                sum = 0;
+                start = i + 1;
             }
         }
-        return -1;
+        return start;
     }
 
 
@@ -401,6 +405,17 @@ public class ArrayDsa {
         return true;
     }
 
+
+    public int foo(int sum) {
+        if (sum == 1) {
+            return 1;
+        }
+        if (sum == 2) {
+            return 2;
+        }
+        return foo(sum - 1) + foo(sum - 2);
+    }
+
     public int candy(int[] ratings) {
         int sum = 0;
         int[] left = new int[ratings.length];
@@ -446,7 +461,7 @@ public class ArrayDsa {
 //        System.out.println("i = " + i);
 //        int i = arrayDsa.differenceOfSums(10, 3);
 
-        int[] arr = {1, 0,2};
+        int[] arr = {1, 0, 2};
 
         int candy = arrayDsa.candy(arr);
         System.out.println("candy = " + candy);

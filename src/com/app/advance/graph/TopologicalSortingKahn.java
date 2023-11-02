@@ -1,8 +1,6 @@
 package com.app.advance.graph;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 public class TopologicalSortingKahn {
 
@@ -32,6 +30,21 @@ public class TopologicalSortingKahn {
                 if (--in_degree[x] == 0)
                     q.add(x);
         }
+    }
+
+    static void topologicalSort2(List<List<Integer>> adj, int size) {
+        // in degree
+        int[] inDegree = new int[size];
+        for (List<Integer> list : adj) {
+            for (int v : list) {
+                inDegree[v]++;
+
+            }
+        }
+
+        // queue with 0 in degree
+
+
     }
 
     public static void main(String[] args) {
