@@ -5,6 +5,7 @@ import java.util.Stack;
 public class TRW {
     // Method for maximum amount of water
     int findWater(int[] arr, int n) {
+
         // left[i] contains height of tallest bar to the
         // left of i'th bar including itself
         int[] left = new int[n];

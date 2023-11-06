@@ -23,7 +23,13 @@ public class CodeChef {
             arr[i] = scanner.nextInt();
         }
     }
+
+
+
+
 }
+
+
 // class Main {
 //
 //     // fast io

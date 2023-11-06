@@ -1,9 +1,27 @@
 package com.app.basic.array;
 
 
-import java.util.Arrays;
-
 public class TwoPointer {
+
+    public int trap(int[] height) {
+        int[] left = new int[height.length];
+        int[] right = new int[height.length];
+
+        for (int i = 1; i < height.length; i++) {
+            left[i] = Math.max(left[i - 1], height[i-1]);
+        }
+        for (int i = height.length - 2; i >-1; i--) {
+            right[i] = Math.max(right[i + 1], height[i+1]);
+        }
+
+        int sum = 0;
+        for (int i = 1; i < height.length; i++) {
+            sum += Math.max(0, Math.min(left[i], right[i]) - height[i]);
+        }
+
+        return sum;
+    }
+
     public int[] twoSum2(int[] arr, int target) {
 
         int start = 0;
@@ -72,13 +90,12 @@ public class TwoPointer {
 
     public static void main(String[] args) {
         TwoPointer twoPointer = new TwoPointer();
-        int[] arr = {2,7,11,15};
+        int[] arr = {4, 2, 0, 3, 2, 5};
         // int[] arr = {1, 1, 1};
 //        int i = main.minSubArrayLen(7, arr);
 //        System.out.println("i = " + i);
-
-        int[] ints = twoPointer.twoSum2(arr, 13);
-        System.out.println("ints = " + Arrays.toString(ints));
+        int trap = twoPointer.trap(arr);
+        System.out.println("trap = " + trap);
 
     }
 }
