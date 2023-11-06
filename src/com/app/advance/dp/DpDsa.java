@@ -1,12 +1,37 @@
 package com.app.advance.dp;
 
-public class LIS {
+public class DpDsa {
+
+    public int lengthOfLIS(int[] nums) {
+        int[] arr = new int[nums.length];
+        int currMax = 1;
+        arr[0] = 1;
+        for (int i = 1; i < nums.length; i++) {
+            int lis = 0;
+            for (int j = 0; j < i; j++) {
+                if (nums[j] < nums[i]) {
+                    lis = Math.max(arr[j], lis);
+                }
+            }
+            arr[i] = lis+1;
+            currMax = Math.max(currMax, arr[i]);
+        }
+        return currMax;
+    }
+
+    public static void main(String[] args) {
+        DpDsa dpDsa = new DpDsa();
+        int[] arr = {10, 9, 2, 5, 3, 7, 101, 18};
+        int i = dpDsa.lengthOfLIS(arr);
+        System.out.println("i = " + i);
+    }
+
     // the subsequence has to be end with any element
     // i am finding every subsequence ending with arr[i]
     // i = 0, 1, . . . , end
     // i am actually finding max length of subsequence ending with arr[]
     // driver
-    public static void main(String[] args) {
+    public static void main1(String[] args) {
         // given an array
         int[] arr = new int[]{
                 10, 22, 9, 33, 21, 50, 41, 60, 80

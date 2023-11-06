@@ -9,6 +9,46 @@ public class LinkedList {
         return reverse(head, k, getLength(head));
     }
 
+    public ListNode reverseBetween(ListNode head, int left, int right) {
+        if (left == right) {
+            return head;
+        }
+        ListNode curr = head;
+        ListNode temp = null;
+        ListNode leftNode = null;
+        ListNode leftNodePrev = null;
+        ListNode prev = null;
+        int count = 1;
+
+        while (curr != null) {
+            ListNode next = curr.next;
+            if (count == left) {
+                leftNodePrev = prev;
+                leftNode = curr;
+                temp = curr;
+                temp.next = null;
+            } else if (left < count && count < right) {
+                curr.next = temp;
+                temp = curr;
+            } else if (count == right) {
+                curr.next = temp;
+                temp = curr;
+                if (leftNodePrev != null) {
+                    leftNodePrev.next = temp;
+                }
+                leftNode.next = next;
+                break;
+            }
+            prev = curr;
+            curr = next;
+            count++;
+        }
+        if (left == 1) {
+            return curr;
+        }
+        return head;
+    }
+
     public int getLength(ListNode head) {
         ListNode curr = head;
         int count = 0;
@@ -160,39 +200,6 @@ public class LinkedList {
 
     }
 
-    public ListNode reverseBetween(ListNode head, int left, int right) {
-        ListNode curr = head;
-        ListNode leftNode = null;
-        ListNode rightNode;
-        ListNode list1Tail = null;
-        ListNode list3Head = null;
-
-
-        int count = 1;
-        while (curr != null) {
-            if (count == left - 1) {
-                leftNode = curr.next;
-                list1Tail = curr;
-            } else if (count == right) {
-                list3Head = curr.next;
-                curr.next = null;
-                break;
-            }
-            curr = curr.next;
-            count++;
-        }
-
-        rightNode = leftNode;
-        leftNode = reverse(leftNode);
-
-        list1Tail.next = leftNode;
-        rightNode.next = list3Head;
-
-        if (left == 1) {
-            return leftNode;
-        }
-        return head;
-    }
 
     public ListNode removeNthFromEnd(ListNode head, int n) {
         int length = getLength(head);
@@ -238,11 +245,11 @@ public class LinkedList {
 
         LinkedList linkedList = new LinkedList();
         linkedList.append(10);
-        linkedList.append(20);
-        linkedList.append(30);
-        linkedList.append(40);
-        linkedList.append(50);
-        linkedList.head = linkedList.removeNthFromEnd(linkedList.head, 5);
+//        linkedList.append(20);
+//        linkedList.append(30);
+//        linkedList.append(40);
+//        linkedList.append(50);
+        linkedList.head = linkedList.reverseBetween(linkedList.head, 1, 1);
         linkedList.traverse();
     }
 }

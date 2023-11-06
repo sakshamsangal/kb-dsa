@@ -467,25 +467,29 @@ public class ArrayDsa {
         return sum;
     }
 
+    public int findKthLargest(int[] nums, int k) {
+        PriorityQueue<Integer> pq = new PriorityQueue<>();
+        for (int i = 0; i < k; i++) {
+            pq.add(nums[i]);
+        }
+        for (int i = k; i < nums.length; i++) {
+            if (pq.peek() < nums[i]) {
+                // if curr is greater
+                // remove from pq
+                // add the curr
+                pq.poll();
+                pq.add(nums[i]);
+            }
+        }
+        return pq.peek();
+    }
+
     public static void main(String[] args) {
         ArrayDsa arrayDsa = new ArrayDsa();
-//        int[] arr = {0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 3};
-//        int i = arrayDsa.removeDuplicates(arr);
-//        System.out.println("arr = " + Arrays.toString(arr));
-//        System.out.println("i = " + i);
-//        boolean b = arrayDsa.canJump(arr);
-//        System.out.println("b = " + b);
+        int[] arr = {3,2,3,1,2,4,5,5,6};
 
-//        int[] arr = {-1, 1, 0, -3, 3};
-//        int[] ints = arrayDsa.productExceptSelf(arr);
-//        System.out.println("ints = " + Arrays.toString(ints));
-//        System.out.println("i = " + i);
-//        int i = arrayDsa.differenceOfSums(10, 3);
-
-        int[] arr = {1, 0, 2};
-
-        int candy = arrayDsa.candy(arr);
-        System.out.println("candy = " + candy);
+        int kthLargest = arrayDsa.findKthLargest(arr, 4);
+        System.out.println("kthLargest = " + kthLargest);
     }
 
 }
