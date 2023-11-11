@@ -1,5 +1,7 @@
 package com.app.basic;
 
+import java.util.*;
+
 public class StringDsa {
 
     public boolean isSubsequence(String s, String t) {
@@ -15,7 +17,7 @@ public class StringDsa {
 
     private int isPresent(int start, char c, String t) {
         for (int i = start; i < t.length(); i++) {
-            if (c == t.charAt(i)) return i+1;
+            if (c == t.charAt(i)) return i + 1;
         }
         return -1;
     }
@@ -138,9 +140,59 @@ public class StringDsa {
         return String.join(" ", ans);
     }
 
+
+    public int minMutation(String startGene, String endGene, String[] bank) {
+        Set<String> set = new HashSet<>();
+        Collections.addAll(set, bank);
+        Queue<String> queue = new LinkedList<>();
+        Map<String, Boolean> visited = new HashMap<>();
+        for (String s : bank) {
+            visited.put(s, false);
+        }
+        queue.add(startGene);
+        visited.put(startGene, true);
+        int level = 0;
+        while (!queue.isEmpty()) {
+            String polled = queue.poll();
+            if (Objects.equals(polled, endGene)) {
+                return level;
+            }
+            List<String> genes = getValidMutations(polled, set);
+            for (String gene : genes) {
+                if (!visited.get(gene)) {
+                    visited.put(gene, true);
+                    queue.offer(gene);
+                }
+            }
+            level++;
+        }
+        return -1;
+    }
+
+    private List<String> getValidMutations(String startGene, Set<String> set) {
+        List<String> list = new ArrayList<>();
+        char[] charArray = startGene.toCharArray();
+        char[] arr = new char[]{'A', 'C', 'G', 'T'};
+        for (int i = 0; i < charArray.length; i++) {
+            char temp = charArray[i];
+            for (char c : arr) {
+                charArray[i] = c;
+                String gene = new String(charArray);
+                if (set.contains(gene)) {
+                    list.add(gene);
+                }
+            }
+            charArray[i] = temp;
+        }
+        return list;
+    }
+
+
     public static void main(String[] args) {
         StringDsa stringDsa = new StringDsa();
-        boolean subsequence = stringDsa.isSubsequence("abc", "acb");
-        System.out.println("subsequence = " + subsequence);
+//        stringDsa.getValidMutations("1122");
+        int i = stringDsa.minMutation("AACCGGTT", "AAACGGTA", new String[]{"AACCGGTA", "AACCGCTA", "AAACGGTA"});
+        System.out.println("i = " + i);
+
     }
 }
