@@ -106,9 +106,33 @@ public class DpDsa {
         return dp[l1][l2] = 1 + Math.min(min1, del);
     }
 
+    public int minSwap(int[] nums1, int[] nums2) {
+
+        int count = 0;
+        int prev1 = -1;
+        int prev2 = -1;
+        for (int i = 0; i < nums1.length; i++) {
+            if (prev1 < nums1[i] && prev2 < nums2[i]) {
+
+            } else {
+                count++;
+                int temp = nums1[i];
+                nums1[i] = nums2[i];
+                nums2[i] = temp;
+            }
+            prev1 = nums1[i];
+            prev2 = nums2[i];
+
+        }
+
+        return count;
+    }
+
     public static void main(String[] args) {
         DpDsa dpDsa = new DpDsa();
-        int i = dpDsa.minDistance("123", "129");
+        int[] arr1 = {0, 4, 4, 5, 9};
+        int[] arr2 = {0, 1, 6, 8, 10};
+        int i = dpDsa.minSwap(arr1, arr2);
         System.out.println("i = " + i);
     }
 }

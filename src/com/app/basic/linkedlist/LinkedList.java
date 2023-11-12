@@ -63,6 +63,19 @@ public class LinkedList {
         return count;
     }
 
+
+    public ListNode getTail(ListNode head) {
+        ListNode curr = head;
+        ListNode prev = head;
+        int count = 0;
+        while (curr != null) {
+            prev = curr;
+            curr = curr.next;
+            count++;
+        }
+        return prev;
+    }
+
     public ListNode reverse(ListNode head, int k, int length) {
         if (length < k || head == null) {
             return head;
@@ -305,16 +318,40 @@ public class LinkedList {
         return newHead;
     }
 
+    public ListNode rotateRight(ListNode head, int k) {
+        /*
+         * need 2 tail
+         * 5 next head
+         * 3 next null
+         * */
+
+        ListNode curr = head;
+        ListNode newHead = null;
+
+        int len = getLength(head) - 1;
+        for (int i = 0; i < len; i++) {
+            if (i == len - k) {
+                newHead = curr;
+            }
+            curr = curr.next;
+        }
+        curr.next = head;
+        head = newHead.next;
+        newHead.next = null;
+
+
+        return head;
+    }
+
     public static void main(String[] args) {
 
         LinkedList linkedList = new LinkedList();
-        linkedList.appendRandom(10);
-        linkedList.appendRandom(20);
-        linkedList.appendRandom(30);
-        linkedList.appendRandom(40);
-        linkedList.appendRandom(50);
-
-        linkedList.headRandom = linkedList.copyRandomList(linkedList.headRandom);
-        linkedList.traverseRandom();
+        linkedList.append(10);
+        linkedList.append(20);
+        linkedList.append(30);
+        linkedList.append(40);
+        linkedList.append(50);
+        linkedList.head = linkedList.rotateRight(linkedList.head, 2);
+        linkedList.traverse();
     }
 }
