@@ -187,11 +187,11 @@ public class BinaryTree {
     }
 
     // Function to insert nodes in level order
-    public Node insertLevelOrder(int[] arr, int i) {
-        Node root = null;
+    public TreeNode insertLevelOrder(int[] arr, int i) {
+        TreeNode root = null;
         // Base case for recursion
         if (i < arr.length) {
-            root = new Node(arr[i]);
+            root = new TreeNode(arr[i]);
 
             // insert left child
             root.left = insertLevelOrder(arr, 2 * i + 1);
@@ -260,12 +260,42 @@ public class BinaryTree {
         return treeTraversal.inOrderWithSum(root, 0, targetSum);
     }
 
-    public static void main(String[] args) {
-        BinaryTree binaryTree = new BinaryTree();
+    public int sumNumbers(TreeNode root) {
+        return sumNumbersRecur(root, 0);
+    }
 
-        int[] arr = {1, 2, 3, 4, 5, 6, 7, 10, 9, 8};
-        Node root = binaryTree.insertLevelOrder(arr, 0);
-        binaryTree.kthSmallest(root, 3);
+    public int sumNumbersRecur(TreeNode root, int num) {
+        // leaf node
+        int val = 10 * num + root.val;
+        if (root.left == null && root.right == null) {
+            return val;
+        }
+
+        int i = 0, j = 0;
+        // left has data
+        if (root.left != null) {
+            i = sumNumbersRecur(root.left, val);
+        }
+
+        // right has data
+        if (root.right != null) {;
+            j = sumNumbersRecur(root.right, val);
+        }
+
+        return i + j;
+    }
+
+
+    public static void main(String[] args) {
+
+        BinaryTree binaryTree = new BinaryTree();
+        int[] arr = {1, 2, 3};
+
+        TreeNode treeNode = binaryTree.insertLevelOrder(arr, 0);
+        int i = binaryTree.sumNumbers(treeNode);
+        System.out.println("i = " + i);
+
+
     }
     //    public static void main(String[] args) {
     //        Node root = new Node(10);

@@ -93,9 +93,26 @@ public class NumberTheory {
         }
     }
 
+    public int trailingZeroes(int n) {
+        n++;
+        int count = 0;
+        int lastDigit = 1;
+        for (int i = 1; i < n; i++) {
+            int f = lastDigit * i;
+            System.out.println("lastDigit = " + lastDigit);
+            lastDigit = f % 10;
+            while (lastDigit == 0) {
+                f = f / 10;
+                lastDigit = f % 10;
+                count++;
+            }
+        }
+        return count;
+    }
+
     public static void main(String[] args) {
         NumberTheory numberTheory = new NumberTheory();
-        double power = numberTheory.power(2, -2147483648);
-        System.out.println("power = " + power);
+        int i = numberTheory.trailingZeroes(625);
+        System.out.println("i = " + i);
     }
 }

@@ -1,9 +1,13 @@
 package com.app.basic.linkedlist;
 
 import com.app.util.ListNode;
+import com.app.util.NodeRandom;
+
+import java.util.HashMap;
 
 public class LinkedList {
     ListNode head;
+    NodeRandom headRandom;
 
     public ListNode reverseKGroup(ListNode head, int k) {
         return reverse(head, k, getLength(head));
@@ -80,6 +84,20 @@ public class LinkedList {
         return prev;
     }
 
+    void appendRandom(int k) {
+        if (headRandom == null) { // if list is empty
+            headRandom = new NodeRandom(k);
+            return;
+        }
+        // if list is not empty
+        // get hold of last node.
+        NodeRandom temp = headRandom;
+        while (temp.next != null) {
+            temp = temp.next;
+        }
+        // insert the node
+        temp.next = new NodeRandom(k);
+    }
 
     void append(int k) {
         if (head == null) { // if list is empty
@@ -116,13 +134,24 @@ public class LinkedList {
     }
 
     void traverse() {
-        // copy head in curr
         ListNode curr = head;
-        // iterate over the list
+
         while (curr != null) {
             System.out.print(curr.val + " ");
             curr = curr.next;
         }
+
+        System.out.println();
+    }
+
+    void traverseRandom() {
+        NodeRandom curr = headRandom;
+
+        while (curr != null) {
+            System.out.print(curr.val + " ");
+            curr = curr.next;
+        }
+
         System.out.println();
     }
 
@@ -241,15 +270,51 @@ public class LinkedList {
         return false;
     }
 
+
+    public NodeRandom copyRandomList(NodeRandom head) {
+        if (head == null) {
+            return null;
+        }
+        HashMap<Integer, NodeRandom> map = new HashMap<>();
+
+        NodeRandom curr = head.next;
+        NodeRandom newHead = new NodeRandom(head.val);
+
+        NodeRandom tail = newHead;
+        map.put(tail.val, tail);
+
+        while (curr != null) {
+            if (!map.containsKey(curr.val)) {
+                tail.next = new NodeRandom(curr.val);
+                map.put(tail.next.val, tail.next);
+            } else {
+                tail.next = map.get(curr.val);
+            }
+            if (curr.random != null) {
+                if (!map.containsKey(curr.random.val)) {
+                    tail.random = new NodeRandom(curr.random.val);
+                    map.put(tail.random.val, tail.random);
+                } else {
+                    tail.random = map.get(curr.random.val);
+                }
+            }
+
+            tail = tail.next;
+            curr = curr.next;
+        }
+        return newHead;
+    }
+
     public static void main(String[] args) {
 
         LinkedList linkedList = new LinkedList();
-        linkedList.append(10);
-//        linkedList.append(20);
-//        linkedList.append(30);
-//        linkedList.append(40);
-//        linkedList.append(50);
-        linkedList.head = linkedList.reverseBetween(linkedList.head, 1, 1);
-        linkedList.traverse();
+        linkedList.appendRandom(10);
+        linkedList.appendRandom(20);
+        linkedList.appendRandom(30);
+        linkedList.appendRandom(40);
+        linkedList.appendRandom(50);
+
+        linkedList.headRandom = linkedList.copyRandomList(linkedList.headRandom);
+        linkedList.traverseRandom();
     }
 }
