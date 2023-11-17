@@ -4,13 +4,12 @@ import com.app.util.Distance;
 import com.app.util.Node;
 import com.app.util.TreeNode;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class BinaryTree {
     static int res = 0;
     static Node prev1 = null;
+    TreeNode prev2 = null;
     static int prev = Integer.MIN_VALUE;
 
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
@@ -170,6 +169,20 @@ public class BinaryTree {
         return isBST(root.right);
     }
 
+    public boolean isValidBST(TreeNode root) {
+        if (Objects.isNull(root)) {
+            return true;
+        }
+        boolean left = isValidBST(root.left);
+        if (prev2 != null) {
+            if (prev2.val > root.val) {
+                return false;
+            }
+        }
+        prev2 = root;
+        return left && isValidBST(root.right);
+    }
+
     public boolean isBalanced(Node root) {
         if (root == null)
             return true;
@@ -186,21 +199,7 @@ public class BinaryTree {
         }
     }
 
-    // Function to insert nodes in level order
-    public TreeNode insertLevelOrder(int[] arr, int i) {
-        TreeNode root = null;
-        // Base case for recursion
-        if (i < arr.length) {
-            root = new TreeNode(arr[i]);
 
-            // insert left child
-            root.left = insertLevelOrder(arr, 2 * i + 1);
-
-            // insert right child
-            root.right = insertLevelOrder(arr, 2 * i + 2);
-        }
-        return root;
-    }
 
     public int kthSmallest(Node root, int k) {
         TreeTraversal treeTraversal = new TreeTraversal();
@@ -278,22 +277,95 @@ public class BinaryTree {
         }
 
         // right has data
-        if (root.right != null) {;
+        if (root.right != null) {
             j = sumNumbersRecur(root.right, val);
         }
 
         return i + j;
     }
 
+    public void flatten(TreeNode root) {
+        if (Objects.isNull(root)) {
+            return;
+        }
+
+        flatten(root.right);
+
+        if (root.left == null) return;
+        flatten(root.left);
+
+        TreeNode rightNode = root.right;
+        root.right = root.left;
+        root.left = null;
+        TreeNode curr = root;
+        while (curr.right != null) {
+            curr = curr.right;
+        }
+        curr.right = rightNode;
+    }
+
+    int currDiff = Integer.MAX_VALUE;
+
+    public int getMinimumDifference(TreeNode root) {
+
+        if (Objects.isNull(root)) {
+            return currDiff;
+        }
+
+        getMinimumDifference(root.left);
+
+        if (Objects.nonNull(prev2)) {
+            int diff = Math.abs(prev2.val - root.val);
+            currDiff = Math.min(diff, currDiff);
+        }
+        prev2 = root;
+
+        getMinimumDifference(root.right);
+
+        return currDiff;
+    }
+
+
+    public List<Double> averageOfLevels(TreeNode root) {
+        if (Objects.isNull(root)) {
+            return null;
+        }
+        List<Double> ans = new ArrayList<>();
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        double sum = root.val;
+        int levelSize;
+        while (!queue.isEmpty()) {
+            levelSize = queue.size();
+            ans.add(sum / levelSize);
+            sum = 0;
+            for (int i = 0; i < levelSize; i++) {
+                TreeNode poll = queue.poll();
+                if (poll.left != null) {
+                    sum += poll.left.val;
+                    queue.add(poll.left);
+                }
+                if (poll.right != null) {
+                    sum += poll.right.val;
+                    queue.add(poll.right);
+                }
+            }
+        }
+
+
+        return ans;
+    }
 
     public static void main(String[] args) {
 
+        TreeTraversal treeTraversal = new TreeTraversal();
         BinaryTree binaryTree = new BinaryTree();
-        int[] arr = {1, 2, 3};
-
-        TreeNode treeNode = binaryTree.insertLevelOrder(arr, 0);
-        int i = binaryTree.sumNumbers(treeNode);
-        System.out.println("i = " + i);
+        int[] arr = { 3, 9,20};
+        TreeNode root = treeTraversal.insertLevelOrder(arr, 0);
+        List<Double> doubles = binaryTree.averageOfLevels(root);
+        for (Double aDouble : doubles) {
+            System.out.println("aDouble = " + aDouble);
+        }
 
 
     }

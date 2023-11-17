@@ -1,11 +1,13 @@
 package com.app.basic.array;
 
+import com.app.util.MyUtil;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class PermComb {
-
 
     public int robRecur(int[] nums, int[] dp, int start) {
         if (start >= nums.length) {
@@ -108,12 +110,36 @@ public class PermComb {
         return n;
     }
 
+
+    public void permuteUtil(List<List<Integer>> res, int[] nums, int start) {
+        if (start+1 == nums.length) {
+            List<Integer> list = new ArrayList<>();
+            for (int num : nums) {
+                list.add(num);
+            }
+            res.add(list);
+            return;
+        }
+        for (int i = start; i < nums.length; i++) {
+            MyUtil.swapArrItem(nums, start, i);
+
+            permuteUtil(res, nums, i + 1);
+
+            MyUtil.swapArrItem(nums,  i, start);
+        }
+    }
+    public List<List<Integer>> permute(int[] nums) {
+        List<List<Integer>> list = new ArrayList<>();
+        permuteUtil(list, nums,0);
+        return list;
+    }
+
     public static void main(String[] args) {
         PermComb permComb = new PermComb();
-        int[] arr = {1, 2, 3, 1};
-//        List<List<Integer>> lists = permComb.combinationSum(arr, 7);
-//        System.out.println("lists = " + lists);
-        int rob = permComb.rob(arr);
-        System.out.println("rob = " + rob);
+        int[] arr = {1, 2, 3};
+        List<List<Integer>> permute = permComb.permute(arr);
+        for (List<Integer> list : permute) {
+            System.out.println("list = " + list);
+        }
     }
 }
