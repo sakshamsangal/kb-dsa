@@ -2,7 +2,7 @@ package com.app.advance.graph;
 
 import java.util.ArrayList;
 
-public class DetectCycleUndirectedGraph {
+public class CycleUnd {
 
     static void addEdge(ArrayList<ArrayList<Integer>> adj, int u, int v) {
         adj.get(u).add(v);
@@ -31,6 +31,57 @@ public class DetectCycleUndirectedGraph {
             if (!visited[i])
                 if (DFSRec(adj, i, visited, -1))
                     return true;
+        }
+        return false;
+    }
+
+
+    public boolean dfs(ArrayList<ArrayList<Integer>> adj, int src, boolean[] vis, int par) {
+        vis[src] = true;
+        for (int child : adj.get(src)) {
+            if (!vis[child]) {
+                if (dfs(adj, child, vis, src)) {
+                    return true;
+                }
+            } else {
+                if (child != par) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+
+    public boolean dfs2(ArrayList<ArrayList<Integer>> adj, int src, boolean[] vis, int par) {
+        vis[src] = true;
+
+        // visit child
+        for (int child : adj.get(src)) {
+            if (child == par){
+                continue;
+            }
+            if (vis[child]) {
+                return true;
+            }
+            if (dfs2(adj, child, vis, src)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+
+    // Function to detect cycle in an undirected graph.
+    public boolean isCycle(int V, ArrayList<ArrayList<Integer>> adj) {
+        boolean[] vis = new boolean[V];
+        for (int i = 0; i < V; i++) {
+            if (!vis[i]) {
+                if (dfs(adj, i, vis, -1)) {
+                    return true;
+                }
+            }
         }
         return false;
     }

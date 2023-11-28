@@ -33,16 +33,32 @@ public class TopologicalSortingKahn {
     }
 
     static void topologicalSort2(List<List<Integer>> adj, int size) {
-        // in degree
-        int[] inDegree = new int[size];
-        for (List<Integer> list : adj) {
-            for (int v : list) {
-                inDegree[v]++;
 
+        // in degree
+        int[] inDeg = new int[size];
+        for (List<Integer> list : adj) {
+            for (int node : list) {
+                inDeg[node]++;
             }
         }
 
-        // queue with 0 in degree
+        Queue<Integer> que = new LinkedList<>();
+        for (int j = 0; j < inDeg.length; j++) {
+            if (inDeg[j] == 0) {
+                que.add(j);
+            }
+        }
+
+        while (!que.isEmpty()) {
+            int polled = que.poll();
+            System.out.println("polled = " + polled);
+            for (int child : adj.get(polled)) {
+                inDeg[child]--;
+                if (inDeg[child] ==0){
+                    que.add(child);
+                }
+            }
+        }
 
 
     }
