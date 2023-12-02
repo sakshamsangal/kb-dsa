@@ -284,40 +284,6 @@ public class LinkedList {
     }
 
 
-    public NodeRandom copyRandomList(NodeRandom head) {
-        if (head == null) {
-            return null;
-        }
-        HashMap<Integer, NodeRandom> map = new HashMap<>();
-
-        NodeRandom curr = head.next;
-        NodeRandom newHead = new NodeRandom(head.val);
-
-        NodeRandom tail = newHead;
-        map.put(tail.val, tail);
-
-        while (curr != null) {
-            if (!map.containsKey(curr.val)) {
-                tail.next = new NodeRandom(curr.val);
-                map.put(tail.next.val, tail.next);
-            } else {
-                tail.next = map.get(curr.val);
-            }
-            if (curr.random != null) {
-                if (!map.containsKey(curr.random.val)) {
-                    tail.random = new NodeRandom(curr.random.val);
-                    map.put(tail.random.val, tail.random);
-                } else {
-                    tail.random = map.get(curr.random.val);
-                }
-            }
-
-            tail = tail.next;
-            curr = curr.next;
-        }
-        return newHead;
-    }
-
     public ListNode rotateRight(ListNode head, int k) {
         /*
          * need 2 tail
@@ -343,15 +309,81 @@ public class LinkedList {
         return head;
     }
 
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        ListNode h3 = new ListNode(-1);
+        ListNode t3 = h3;
+        ListNode curr = l1;
+        ListNode curr2 = l2;
+        while (curr != null & curr2 != null) {
+            t3.next = new ListNode(curr.val + curr2.val);
+            t3 = t3.next;
+            curr = curr.next;
+            curr2 = curr2.next;
+        }
+        while (curr != null) {
+            t3.next = new ListNode(curr.val);
+            t3 = t3.next;
+            curr = curr.next;
+        }
+        while (curr2 != null) {
+            t3.next = new ListNode(curr2.val);
+            t3 = t3.next;
+            curr2 = curr2.next;
+        }
+        h3 = h3.next;
+
+        curr = h3;
+        while (curr != null) {
+            if (9 < curr.val) {
+                curr.val = curr.val % 10;
+                if (curr.next == null) {
+                    curr.next = new ListNode(1);
+                } else {
+                    curr.next.val += 1;
+                }
+            }
+            curr = curr.next;
+        }
+        return h3;
+    }
+
+
+    public NodeRandom copyRandomList(NodeRandom head) {
+        HashMap<String, NodeRandom> map = new HashMap<>();
+        NodeRandom curr = head;
+        NodeRandom h1 = new NodeRandom(-1);
+        NodeRandom t1 = h1;
+        int c = 0;
+        while (curr != null) {
+            t1.next = new NodeRandom(curr.val);
+            t1 = t1.next;
+            map.put(c + "_" + t1.val, t1);
+            curr = curr.next;
+            c++;
+        }
+        h1 = h1.next;
+
+        curr = head;
+        NodeRandom temp = h1;
+        c = 0;
+        while (curr != null) {
+            if (curr.random != null) {
+                temp.random = map.get(c + "_" + curr.random.val);
+            }
+            curr = curr.next;
+            temp = temp.next;
+            c++;
+        }
+
+        return h1;
+    }
+
     public static void main(String[] args) {
 
-        LinkedList linkedList = new LinkedList();
-        linkedList.append(10);
-        linkedList.append(20);
-        linkedList.append(30);
-        linkedList.append(40);
-        linkedList.append(50);
-        linkedList.head = linkedList.rotateRight(linkedList.head, 2);
-        linkedList.traverse();
+        LinkedList l1 = new LinkedList();
+        l1.appendRandom(10);
+        l1.appendRandom(20);
+
+        l1.copyRandomList(l1.headRandom);
     }
 }
