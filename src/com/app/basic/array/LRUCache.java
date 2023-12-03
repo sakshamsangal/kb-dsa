@@ -5,6 +5,7 @@ import com.app.util.DLLNode;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 
 public class LRUCache {
@@ -12,7 +13,7 @@ public class LRUCache {
     // Size denotes the current size of
     // the List while capacity is the
     // maximum size list is allowed to take.
-    int size, capacity;
+    int capacity;
 
     // 'map' is the Hash that will map
     // the 'key' to 'Nodes'.
@@ -28,58 +29,45 @@ public class LRUCache {
     }
 
     public int get(int key) {
-        // Checking in the 'map' for check
-        // the 'node' with Key as 'key'.
         DLLNode node = map.get(key);
+        if (Objects.isNull(node)) {
 
-        // If no such node exists in 'map'
-        // Return -1.
-        if (node == null)
+            System.out.println("-1 = ");
             return -1;
-
-        /// Otherwise move it to the head.
+        }
         list.moveToHead(node);
-
-        // Returning the value associated with 'node'.
+        System.out.println("node.val = " + node.val);
         return node.val;
     }
 
     public void put(int key, int value) {
-        // Checking if map allowed co
+
         DLLNode node = map.get(key);
-
-        // If it do not exists.
-        if (node == null) {
-            // Defining a new node that will be
-            // inserted in the cache.
-            DLLNode newNode = new DLLNode(key, value);
-            // Putting in 'map'.
-            map.put(key, newNode);
-            // Adding it to head of list.
-            list.addToHead(newNode);
-
-            // Increasing the size of the list.
-            size++;
-
-            // If after adding, 'size' exceeds the
-            // capacity.
-            if (size > capacity) {
-                // Remove the node at tail, because
-                // it is the least recently used.
-                DLLNode temp = list.removeFromTail();
-                map.remove(temp.key);
-
-                // Reducing the size by 1.
-                size--;
+        if (Objects.isNull(node)) {
+            if (map.size() == capacity) {
+                DLLNode popped = list.removeFromTail();
+                map.remove(popped.key);
             }
-        }
-        // Otherwise if it exists.
-        else {
-            // Update the value.
-            node.val = value;
 
-            // Move the node to head of the list.
+            DLLNode item = new DLLNode(key, value);
+            list.addToHead(item);
+            map.put(key, item);
+        } else {
+            node.val = value;
             list.moveToHead(node);
         }
+
+    }
+
+    public static void main(String[] args) {
+        LRUCache lRUCache = new LRUCache(2);
+        lRUCache.get(2);    // return 1
+        lRUCache.put(2, 6); // LRU key was 2, evicts key 2, cache is {1=1, 3=3}
+        lRUCache.get(1);    // returns -1 (not found)
+
+        lRUCache.put(1, 5); // LRU key was 1, evicts key 1, cache is {4=4, 3=3}
+        lRUCache.put(1, 2); // LRU key was 1, evicts key 1, cache is {4=4, 3=3}
+        lRUCache.get(1);    // return -1 (not found)
+        lRUCache.get(2);    // return 3
     }
 }

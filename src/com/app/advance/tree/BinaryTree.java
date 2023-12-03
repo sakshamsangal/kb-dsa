@@ -200,7 +200,6 @@ public class BinaryTree {
     }
 
 
-
     public int kthSmallest(Node root, int k) {
         TreeTraversal treeTraversal = new TreeTraversal();
         List<Integer> ans = new ArrayList<>();
@@ -251,13 +250,6 @@ public class BinaryTree {
             return lca2;
     }
 
-    public boolean hasPathSum(TreeNode root, int targetSum) {
-        if (Objects.isNull(root)) {
-            return false;
-        }
-        TreeTraversal treeTraversal = new TreeTraversal();
-        return treeTraversal.inOrderWithSum(root, 0, targetSum);
-    }
 
     public int sumNumbers(TreeNode root) {
         return sumNumbersRecur(root, 0);
@@ -283,6 +275,7 @@ public class BinaryTree {
 
         return i + j;
     }
+
 
     public void flatten(TreeNode root) {
         if (Objects.isNull(root)) {
@@ -356,17 +349,38 @@ public class BinaryTree {
         return ans;
     }
 
+
+    int sum = 0;
+
+    public boolean hasPathSum(TreeNode root, int targetSum) {
+        if (root == null) {
+            return false;
+        }
+        if (root.left == null && root.right == null) {
+            return sum + root.val == targetSum;
+        }
+
+        if (Objects.nonNull(root.left)) {
+            sum += root.val;
+            boolean leftl = hasPathSum(root.left, targetSum);
+            if (leftl) {
+                return true;
+            }
+        }
+
+        if (Objects.nonNull(root.right)) {
+            sum -= root.val;
+            return hasPathSum(root.right, targetSum);
+        }
+        return false;
+    }
     public static void main(String[] args) {
 
         TreeTraversal treeTraversal = new TreeTraversal();
         BinaryTree binaryTree = new BinaryTree();
-        int[] arr = { 3, 9,20};
+        int[] arr = {3, 9, 20};
         TreeNode root = treeTraversal.insertLevelOrder(arr, 0);
-        List<Double> doubles = binaryTree.averageOfLevels(root);
-        for (Double aDouble : doubles) {
-            System.out.println("aDouble = " + aDouble);
-        }
-
+        binaryTree.hasPathSum(root, 2);
 
     }
     //    public static void main(String[] args) {

@@ -7,43 +7,27 @@ import java.util.List;
 
 public class IntervalDsa {
 
-    public int[][] insert(int[][] intervals, int[] newInterval) {
-
+    public int[][] insert(int[][] mat, int[] item) {
         List<int[]> ans = new ArrayList<>();
-
-        int i;
-        for (i = 0; i < intervals.length; i++) {
-            int[] interval = intervals[i];
-            if (interval[0] < newInterval[0]) {
-                ans.add(new int[]{interval[0], interval[1]});
+        for (int[] curr : mat) {
+            if (curr[1] < item[0]) {
+                ans.add(curr);
+            } else if (item[1] < curr[0]) {
+                ans.add(item);
+                item = curr;
             } else {
-
-                int a = newInterval[0];
-                int b = newInterval[1];
-                int[] prev = ans.get(ans.size() - 1);
-
-                if (prev[1] < a) {
-                    ans.add(new int[]{a, b});
-                } else {
-                    int c = Math.max(prev[1], b);
-                    ans.add(new int[]{prev[0], c});
-                }
-//                ans.add(new int[]{a, Math.max(c, intervals[i+1][1])});
-
+                item[0] = Math.min(curr[0], item[0]);
+                item[1] = Math.max(curr[1], item[1]);
             }
         }
-//        for (int j = i; j < intervals.length; j++) {
-//            int[] interval = intervals[i];
-//            ans.add(new int[]{interval[0], interval[1]});
-//        }
-
+        ans.add(item);
         return ans.toArray(new int[0][]);
     }
 
     public int[][] merge(int[][] intervals) {
         Arrays.sort(intervals, Comparator.comparingInt(o -> o[0]));
 
-        List<int[]> res = new ArrayList<>();
+        List<int[]> ans = new ArrayList<>();
 
         for (int i = 0; i < intervals.length; i++) {
 
@@ -54,10 +38,10 @@ public class IntervalDsa {
                 end = Math.max(end, intervals[i + 1][1]);
                 i++;
             }
-            res.add(new int[]{start, end});
+            ans.add(new int[]{start, end});
         }
 
-        return res.toArray(new int[0][]);
+        return ans.toArray(new int[0][]);
     }
 
     public List<String> summaryRanges(int[] nums) {
@@ -94,8 +78,8 @@ public class IntervalDsa {
 
     public static void main(String[] args) {
         IntervalDsa intervalDsa = new IntervalDsa();
-        int[][] arr = {{1, 3}, {6, 9}};
-        int[] arr2 = {2, 5};
+        int[][] arr = {{1, 3}, {7, 9}};
+        int[] arr2 = {4, 5};
 
         int[][] insert = intervalDsa.insert(arr, arr2);
         System.out.println("insert = " + Arrays.deepToString(insert));
