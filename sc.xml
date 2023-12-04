@@ -1,0 +1,137 @@
+<templateSet group="dsa">
+    <template name="arr-init" value="int[] arr = {1, 2, 3, 4, 5, 6, 7};" description="" toReformat="true" toShortenFQNames="true">
+        <context>
+            <option name="JAVA_EXPRESSION" value="true" />
+            <option name="JAVA_STATEMENT" value="true" />
+        </context>
+    </template>
+    <template name="pi" value="// pick&#10;        // ignore" description="" toReformat="true" toShortenFQNames="true">
+        <context>
+            <option name="JAVA_EXPRESSION" value="true" />
+            <option name="JAVA_STATEMENT" value="true" />
+        </context>
+    </template>
+    <template name="cmax" value="int currMax = java.lang.Integer.MIN_VALUE;" description="" toReformat="true" toShortenFQNames="true">
+        <context>
+            <option name="JAVA_EXPRESSION" value="true" />
+            <option name="JAVA_STATEMENT" value="true" />
+        </context>
+    </template>
+    <template name="cmin" value="int currMin = java.lang.Integer.MAX_VALUE;" description="" toReformat="true" toShortenFQNames="true">
+        <context>
+            <option name="JAVA_EXPRESSION" value="true" />
+            <option name="JAVA_STATEMENT" value="true" />
+        </context>
+    </template>
+    <template name="sum1" value="int sum = 0;" description="" toReformat="true" toShortenFQNames="true">
+        <context>
+            <option name="JAVA_EXPRESSION" value="true" />
+            <option name="JAVA_STATEMENT" value="true" />
+        </context>
+    </template>
+    <template name="start-end" value="int start = 0;&#10;        int end = 0;" description="" toReformat="true" toShortenFQNames="true">
+        <context>
+            <option name="JAVA_EXPRESSION" value="true" />
+            <option name="JAVA_STATEMENT" value="true" />
+        </context>
+    </template>
+    <template name="two-pointer" value="int start = 0;&#10;int end = arr.length - 1;&#10;while (start &lt; end) {&#10;    // success&#10;    &#10;    // movement&#10;    if (true) {&#10;        start++;&#10;    } else {&#10;        end--;&#10;    }&#10;}" description="" toReformat="true" toShortenFQNames="true">
+        <context>
+            <option name="JAVA_EXPRESSION" value="true" />
+            <option name="JAVA_STATEMENT" value="true" />
+        </context>
+    </template>
+    <template name="letter-occ" value="// letter occurrence&#10;        int[] arr = new int[26];&#10;        for (int i = 0; i &lt; magazine.length(); i++) {&#10;            arr[magazine.charAt(i) - 97]++;&#10;        }" description="" toReformat="true" toShortenFQNames="true">
+        <context>
+            <option name="JAVA_EXPRESSION" value="true" />
+            <option name="JAVA_STATEMENT" value="true" />
+        </context>
+    </template>
+    <template name="isnull" value="if (java.util.Objects.isNull($EXP$)) {&#10;        }" description="" toReformat="true" toShortenFQNames="true">
+        <variable name="EXP" expression="variableOfType(&quot;&quot;)" defaultValue="&quot;exp&quot;" alwaysStopAt="true" />
+        <context>
+            <option name="JAVA_EXPRESSION" value="true" />
+            <option name="JAVA_STATEMENT" value="true" />
+        </context>
+    </template>
+    <template name="pfinal" value="private final $a$ $b$;" description="" toReformat="true" toShortenFQNames="true">
+        <variable name="a" expression="className()" defaultValue="" alwaysStopAt="true" />
+        <variable name="b" expression="decapitalize(a)" defaultValue="" alwaysStopAt="false" />
+        <context>
+            <option name="JAVA_DECLARATION" value="true" />
+        </context>
+    </template>
+    <template name="cmax-cond" value="currMax = java.lang.Math.max(currMax, s.length());" description="" toReformat="true" toShortenFQNames="true">
+        <context>
+            <option name="JAVA_EXPRESSION" value="true" />
+            <option name="JAVA_STATEMENT" value="true" />
+        </context>
+    </template>
+    <template name="count" value="int count = 0;" description="" toReformat="true" toShortenFQNames="true">
+        <context>
+            <option name="JAVA_EXPRESSION" value="true" />
+            <option name="JAVA_STATEMENT" value="true" />
+        </context>
+    </template>
+    <template name="sliding-widow" value="int start = 0;&#10;int sum = 0;&#10;int $currMin$;&#10;for (int i = 0; i &lt; $nums$.length; i++) {&#10;    &#10;}&#10;&#10;return $a$;" description="" toReformat="true" toShortenFQNames="true">
+        <variable name="currMin" expression="enum(&quot;currMin = java.lang.Integer.MAX_VALUE&quot;, &quot;currMax = java.lang.Integer.MIN_VALUE&quot;)" defaultValue="" alwaysStopAt="true" />
+        <variable name="nums" expression="arrayVariable()" defaultValue="" alwaysStopAt="true" />
+        <variable name="a" expression="enum(&quot;currMin&quot;, &quot;currMax&quot;)" defaultValue="" alwaysStopAt="true" />
+        <context>
+            <option name="JAVA_EXPRESSION" value="true" />
+            <option name="JAVA_STATEMENT" value="true" />
+        </context>
+    </template>
+    <template name="obj" value="$obj$:&#10;      description: $Response$&#10;      required:&#10;        - &#10;      type: object&#10;      properties:" description="" toReformat="true" toShortenFQNames="true">
+        <variable name="obj" expression="" defaultValue="" alwaysStopAt="true" />
+        <variable name="Response" expression="&quot;Response from getDocumentStatusAPI&quot;" defaultValue="" alwaysStopAt="true" />
+        <context>
+            <option name="GROOVY" value="false" />
+            <option name="HTML" value="false" />
+            <option name="JAVA_CODE" value="false" />
+            <option name="JSON" value="false" />
+            <option name="KOTLIN" value="false" />
+            <option name="MAVEN" value="false" />
+            <option name="OTHER" value="true" />
+            <option name="Properties" value="false" />
+            <option name="SHELL_SCRIPT" value="false" />
+            <option name="XML" value="false" />
+            <option name="XML_ATTRIBUTE" value="false" />
+        </context>
+    </template>
+    <template name="str" value="$id$:&#10;          type: string&#10;          example: $tx123$&#10;          description: $myDesc$" description="" toReformat="true" toShortenFQNames="true">
+        <variable name="id" expression="&quot;id&quot;" defaultValue="" alwaysStopAt="true" />
+        <variable name="tx123" expression="" defaultValue="" alwaysStopAt="true" />
+        <variable name="myDesc" expression="&quot;myDesc&quot;" defaultValue="" alwaysStopAt="true" />
+        <context>
+            <option name="GROOVY" value="false" />
+            <option name="HTML" value="false" />
+            <option name="JAVA_CODE" value="false" />
+            <option name="JSON" value="false" />
+            <option name="KOTLIN" value="false" />
+            <option name="MAVEN" value="false" />
+            <option name="OTHER" value="true" />
+            <option name="Properties" value="false" />
+            <option name="SHELL_SCRIPT" value="false" />
+            <option name="XML" value="false" />
+            <option name="XML_ATTRIBUTE" value="false" />
+        </context>
+    </template>
+    <template name="arrobj" value="$A$[] $B$ = new $A$[$size$];&#10;$END$" description="" toReformat="true" toShortenFQNames="true">
+        <variable name="A" expression="enum(&quot;int&quot;,&quot;boolean&quot;,&quot;String&quot;) " defaultValue="" alwaysStopAt="true" />
+        <variable name="B" expression="enum(&quot;arr&quot;,&quot;vis&quot;,&quot;temp&quot;, &quot;recTrack&quot;) " defaultValue="" alwaysStopAt="true" />
+        <variable name="size" expression="enum(&quot;size&quot;, &quot;V&quot;)" defaultValue="" alwaysStopAt="true" />
+        <context>
+            <option name="JAVA_EXPRESSION" value="true" />
+            <option name="JAVA_STATEMENT" value="true" />
+        </context>
+    </template>
+    <template name="hm" value="java.util.HashMap&lt;$A$, $B$&gt; map = new java.util.HashMap&lt;&gt;();$END$" description="" toReformat="true" toShortenFQNames="true">
+        <variable name="A" expression="enum(&quot;Character&quot;,&quot;Boolean&quot;,&quot;String&quot;) " defaultValue="" alwaysStopAt="true" />
+        <variable name="B" expression="enum(&quot;Character&quot;,&quot;Boolean&quot;,&quot;String&quot;) " defaultValue="" alwaysStopAt="true" />
+        <context>
+            <option name="JAVA_EXPRESSION" value="true" />
+            <option name="JAVA_STATEMENT" value="true" />
+        </context>
+    </template>
+</templateSet>
