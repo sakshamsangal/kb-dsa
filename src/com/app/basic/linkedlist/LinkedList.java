@@ -1,6 +1,7 @@
 package com.app.basic.linkedlist;
 
 import com.app.util.ListNode;
+import com.app.advance.tree.Node;
 import com.app.util.NodeRandom;
 
 import java.util.HashMap;
@@ -212,6 +213,26 @@ public class LinkedList {
         return prev;
     }
 
+    //Function to check if the linked list has a loop.
+//    public static boolean detectLoop(Node head) {
+//
+//        if (head == null) {
+//            return false;
+//        }
+//
+//        Node slow = head;
+//        Node fast = head.next;
+//
+//        while (fast.next != null) {
+//            if (slow == fast) {
+//                return true;
+//            }
+//            slow = slow.next;
+//            fast = fast.next.next;
+//        }
+//
+//        return false;
+//    }
 
     public ListNode partition(ListNode head, int x) {
         ListNode curr = head;

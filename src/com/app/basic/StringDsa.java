@@ -4,6 +4,28 @@ import java.util.*;
 
 public class StringDsa {
 
+    public boolean wordPattern(String pattern, String s) {
+
+        String[] arr = s.split("\\s");
+        if (pattern.length() != arr.length) {
+            return false;
+        }
+
+        HashMap<Character, String> map = new HashMap<>();
+
+        for (int i = 0; i < pattern.length(); i++) {
+            char c = pattern.charAt(i);
+            String s1 = map.get(c);
+            if (s1 == null) {
+                map.put(c, arr[i]);
+            } else if (!Objects.equals(s1, arr[i])) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     public boolean isSubsequence(String s, String t) {
         int start = 0;
         for (int i = start; i < s.length(); i++) {

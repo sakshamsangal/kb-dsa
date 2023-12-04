@@ -1,7 +1,5 @@
 package com.app.advance.tree;
 
-import com.app.util.Node;
-
 public class MirrorTree {
 
     public static void main(String[] args) {
