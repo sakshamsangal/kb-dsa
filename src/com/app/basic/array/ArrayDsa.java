@@ -484,12 +484,46 @@ public class ArrayDsa {
         return pq.peek();
     }
 
+    public int longestConsecutive(int[] nums) {
+        if (nums.length == 0) {
+            return 0;
+        }
+        Arrays.sort(nums);
+        int[] ans = new int[nums.length];
+        ans[0] = 1;
+        int currMax = 1;
+        for (int i = 1; i < nums.length; i++) {
+            if (nums[i - 1] == nums[i]) {
+                ans[i] = ans[i - 1];
+            } else if (nums[i - 1] + 1 == nums[i]) {
+                ans[i] = ans[i - 1] + 1;
+            } else {
+                ans[i] = 1;
+            }
+            currMax = Math.max(currMax, ans[i]);
+        }
+        return currMax;
+    }
+
+    public boolean isHappy(int n) {
+        while (10 < n) {
+            int sum = 0;
+            while (n != 0) {
+                int last = n % 10;
+                sum += last * last;
+                n = n/10;
+            }
+            n = sum;
+        }
+        return n == 1;
+    }
+
     public static void main(String[] args) {
         ArrayDsa arrayDsa = new ArrayDsa();
-        int[] arr = {3,2,3,1,2,4,5,5,6};
 
-        int kthLargest = arrayDsa.findKthLargest(arr, 4);
-        System.out.println("kthLargest = " + kthLargest);
+        boolean happy = arrayDsa.isHappy(100);
+        System.out.println("happy = " + happy);
+
     }
 
 }

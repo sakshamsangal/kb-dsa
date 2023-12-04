@@ -71,6 +71,7 @@ public class Sorting {
         }
     }
 
+
     // quickSort
     private static void quickSort(int[] arr, int start, int end) {
         // more than 1 element
@@ -134,4 +135,86 @@ public class Sorting {
         }
         System.out.println(Arrays.toString(result));
     }
+
+
+    void countingSort1(int[] arr) {
+
+        int currMax = 0;
+        int currMin = 100;
+        for (int j : arr) {
+            currMax = Math.max(currMax, j);
+            currMin = Math.min(currMin, j);
+        }
+
+        int[] freq = new int[currMax - currMin + 1];
+
+        for (int j : arr) {
+            freq[j - currMin]++;
+        }
+
+        int[] lastPos = new int[freq.length];
+
+        lastPos[0] = freq[0];
+        for (int i = 1; i < freq.length; i++) {
+            lastPos[i] = lastPos[i - 1] + freq[i];
+        }
+
+        int[] ans = new int[arr.length];
+        for (int item : arr) {
+            ans[lastPos[item - currMin] - 1] = item;
+            lastPos[item - currMin]--;
+        }
+        System.out.println("ans = " + Arrays.toString(ans));
+
+    }
+
+    String countingSortString(String str) {
+
+        int[] freq = new int[26];
+        for (int i = 0; i < str.length(); i++) {
+            freq[str.charAt(i) - 97]++;
+        }
+
+        int[] lastPos = new int[freq.length];
+
+        lastPos[0] = freq[0];
+        for (int i = 1; i < freq.length; i++) {
+            lastPos[i] = lastPos[i - 1] + freq[i];
+        }
+
+        StringBuilder stringBuilder = new StringBuilder(str);
+        for (int i = 0; i < str.length(); i++) {
+            char c = str.charAt(i);
+            lastPos[c - 97]--;
+            stringBuilder.setCharAt(lastPos[c - 97], c);
+        }
+
+        System.out.println("stringBuilder = " + stringBuilder);
+        return stringBuilder.toString();
+
+    }
+
+
+    int partition2(int[] arr, int start, int end) {
+        int pivot = arr[end];
+        int j = start;
+        for (int i = start; i < end; i++) {
+            if (arr[i] < pivot) {
+                swap(arr, i, j);
+                j++;
+            }
+        }
+        swap(arr, end, j);
+
+        return j;
+    }
+
+    public static void main(String[] args) {
+        Sorting sorting = new Sorting();
+        int[] arr = {20,30,80,70};
+        sorting.partition2(arr,0, arr.length-1);
+        System.out.println("arr = " + Arrays.toString(arr));
+    }
+
+
 }
