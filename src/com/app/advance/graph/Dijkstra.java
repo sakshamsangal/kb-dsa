@@ -3,17 +3,17 @@ package com.app.advance.graph;
 import java.util.*;
 import java.util.stream.IntStream;
 
-public class SSSAPDijkstra {
+public class Dijkstra {
     private final int V;
     private final List<List<Edge>> adj;
 
-    SSSAPDijkstra(int V) {
+    Dijkstra(int V) {
         this.V = V;
         adj = new ArrayList<>();
         IntStream.range(0, V).forEach(i -> adj.add(new ArrayList<>()));
     }
 
-    static int[] dijkstra(int V, ArrayList<ArrayList<ArrayList<Integer>>> adj, int S) {
+    static int[] dijkstra1(int V, ArrayList<ArrayList<ArrayList<Integer>>> adj, int S) {
         PriorityQueue<Pair> pq = new PriorityQueue<>(V, Comparator.comparingInt(o -> o.d));
         int[] currDis = new int[V];
         boolean[] visited = new boolean[V];
@@ -36,9 +36,43 @@ public class SSSAPDijkstra {
         return currDis;
     }
 
+
+    static int[] dijkstra(int V, ArrayList<ArrayList<ArrayList<Integer>>> adj, int src) {
+
+        int[] disFromSrc = new int[V];
+        boolean[] vis = new boolean[V];
+        Arrays.fill(disFromSrc, Integer.MAX_VALUE);
+        disFromSrc[src] = 0;
+
+        PriorityQueue<Pair> pq = new PriorityQueue<>(Comparator.comparingInt(o -> o.d));
+        vis[src] = true;
+        pq.add(new Pair(src, 0));
+
+        while (!pq.isEmpty()) {
+
+            Pair parent = pq.poll();
+
+            for (ArrayList<Integer> child : adj.get(parent.key)) {
+                if (vis[child.get(0)]) {
+                    continue;
+                }
+                Integer parToChildDis = child.get(1);
+                if (disFromSrc[child.get(0)] > disFromSrc[parent.key] + parToChildDis) {
+                    disFromSrc[child.get(0)] = disFromSrc[parent.key] + parToChildDis;
+                    vis[child.get(0)] = true;
+                    pq.add(new Pair(child.get(0), disFromSrc[child.get(0)]));
+                }
+            }
+        }
+
+        return disFromSrc;
+    }
+
+
     public static void main(String[] args) {
         int V = 9;
-        SSSAPDijkstra g = new SSSAPDijkstra(V);
+        Dijkstra g = new Dijkstra(V);
+
         g.addEdge(0, 1, 4);
         g.addEdge(0, 7, 8);
         g.addEdge(1, 2, 8);
