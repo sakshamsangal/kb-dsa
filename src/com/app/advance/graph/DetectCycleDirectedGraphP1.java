@@ -41,25 +41,51 @@ public class DetectCycleDirectedGraphP1 {
         return false;
     }
 
-    public static void main(String[] args) {
-        int V = 6;
-        ArrayList<ArrayList<Integer>> adj = new ArrayList<>(V);
 
-        for (int i = 0; i < V; i++)
-            adj.add(new ArrayList<Integer>());
+    public boolean dfs(ArrayList<ArrayList<Integer>> adj, int src, boolean[] vis, boolean[] recTrack) {
+        vis[src]=true;
+        recTrack[src] = true;
 
-        addEdge(adj, 0, 1);
-        addEdge(adj, 2, 1);
-        addEdge(adj, 2, 3);
-        addEdge(adj, 3, 4);
-        addEdge(adj, 4, 5);
-        addEdge(adj, 5, 3);
+        for (Integer child : adj.get(src)) {
+            if (vis[child]) {
+                if (recTrack[child]){
+                    return true;
+                }
+                continue;
+            }
+            if (dfs(adj, child, vis, recTrack)) {
+                return true;
+            }
 
-        if (DFS(adj, V))
-            System.out.println("Cycle found");
-        else
-            System.out.println("No cycle found");
+        }
+        recTrack[src] = false;
+        return false;
     }
+
+
+
+
+
+    // Function to detect cycle in a directed graph.
+    public boolean isCyclic(int V, ArrayList<ArrayList<Integer>> adj) {
+
+        boolean[] vis = new boolean[V];
+        boolean[] recTrack = new boolean[V];
+
+
+         for (int i = 0; i < V; i++) {
+             if (vis[i]) {
+                continue;
+             }
+             if (dfs(adj, 0, vis,recTrack)) {
+                 return true;
+             }
+         }
+
+        return false;
+    }
+
+
 }
 
 
