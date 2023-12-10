@@ -3,6 +3,7 @@ package com.app.advance.geo;
 import java.util.List;
 
 public class NewYearChaos {
+
     public static void minimumBribes(List<Integer> q) {
         // Write your code here
         int[] A = new int[q.size()];

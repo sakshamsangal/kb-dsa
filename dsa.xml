@@ -126,7 +126,7 @@
             <option name="JAVA_STATEMENT" value="true" />
         </context>
     </template>
-    <template name="hm" value="java.util.HashMap&lt;$A$, $B$&gt; map = new java.util.HashMap&lt;&gt;();$END$" description="" toReformat="true" toShortenFQNames="true">
+    <template name="hm" value="java.util.Map&lt;$A$, $B$&gt; map = new java.util.HashMap&lt;&gt;();$END$" description="" toReformat="true" toShortenFQNames="true">
         <variable name="A" expression="enum(&quot;Character&quot;,&quot;Boolean&quot;,&quot;String&quot;) " defaultValue="" alwaysStopAt="true" />
         <variable name="B" expression="enum(&quot;Character&quot;,&quot;Boolean&quot;,&quot;String&quot;) " defaultValue="" alwaysStopAt="true" />
         <context>

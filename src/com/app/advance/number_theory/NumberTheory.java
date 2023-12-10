@@ -20,7 +20,7 @@ public class NumberTheory {
         return -1;
     }
 
-    public double power(double base, int power) {
+    public double binaryExp(double base, int power) {
         int n = Math.abs(power);
         double result = 1;
         while (n != 0) {

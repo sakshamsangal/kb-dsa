@@ -32,16 +32,28 @@ public class ArticulationPoint {
 
         for (int v : adj.get(u)) {
             if (!visited[v]) {
+
                 children++;
+
+
                 parent[v] = u;
+
+
                 APUtil(adj, v, visited, disc, low, parent, ap);
+
 
                 low[u] = Math.min(low[u], low[v]);
 
+
                 if (parent[u] == NIL && children > 1)
+
+
                     ap[u] = true;
 
+
                 if (parent[u] != NIL && low[v] >= disc[u])
+
+
                     ap[u] = true;
             } else if (v != parent[u])
                 low[u] = Math.min(low[u], disc[v]);

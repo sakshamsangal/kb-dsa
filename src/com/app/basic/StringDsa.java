@@ -12,12 +12,17 @@ public class StringDsa {
         }
 
         HashMap<Character, String> map = new HashMap<>();
+        HashSet<String> set = new HashSet<>();
 
         for (int i = 0; i < pattern.length(); i++) {
             char c = pattern.charAt(i);
             String s1 = map.get(c);
             if (s1 == null) {
+                if (set.contains(arr[i])) {
+                    return false;
+                }
                 map.put(c, arr[i]);
+                set.add(arr[i]);
             } else if (!Objects.equals(s1, arr[i])) {
                 return false;
             }
