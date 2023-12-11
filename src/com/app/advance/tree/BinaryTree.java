@@ -373,6 +373,27 @@ public class BinaryTree {
         }
         return false;
     }
+
+
+    public TreeNode sortedArrayToBSTUtil(int[] arr, int start, int end) {
+        if (start > end) {
+            return null;
+        }
+        int mid = start + (end - start) / 2;
+        TreeNode root = new TreeNode(arr[mid]);
+        root.left = sortedArrayToBSTUtil(arr, start, mid - 1);
+        root.right = sortedArrayToBSTUtil(arr, mid + 1, end);
+
+        return root;
+    }
+
+    public TreeNode sortedArrayToBST(int[] arr) {
+        int start = 0;
+        int end = arr.length - 1;
+        return sortedArrayToBSTUtil(arr, start, end);
+    }
+
+
     public static void main(String[] args) {
 
         TreeTraversal treeTraversal = new TreeTraversal();

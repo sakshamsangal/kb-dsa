@@ -19,3 +19,8 @@ IG=1
 YA=1
 AH=3
 PAYPALISHIRING
+
+[["X","X","X","X"],
+["X","O","O","X"]
+,["X","X","O","X"],
+["X","O","X","X"]]
