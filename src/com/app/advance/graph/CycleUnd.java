@@ -86,23 +86,40 @@ public class CycleUnd {
         return false;
     }
 
-    public static void main(String[] args) {
-        int V = 6;
-        ArrayList<ArrayList<Integer>> adj = new ArrayList<ArrayList<Integer>>(V);
 
-        for (int i = 0; i < V; i++)
-            adj.add(new ArrayList<Integer>());
-
-        addEdge(adj, 0, 1);
-        addEdge(adj, 1, 2);
-        addEdge(adj, 2, 4);
-        addEdge(adj, 4, 5);
-        addEdge(adj, 1, 3);
-        addEdge(adj, 2, 3);
-
-        if (DFS(adj, V))
-            System.out.println("Cycle found");
-        else
-            System.out.println("No cycle found");
+    private boolean isCycleUtil(ArrayList<ArrayList<Integer>> adj, int src, boolean[] vis, boolean[] recSt) {
+        vis[src]=true;
+        recSt[src]=true;
+        for (Integer nei : adj.get(src)) {
+            if (!vis[nei]) {
+                if (isCycleUtil(adj, nei, vis, recSt)) {
+                    return true;
+                }
+            } else if (recSt[nei]){
+                return true;
+            }
+        }
+        recSt[src]=false;
+        return false;
     }
+
+
+    // Function to detect cycle in an directed graph.
+    public boolean isCyclic(int V, ArrayList<ArrayList<Integer>> adj) {
+
+        boolean[] vis = new boolean[V];
+        boolean[] recSt = new boolean[V];
+
+        for (int i = 0; i < V; i++) {
+            if (!vis[i]) {
+                if (isCycleUtil(adj, i, vis, recSt)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+
+
 }

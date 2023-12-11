@@ -1,6 +1,6 @@
 package com.app.basic.sorting;
 
-import java.util.Arrays;
+import java.util.*;
 
 public class Sorting {
     // insertionSort
@@ -16,9 +16,6 @@ public class Sorting {
             arr[end + 1] = item;
         }
     }
-
-
-
 
 
     // insertionSort
@@ -75,6 +72,29 @@ public class Sorting {
         }
     }
 
+    private static List<Integer> merge(List<Integer> list1, List<Integer> list2) {
+
+        List<Integer> ans = new ArrayList<>();
+        int i = 0, j = 0;
+        while (i < list1.size() && j < list2.size()) {
+            if (list1.get(i) < list2.get(j)) {
+                ans.add(list1.get(i));
+                i++;
+            } else {
+                ans.add(list2.get(j));
+                j++;
+            }
+        }
+
+        while (i < list1.size()) {
+            ans.add(list1.get(i++));
+        }
+
+        while (j < list2.size()) {
+            ans.add(list2.get(j++));
+        }
+        return ans;
+    }
 
     // quickSort
     private static void quickSort(int[] arr, int start, int end) {
@@ -213,10 +233,69 @@ public class Sorting {
         return j;
     }
 
+    void topoSortUtil(ArrayList<ArrayList<Integer>> adj, int src, boolean[] vis, Stack<Integer> st) {
+        vis[src] = true;
+        for (Integer nei : adj.get(src)) {
+            if (!vis[nei]) {
+                topoSortUtil(adj, nei, vis, st);
+            }
+        }
+        st.add(src);
+    }
+
+    int[] topoSort(int V, ArrayList<ArrayList<Integer>> adj) {
+        boolean[] vis = new boolean[V];
+        Stack<Integer> stack = new Stack<>();
+
+        for (int i = 0; i < V; i++) {
+            if (!vis[i]) {
+                topoSortUtil(adj, i, vis, stack);
+            }
+        }
+
+        int[] ans = new int[V];
+        int i = 0;
+        while (!stack.isEmpty()) {
+            ans[i++] = stack.pop();
+        }
+        return ans;
+    }
+
+    static int[] topoSortKahn(ArrayList<ArrayList<Integer>> adj, int V) {
+        int[] inDeg = new int[V];
+        for (ArrayList<Integer> list : adj) {
+            for (Integer nei : list) {
+                inDeg[nei]++;
+            }
+        }
+        Queue<Integer> queue = new LinkedList<>();
+
+        for (int i = 0; i < inDeg.length; i++) {
+            if (inDeg[i] == 0) {
+                queue.add(i);
+            }
+        }
+        int[] ans = new int[V];
+        int i = 0;
+        while (!queue.isEmpty()) {
+            Integer polled = queue.poll();
+            ans[i++] = polled;
+            for (Integer nei : adj.get(polled)) {
+                inDeg[nei]--;
+                if (inDeg[nei] == 0) {
+                    queue.add(nei);
+                }
+            }
+        }
+        return ans;
+
+    }
+
+
     public static void main(String[] args) {
         Sorting sorting = new Sorting();
-        int[] arr = {20,30,80,70};
-        sorting.partition2(arr,0, arr.length-1);
+        int[] arr = {20, 30, 80, 70};
+        sorting.partition2(arr, 0, arr.length - 1);
         System.out.println("arr = " + Arrays.toString(arr));
     }
 
