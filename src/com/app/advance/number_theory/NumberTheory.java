@@ -20,7 +20,7 @@ public class NumberTheory {
         return -1;
     }
 
-    public double power(double base, int power) {
+    public double binaryExp(double base, int power) {
         int n = Math.abs(power);
         double result = 1;
         while (n != 0) {
@@ -110,9 +110,26 @@ public class NumberTheory {
         return count;
     }
 
+
+    public static int countSetBits(int n) {
+        int sum = 0;
+        for (int i = 1; i <= n; i++) {
+            int count = 0;
+
+            int k = i;
+            while (k != 0) {
+                k = k & (k - 1);
+                count++;
+            }
+            sum += count;
+        }
+        return sum;
+    }
+
+
     public static void main(String[] args) {
         NumberTheory numberTheory = new NumberTheory();
-        int i = numberTheory.trailingZeroes(625);
+        int i = countSetBits(10);
         System.out.println("i = " + i);
     }
 }

@@ -511,18 +511,34 @@ public class ArrayDsa {
             while (n != 0) {
                 int last = n % 10;
                 sum += last * last;
-                n = n/10;
+                n = n / 10;
             }
             n = sum;
         }
         return n == 1;
     }
 
+
+    public int countTestedDevices(int[] batteryPercentages) {
+        int count = 0;
+        for (int i = 0; i < batteryPercentages.length; i++) {
+            if (0 < batteryPercentages[i]) {
+                count++;
+                batteryPercentages[i]++;
+                for (int j = i + 1; j < batteryPercentages.length; j++) {
+                    batteryPercentages[j] = Math.max(0, batteryPercentages[j] - 1);
+                }
+            }
+        }
+        return count;
+    }
+
     public static void main(String[] args) {
         ArrayDsa arrayDsa = new ArrayDsa();
 
-        boolean happy = arrayDsa.isHappy(100);
-        System.out.println("happy = " + happy);
+        int[] arr = {0,1,2};
+        int i = arrayDsa.countTestedDevices(arr);
+        System.out.println("i = " + i);
 
     }
 

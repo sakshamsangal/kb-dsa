@@ -15,7 +15,6 @@ public class RunLengthEncoding {
                 prev = 1;
                 ch = str.charAt(i);
             }
-
         }
 
         if (i == str.length() - 1) {
