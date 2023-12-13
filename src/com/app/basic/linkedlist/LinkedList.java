@@ -1,10 +1,10 @@
 package com.app.basic.linkedlist;
 
 import com.app.util.ListNode;
-import com.app.advance.tree.Node;
 import com.app.util.NodeRandom;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 public class LinkedList {
     ListNode head;
@@ -397,6 +397,60 @@ public class LinkedList {
         }
 
         return h1;
+    }
+
+    public ListNode sortList(ListNode head) {
+        if (Objects.isNull(head)|| Objects.isNull(head.next)) {
+            return head;
+        }
+        ListNode prev = null;
+        ListNode slow = head;
+        ListNode fast = head;
+
+        while (fast != null && fast.next != null) {
+            prev = slow;
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        prev.next = null;
+        ListNode h1 = sortList(head);
+        ListNode h2 = sortList(slow);
+
+        return mergeTwoLists(h1, h2);
+    }
+
+    public ListNode mergeTwoLists(ListNode head1, ListNode head2) {
+
+        ListNode fh = new ListNode(-1);
+        ListNode ft = fh;
+
+        while (head1 != null && head2 != null) {
+            if (head1.val < head2.val) {
+                ft.next = head1;
+                head1 = head1.next;
+            } else {
+                ft.next = head2;
+                head2 = head2.next;
+            }
+            ft = ft.next;
+        }
+
+        while (head1 != null) {
+            ft.next = head1;
+            head1 = head1.next;
+            ft = ft.next;
+
+        }
+
+        while (head2 != null) {
+            ft.next = head2;
+            head2 = head2.next;
+            ft = ft.next;
+        }
+
+        return fh.next;
+
     }
 
     public static void main(String[] args) {

@@ -8,6 +8,7 @@ import java.util.*;
 public class BinaryTree {
     static int res = 0;
     static Node prev1 = null;
+    static Node head = null;
     TreeNode prev2 = null;
     static int prev = Integer.MIN_VALUE;
 
@@ -22,14 +23,20 @@ public class BinaryTree {
         TreeNode left = lowestCommonAncestor(root.left, p, q);
         TreeNode right = lowestCommonAncestor(root.right, p, q);
 
-        if (Objects.nonNull(left) && Objects.isNull(right)) {
-            return null;
-        } else if (Objects.isNull(left)) {
-            return right;
-        } else {
+        if (Objects.nonNull(left) && Objects.nonNull(right)) {
+            return root;
+        }
+
+        if (Objects.nonNull(left)) {
             return left;
         }
+        if (Objects.nonNull(right)) {
+            return right;
+        }
+
+        return null;
     }
+
 
     public TreeNode invertTree(TreeNode root) {
         if (Objects.isNull(root)) {
@@ -41,33 +48,30 @@ public class BinaryTree {
         return root;
     }
 
-    public boolean isCSum(Node root) {
-        if (root == null)
-            return true;
-        if (root.left == null && root.right == null)
-            return true;
-        int sum = 0;
-        if (root.left != null) sum += root.left.data;
-        if (root.right != null) sum += root.right.data;
 
-        return (root.data == sum && isCSum(root.left) && isCSum(root.right));
-    }
-
-
-    // empty tree height = 0
-    // max number of nodes from root to leaf
-    void toDLL(Node prev, Node curr) {
-        if (curr != null) {
-            toDLL(prev, curr.left);
-            if (prev != null) {
-                prev.right = curr;
-                curr.left = prev;
-            }
-            prev = curr;
-            toDLL(prev, curr.right);
+    public int isCSum(Node root) {
+        if (Objects.isNull(root)) {
+            return 1;
         }
-    }
+        if (Objects.isNull(root.left) && Objects.isNull(root.right)) {
+            return 1;
+        }
 
+        int sum = 0;
+        if (Objects.nonNull(root.left)) {
+            sum += root.left.data;
+        }
+        if (Objects.nonNull(root.right)) {
+            sum += root.left.data;
+        }
+
+        if (sum == root.data) {
+            if (isCSum(root.left) == 1 && isCSum(root.right) == 1) {
+                return 1;
+            }
+        }
+        return 0;
+    }
 
     public void traverseDLL(Node root) {
         Node temp = root;
@@ -80,19 +84,22 @@ public class BinaryTree {
 
 
     public Node toDoublyLL(Node root) {
-        if (root == null)
+        if (Objects.isNull(root)) {
             return null;
-
-        Node head = toDoublyLL(root.left);
-
-        if (prev1 == null) {
-            head = root;
-        } else {
-            root.left = prev1;
-            prev1.right = root;
         }
-        prev1 = root;
-        System.out.println("root = " + root.data);
+
+        toDoublyLL(root.left);
+
+
+        if (Objects.nonNull(prev1)) {
+            prev1.right = root;
+            root.left = prev1;
+            prev1 = prev1.right;
+        } else {
+            head = root;
+        }
+
+
         toDoublyLL(root.right);
         return head;
     }
@@ -160,42 +167,37 @@ public class BinaryTree {
     }
 
     static boolean isBST(Node root) {
-        if (root == null)
-            return true;
-        if (!isBST(root.left)) return false;
-        if (root.data < prev) return false;
-        prev = root.data;
-        return isBST(root.right);
-    }
-
-    public boolean isValidBST(TreeNode root) {
         if (Objects.isNull(root)) {
             return true;
         }
-        boolean left = isValidBST(root.left);
-        if (prev2 != null) {
-            if (prev2.val > root.val) {
-                return false;
-            }
+
+        if (!isBST(root.left)) {
+            return false;
         }
-        prev2 = root;
-        return left && isValidBST(root.right);
+
+        if (prev < root.data) {
+            prev = root.data;
+            return isBST(root.right);
+        }
+        return false;
+
     }
 
+
     public boolean isBalanced(Node root) {
-        if (root == null)
-            return true;
-        int lh = height(root.left);
-        int rh = height(root.right);
-        return (Math.abs(lh - rh) <= 1 && isBalanced(root.left) && isBalanced(root.right));
+
+        return false;
     }
 
     public int height(Node root) {
-        if (root == null) {
+        if (Objects.isNull(root)) {
             return 0;
-        } else {
-            return (1 + Math.max(height(root.left), height(root.right)));
         }
+        int count = 1;
+        int left = height(root.left);
+        int right = height(root.right);
+
+        return count + Math.max(left, right);
     }
 
 
@@ -207,46 +209,46 @@ public class BinaryTree {
         return ans.get(k);
     }
 
-    public boolean findPath(Node root, ArrayList<Node> p, int n) {
-        if (root == null) return false;
-
-        // first take action
-        // then check if action taken was correct or not
+    public boolean findPath(Node root, List<Node> p, int n) {
+        if (Objects.isNull(root)) {
+            return false;
+        }
         p.add(root);
-        if (root.data == n) return true;
-
-        if (findPath(root.left, p, n) || findPath(root.right, p, n)) return true;
-
-        p.remove(p.size() - 1);
-
+        if (root.data == n) {
+            return true;
+        }
+        boolean path1 = findPath(root.left, p, n);
+        if (path1) {
+            return true;
+        }
+        boolean path2 = findPath(root.right, p, n);
+        if (path2) {
+            return true;
+        }
+        p.remove(root);
         return false;
     }
 
     public Node lca(Node root, int n1, int n2) {
-        ArrayList<Node> path1 = new ArrayList<>();
-        ArrayList<Node> path2 = new ArrayList<>();
-        if (!findPath(root, path1, n1) || !findPath(root, path2, n2))
-            return null;
-        for (int i = 0; i < path1.size() - 1 && i < path2.size() - 1; i++)
-            if (path1.get(i + 1) != path2.get(i + 1))
-                return path1.get(i);
+        List<Node> list1 = new ArrayList<>();
+        boolean path1 = findPath(root, list1, n1);
+
+        if (path1) {
+            List<Node> list2 = new ArrayList<>();
+            boolean path2 = findPath(root, list2, n2);
+            if (path2) {
+                int size = Math.min(list1.size(), list2.size());
+                int i = 0;
+                while (i < size) {
+                    if (list1.get(i) != list2.get(i)) {
+                        return list1.get(i - 1);
+                    }
+                    i++;
+                }
+                return list1.get(i - 1);
+            }
+        }
         return null;
-    }
-
-    public Node lca2(Node root, int n1, int n2) {
-        if (root == null) return null;
-        if (root.data == n1 || root.data == n2)
-            return root;
-
-        Node lca1 = lca2(root.left, n1, n2);
-        Node lca2 = lca2(root.right, n1, n2);
-
-        if (lca1 != null && lca2 != null)
-            return root;
-        if (lca1 != null)
-            return lca1;
-        else
-            return lca2;
     }
 
 
@@ -262,10 +264,12 @@ public class BinaryTree {
         }
 
         int i = 0, j = 0;
+
         // left has data
         if (root.left != null) {
             i = sumNumbersRecur(root.left, val);
         }
+
 
         // right has data
         if (root.right != null) {
@@ -349,49 +353,44 @@ public class BinaryTree {
     }
 
 
-    int sum = 0;
-
     public boolean hasPathSum(TreeNode root, int targetSum) {
-        if (root == null) {
-            return false;
+        if (Objects.isNull(root)) {
+            return true;
         }
-        if (root.left == null && root.right == null) {
-            return sum + root.val == targetSum;
+
+        // leaf
+        if (Objects.isNull(root.left) && Objects.isNull(root.right)) {
+            return root.val == targetSum;
         }
 
         if (Objects.nonNull(root.left)) {
-            sum += root.val;
-            boolean leftl = hasPathSum(root.left, targetSum);
-            if (leftl) {
+            boolean left = hasPathSum(root.left, targetSum - root.val);
+            if (left) {
                 return true;
             }
         }
 
         if (Objects.nonNull(root.right)) {
-            sum -= root.val;
-            return hasPathSum(root.right, targetSum);
+            return hasPathSum(root.right, targetSum - root.val);
         }
+
         return false;
     }
+
+
+
+
+
+
     public static void main(String[] args) {
 
-        TreeTraversal treeTraversal = new TreeTraversal();
-        BinaryTree binaryTree = new BinaryTree();
-        int[] arr = {3, 9, 20};
-        TreeNode root = treeTraversal.insertLevelOrder(arr, 0);
-        binaryTree.hasPathSum(root, 2);
+//        TreeTraversal treeTraversal = new TreeTraversal();
+//        BinaryTree binaryTree = new BinaryTree();
+//        int[] arr = {3, 9, 20};
+//        TreeNode root = treeTraversal.insertLevelOrder(arr, 0);
+//        binaryTree.hasPathSum(root, 2);
 
     }
-    //    public static void main(String[] args) {
-    //        Node root = new Node(10);
-    //        root.left = new Node(20);
-    //        root.right = new Node(30);
-    //        root.right.left = new Node(40);
-    //        root.right.right = new Node(50);
-    //        int n1 = 20, n2 = 50;
-    //
-    //        Node ans = lca(root, n1, n2);
-    //        System.out.println("LCA: " + ans.data);
-    //    }
+
 
 }
