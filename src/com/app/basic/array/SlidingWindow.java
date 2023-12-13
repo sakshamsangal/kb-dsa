@@ -153,6 +153,16 @@ public class SlidingWindow {
         return len;
     }
 
+
+    private static boolean isValid(char ch) {
+        return false;
+    }
+
+
+
+
+
+
     public static void main(String[] args) {
         SlidingWindow slidingWindow = new SlidingWindow();
 //        int[] arr = {1, 2, 3, 4, 5};

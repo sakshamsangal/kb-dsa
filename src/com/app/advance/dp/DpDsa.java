@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 public class DpDsa {
 
+
     public int lengthOfLIS(int[] nums) {
         int[] arr = new int[nums.length];
         int currMax = 1;
@@ -128,11 +129,113 @@ public class DpDsa {
         return count;
     }
 
+
+    public long count(int[] coins, int len, int sum) {
+
+        if (sum == 0) {
+            return 1;
+        }
+        if (len == 0) {
+            return 0;
+        }
+
+
+        // skip
+        if (coins[len - 1] > sum) {
+            return count(coins, len - 1, sum);
+        }
+
+        long pick = count(coins, len, sum - coins[len - 1]);
+        long skip = count(coins, len - 1, sum);
+
+        return pick + skip;
+    }
+
+
+    public int knapSackUtil(int W, int wt[], int val[], int n, int[][] dp) {
+
+        if (n == 0) {
+            return 0;
+        }
+
+        if (dp[n - 1][W] != -1) {
+            return dp[n - 1][W];
+        }
+
+        if (wt[n - 1] > W) {
+            dp[n - 1][W] = knapSackUtil(W, wt, val, n - 1, dp);
+            return dp[n - 1][W];
+        }
+
+        // pick
+        int pick = val[n - 1] + knapSackUtil(W - wt[n - 1], wt, val, n - 1, dp);
+
+        // skip
+        int skip = knapSackUtil(W, wt, val, n - 1, dp);
+
+        dp[n - 1][W] = Math.max(pick, skip);
+        return dp[n - 1][W];
+    }
+
+    public int knapSack(int W, int wt[], int val[], int n) {
+        int[][] dp = new int[n + 1][];
+        for (int i = 0; i < dp.length; i++) {
+            dp[i] = new int[W + 1];
+            Arrays.fill(dp[i], -1);
+        }
+        return knapSackUtil(W, wt, val, n, dp);
+    }
+
+    public int editDistanceUtil(String s, String t, int srcEnd, int trgEnd, int[][] dp) {
+
+        if (srcEnd < 0) {
+            return trgEnd + 1;
+        }
+
+        if (trgEnd < 0) {
+            return srcEnd + 1;
+        }
+
+        if (dp[srcEnd][trgEnd] != -1) {
+            return dp[srcEnd][trgEnd];
+        }
+
+        if (s.charAt(srcEnd) == t.charAt(trgEnd)) {
+            return editDistanceUtil(s, t, srcEnd - 1, trgEnd - 1, dp);
+        }
+
+        // 123 789
+        int add = 1 + editDistanceUtil(s, t, srcEnd, trgEnd - 1, dp); // 1239
+        int remove = 1 + editDistanceUtil(s, t, srcEnd - 1, trgEnd, dp); // 12
+        int replace = 1 + editDistanceUtil(s, t, srcEnd - 1, trgEnd - 1, dp); // 129
+
+        int ans1 = Math.min(add, remove);
+        return dp[srcEnd][trgEnd] = Math.min(ans1, replace);
+
+    }
+
+    public int editDistance(String s, String t) {
+        int[][] dp = new int[s.length()][];
+        for (int i = 0; i < dp.length; i++) {
+            dp[i] = new int[t.length()];
+            Arrays.fill(dp[i], -1);
+        }
+
+        return editDistanceUtil(s, t, s.length() - 1, t.length() - 1, dp);
+    }
+
+
     public static void main(String[] args) {
         DpDsa dpDsa = new DpDsa();
-        int[] arr1 = {0, 4, 4, 5, 9};
-        int[] arr2 = {0, 1, 6, 8, 10};
-        int i = dpDsa.minSwap(arr1, arr2);
+        int[] arr = {1, 2, 3};
+
+        int[] values = {1, 2, 3};
+        int[] weight = {4, 5, 1};
+
+        int i = dpDsa.knapSack(4, weight, values, weight.length);
         System.out.println("i = " + i);
+
     }
+
+
 }
