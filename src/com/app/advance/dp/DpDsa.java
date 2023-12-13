@@ -4,7 +4,6 @@ import java.util.Arrays;
 
 public class DpDsa {
 
-
     public int lengthOfLIS(int[] nums) {
         int[] arr = new int[nums.length];
         int currMax = 1;
@@ -20,6 +19,27 @@ public class DpDsa {
             currMax = Math.max(currMax, arr[i]);
         }
         return currMax;
+    }
+
+    static int longestSubsequence(int size, int a[]) {
+        return lengthOfLIS2(a, -1,0);
+    }
+
+    public static int lengthOfLIS2(int[] nums, int prev, int start) {
+        if (start == nums.length) {
+            return 0;
+        }
+
+        int pick = 0;
+
+        if (prev == -1 || nums[prev] < nums[start]) {
+            pick = 1 + lengthOfLIS2(nums, start, start + 1);
+        }
+
+        int skip = lengthOfLIS2(nums, prev, start + 1);
+
+        return Math.max(pick, skip);
+
     }
 
     public boolean canPartition(int[] nums) {
