@@ -98,24 +98,6 @@ public class SlidingWindow {
     }
 
 
-    public int minSubArrayLen2(int target, int[] nums) {
-        int exp = 0;
-        int shr = 0;
-        int currMin = Integer.MAX_VALUE;
-        int sum = 0;
-        while (exp < nums.length) {
-            sum += nums[exp];
-            while (sum >= target) {
-                currMin = Math.min(currMin, exp - shr);
-                sum -= nums[shr];
-                shr++;
-            }
-            exp++;
-        }
-        return currMin == Integer.MAX_VALUE ? 0 : currMin + 1;
-    }
-
-
     public int longestkSubstr(String s, int k) {
         if (s.isEmpty()) {
             return -1;
@@ -154,22 +136,57 @@ public class SlidingWindow {
     }
 
 
-    private static boolean isValid(char ch) {
-        return false;
+    public int atMost(int[] nums, int goal) {
+
+        int start = 0;
+        int sum = 0;
+        int count = 0;
+        for (int i = 0; i < nums.length; i++) {
+            sum += nums[i];
+            while (start < i && sum > goal) {
+                sum = sum - nums[start];
+                start++;
+            }
+            if (sum <= goal) {
+                count = count + i - start + 1;
+            }
+        }
+        return count;
     }
 
+    public int numSubarraysWithSum(int[] nums, int goal) {
+        return atMost(nums, goal) - atMost(nums, goal - 1);
+    }
 
+    public int numSubarrayProductLessThanK(int[] nums, int k) {
+        int start = 0;
+        int prod = 1;
+        int count = 0;
+        for (int i = 0; i < nums.length; i++) {
+            prod *= nums[i];
 
+            while (start < i && prod >= k) {
+                prod = prod / nums[start];
+                start++;
+            }
 
+            if (prod < k) {
+                int len = i - start + 1;
+                count += len;
+            }
+        }
+
+        return count;
+    }
 
 
     public static void main(String[] args) {
         SlidingWindow slidingWindow = new SlidingWindow();
 //        int[] arr = {1, 2, 3, 4, 5};
-        int[] arr = {2, 3, 1, 2, 4, 3};
+        int[] arr = {1, 2, 3, 4, 5};
 //        int[] arr = {1, 4, 4};
 
-        int i = slidingWindow.longestkSubstr("aabacbebebe", 3);
+        int i = slidingWindow.numSubarrayProductLessThanK(arr, 1);
         System.out.println("i = " + i);
     }
 }

@@ -3,6 +3,32 @@ package com.app.advance.dp;
 import java.util.Arrays;
 
 public class DpDsa {
+    public int maximizeCuts(int n, int x, int y, int z) {
+        int[] dp = new int[n + 1];
+        Arrays.fill(dp, -1);
+        int ans = maximizeCutsUtil(n, x, y, z, dp);
+        return Math.max(ans, 0);
+    }
+
+    public int maximizeCutsUtil(int n, int x, int y, int z, int[] dp) {
+        if (n == 0) {
+            return 0;
+        }
+        if (n < 0) {
+            return Integer.MIN_VALUE;
+        }
+        if (dp[n] != -1) {
+            return dp[n];
+        }
+
+        int first = 1 + maximizeCutsUtil(n - x, x, y, z, dp);
+        int sec = 1 + maximizeCutsUtil(n - y, x, y, z, dp);
+        int third = 1 + maximizeCutsUtil(n - z, x, y, z, dp);
+
+        dp[n] = Math.max(Math.max(first, sec), third);
+        return dp[n];
+    }
+
 
     public int lengthOfLIS(int[] nums) {
         int[] arr = new int[nums.length];
@@ -22,7 +48,7 @@ public class DpDsa {
     }
 
     static int longestSubsequence(int size, int a[]) {
-        return lengthOfLIS2(a, -1,0);
+        return lengthOfLIS2(a, -1, 0);
     }
 
     public static int lengthOfLIS2(int[] nums, int prev, int start) {
@@ -245,6 +271,35 @@ public class DpDsa {
     }
 
 
+
+
+
+    static int minJumps(int[] arr, int end) {
+        if (end == 0) {
+            return 0;
+        }
+
+        int ans = -1;
+        for (int i = 0; i < end; i++) {
+            if (i + arr[i] >= end) {
+                int res = minJumps(arr, i);
+                if (res != -1) {
+                    ans = Math.min(ans, res + 1);
+                }
+            }
+        }
+        return ans;
+    }
+
+
+
+
+
+
+
+
+    
+
     public static void main(String[] args) {
         DpDsa dpDsa = new DpDsa();
         int[] arr = {1, 2, 3};
@@ -252,8 +307,11 @@ public class DpDsa {
         int[] values = {1, 2, 3};
         int[] weight = {4, 5, 1};
 
-        int i = dpDsa.knapSack(4, weight, values, weight.length);
-        System.out.println("i = " + i);
+
+//        int i = dpDsa.maximizeCuts(9999, 94, 20, 244);
+        System.out.println("i = " + Integer.MAX_VALUE);
+        int a = Integer.MAX_VALUE + 1;
+        System.out.println("i = " + a);
 
     }
 
