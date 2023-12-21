@@ -198,6 +198,67 @@ public class DpDsa {
     }
 
 
+    public int knapSackUtil1(int W, int wt[], int val[], int[][] dp, int start) {
+        if (start == wt.length) {
+            return 0;
+        }
+
+        if (dp[start][W] != -1) {
+            return dp[start][W];
+        }
+
+        int minVal = 0;
+        for (int i = start; i < wt.length; i++) {
+            if (wt[i] <= W) {
+                int pick = val[i] + knapSackUtil1(W - wt[i], wt, val, dp, i + 1);
+                minVal = Math.max(minVal, pick);
+            }
+        }
+
+        return dp[start][W] = minVal;
+    }
+
+
+    public int robUtil(int[] nums, int start, int[] dp) {
+
+        if (start >= nums.length) {
+            return 0;
+        }
+
+        if (dp[start] != -1) {
+            return dp[start];
+        }
+
+        int minVal = 0;
+        for (int i = start; i < nums.length; i++) {
+            int pick = nums[i] + robUtil(nums, i + 2, dp);
+            minVal = Math.max(minVal, pick);
+        }
+
+        return dp[start] = minVal;
+    }
+
+    public int rob(int[] nums) {
+        int[] dp = new int[nums.length];
+        dp[0] = nums[0];
+
+        for (int i = 1; i < nums.length; i++) {
+            int pick = nums[i] + dp[i - 2];
+        }
+
+        return 0;
+    }
+
+
+    public int knapSack(int W, int wt[], int val[], int n) {
+        int[][] dp = new int[n + 1][];
+        for (int i = 0; i < dp.length; i++) {
+            dp[i] = new int[W + 1];
+            Arrays.fill(dp[i], -1);
+        }
+        return knapSackUtil1(W, wt, val, dp, 0);
+    }
+
     public int knapSackUtil(int W, int wt[], int val[], int n, int[][] dp) {
 
         if (n == 0) {
@@ -223,14 +284,6 @@ public class DpDsa {
         return dp[n - 1][W];
     }
 
-    public int knapSack(int W, int wt[], int val[], int n) {
-        int[][] dp = new int[n + 1][];
-        for (int i = 0; i < dp.length; i++) {
-            dp[i] = new int[W + 1];
-            Arrays.fill(dp[i], -1);
-        }
-        return knapSackUtil(W, wt, val, n, dp);
-    }
 
     public int editDistanceUtil(String s, String t, int srcEnd, int trgEnd, int[][] dp) {
 
@@ -271,9 +324,6 @@ public class DpDsa {
     }
 
 
-
-
-
     static int minJumps(int[] arr, int end) {
         if (end == 0) {
             return 0;
@@ -291,14 +341,6 @@ public class DpDsa {
         return ans;
     }
 
-
-
-
-
-
-
-
-    
 
     public static void main(String[] args) {
         DpDsa dpDsa = new DpDsa();

@@ -1,6 +1,6 @@
 package com.app.advance.tree;
 
-import com.app.util.PairTree;
+import com.app.util.HdPair;
 
 import java.util.LinkedList;
 import java.util.Map;
@@ -27,18 +27,18 @@ public class View {
 
 
     public void bv(Node root) {
-        Queue<PairTree> q = new LinkedList<>();
+        Queue<HdPair> q = new LinkedList<>();
         Map<Integer, Integer> mp = new TreeMap<>();
-        q.add(new PairTree(root, 0));
+        q.add(new HdPair(root, 0));
         while (!q.isEmpty()) {
-            PairTree p = q.poll();
+            HdPair p = q.poll();
             Node curr = p.node;
             int hd = p.hd;
             mp.put(hd, curr.data);
             if (curr.left != null)
-                q.add(new PairTree(curr.left, hd - 1));
+                q.add(new HdPair(curr.left, hd - 1));
             if (curr.right != null)
-                q.add(new PairTree(curr.right, hd + 1));
+                q.add(new HdPair(curr.right, hd + 1));
         }
         for (Map.Entry<Integer, Integer> x : mp.entrySet()) {
             System.out.print(x.getValue() + " ");
@@ -46,19 +46,19 @@ public class View {
     }
 
     public  void topView(Node root) {
-        Queue<PairTree> q = new LinkedList<>();
+        Queue<HdPair> q = new LinkedList<>();
         Map<Integer, Integer> mp = new TreeMap<>();
-        q.add(new PairTree(root, 0));
+        q.add(new HdPair(root, 0));
         while (!q.isEmpty()) {
-            PairTree p = q.poll();
+            HdPair p = q.poll();
             Node curr = p.node;
             int hd = p.hd;
             if (!mp.containsKey(hd))
                 mp.put(hd, curr.data);
             if (curr.left != null)
-                q.add(new PairTree(curr.left, hd - 1));
+                q.add(new HdPair(curr.left, hd - 1));
             if (curr.right != null)
-                q.add(new PairTree(curr.right, hd + 1));
+                q.add(new HdPair(curr.right, hd + 1));
         }
         for (Map.Entry<Integer, Integer> x : mp.entrySet()) {
             System.out.print(x.getValue() + " ");

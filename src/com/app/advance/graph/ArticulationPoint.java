@@ -1,5 +1,6 @@
 package com.app.advance.graph;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ArticulationPoint {
@@ -7,56 +8,30 @@ public class ArticulationPoint {
     int time = 0;
 
 
-    public static void main(String[] args) {
-        System.out.println("Articulation points in first graph ");
-        Graph g = new Graph(5);
-        g.addEdgeBothDirection(g.adj, 1, 0);
-        g.addEdgeBothDirection(g.adj, 0, 2);
-        g.addEdgeBothDirection(g.adj, 2, 1);
-        g.addEdgeBothDirection(g.adj, 0, 3);
-        g.addEdgeBothDirection(g.adj, 3, 4);
-
-        ArticulationPoint articulationPoint = new ArticulationPoint();
-        articulationPoint.AP(g.adj, g.size);
-        System.out.println();
-    }
-
-
     public void APUtil(List<List<Integer>> adj, int u, boolean[] visited, int[] disc, int[] low, int[] parent, boolean[] ap) {
 
         int children = 0;
-
         visited[u] = true;
-
         disc[u] = low[u] = ++time;
 
         for (int v : adj.get(u)) {
             if (!visited[v]) {
-
                 children++;
-
-
                 parent[v] = u;
-
-
                 APUtil(adj, v, visited, disc, low, parent, ap);
-
-
                 low[u] = Math.min(low[u], low[v]);
 
-
-                if (parent[u] == NIL && children > 1)
-
-
+                if (parent[u] == NIL && children > 1) {
                     ap[u] = true;
+                }
 
-
-                if (parent[u] != NIL && low[v] >= disc[u])
-
-
+                if (parent[u] != NIL && low[v] >= disc[u]) {
                     ap[u] = true;
-            } else if (v != parent[u])
+                }
+
+            } else if (v != parent[u]) {
                 low[u] = Math.min(low[u], disc[v]);
+            }
         }
     }
 
@@ -83,4 +58,73 @@ public class ArticulationPoint {
             if (ap[i])
                 System.out.print(i + " ");
     }
+
+
+    public ArrayList<Integer> articulationPoints(int V, List<List<Integer>> adj) {
+
+        boolean[] vis = new boolean[V];
+        ApModel apModel = new ApModel(V);
+
+        for (int i = 0; i < V; i++) {
+            if (!vis[i]) {
+                apModel.par = -1;
+                articulationPointsUtil(adj, i, vis, apModel);
+            }
+        }
+
+        ArrayList<Integer> ap = new ArrayList<>();
+        for (int i = 0; i < apModel.ap.length; i++) {
+            if (apModel.ap[i]) {
+                ap.add(i);
+            }
+        }
+        if (ap.size() == 0) {
+            return (ArrayList<Integer>) List.of(-1);
+        }
+        return ap;
+    }
+
+    public void articulationPointsUtil(List<List<Integer>> adj, int src, boolean[] vis, ApModel apModel) {
+        vis[src] = true;
+        apModel.dis[src] = apModel.timer;
+        apModel.low[src] = apModel.timer;
+
+        int child = 0;
+        for (Integer nei : adj.get(src)) {
+            if (!vis[nei]) {
+                child++;
+                apModel.par = nei;
+                apModel.timer = apModel.timer + 1;
+                articulationPointsUtil(adj, nei, vis, apModel);
+
+                apModel.low[src] = Math.min(apModel.low[src], apModel.low[nei]);
+                if (apModel.dis[src] <= apModel.low[nei]) {
+                    apModel.ap[src] = true;
+                }
+
+            } else if (nei != apModel.par) {
+                apModel.low[src] = Math.min(apModel.low[src], apModel.dis[nei]);
+            }
+        }
+        if (apModel.par == -1 && 1 < child) {
+            apModel.ap[src] = true;
+        }
+    }
+
+
+    public static void main(String[] args) {
+        ArticulationPoint articulationPoint = new ArticulationPoint();
+
+        Graph graph = new Graph(5);
+        graph.addEdge2Way(0, 1);
+        graph.addEdge2Way(1, 4);
+        graph.addEdge2Way(2, 4);
+        graph.addEdge2Way(3, 4);
+        graph.addEdge2Way(2, 3);
+
+        ArrayList<Integer> integers = articulationPoint.articulationPoints(graph.size, graph.adj);
+        System.out.println("integers = " + integers);
+    }
+
+
 }

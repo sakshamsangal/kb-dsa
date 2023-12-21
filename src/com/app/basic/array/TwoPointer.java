@@ -1,50 +1,12 @@
 package com.app.basic.array;
 
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class TwoPointer {
 
-    public int trap(int[] height) {
-        int[] left = new int[height.length];
-        int[] right = new int[height.length];
-
-        for (int i = 1; i < height.length; i++) {
-            left[i] = Math.max(left[i - 1], height[i-1]);
-        }
-        for (int i = height.length - 2; i >-1; i--) {
-            right[i] = Math.max(right[i + 1], height[i+1]);
-        }
-
-        int sum = 0;
-        for (int i = 1; i < height.length; i++) {
-            sum += Math.max(0, Math.min(left[i], right[i]) - height[i]);
-        }
-
-        return sum;
-    }
-
-    public int[] twoSum2(int[] arr, int target) {
-
-        int start = 0;
-        int end = arr.length - 1;
-        int[] ans = new int[2];
-
-        while (start < end) {
-            // success
-            if (arr[start] + arr[end] == target) {
-                ans[0] = start + 1;
-                ans[1] = end + 1;
-                return ans;
-            }
-            // movement
-            if (arr[start] + arr[end] < target) {
-                start++;
-            } else {
-                end--;
-            }
-        }
-
-        return ans;
-    }
 
     public int maxArea(int[] height) {
         int currMax = Integer.MIN_VALUE;
@@ -64,29 +26,97 @@ public class TwoPointer {
         return currMax;
     }
 
-    public int minSubArrayLen(int target, int[] nums) {
-        int n = nums.length;
-        int start = 0;
-        int end = 0;
-        int sum = 0;
 
-        int answer = n + 1;
+    public void twoSum(int[] numbers, int target, int start, List<List<Integer>> ans) {
 
-        // given a window
-        while (end < n) {
-            sum += nums[end];
+        int end = numbers.length - 1;
 
-            // valid window
-            while (sum >= target) {
-                answer = Math.min(answer, end + 1 - start);
-                sum -= nums[start++];
+        // at-least 2 item
+        while (start < end) {
+
+            while (start + 1 < numbers.length && numbers[start] == numbers[start + 1]) {
+                start++;
+            }
+            while (-1 < end - 1 && numbers[end - 1] == numbers[end]) {
+                end--;
             }
 
-            // invalid window
-            end++;
+            int sum = numbers[start] + numbers[end];
+
+            if (sum == target) {
+                ans.add(List.of(-target, numbers[start], numbers[end]));
+                return;
+            } else if (sum < target) {
+                start++;
+            } else {
+                end--;
+            }
         }
-        return answer == n + 1 ? 0 : answer;
     }
+
+    List<List<Integer>> ans = new ArrayList<>();
+
+    public List<List<Integer>> threeSum(int[] arr) {
+        ans.clear();
+        Arrays.sort(arr);
+        for (int i = 0; i < arr.length; i++) {
+            if (-1 < i - 1 && arr[i - 1] == arr[i]) {
+                continue;
+            }
+            twoSum(arr, -arr[i], i, ans);
+        }
+        return ans;
+    }
+
+
+    public int trap(int[] height) {
+
+        int start = 0;
+        int leftMax = 0;
+        int rightMax = 0;
+        int end = height.length - 1;
+
+        int water = 0;
+
+        while (start < end) {
+
+            if (height[start] < height[end]) {
+                leftMax = Math.max(leftMax, height[start]);
+                water = water + leftMax - height[start];
+                start++;
+            } else {
+                rightMax = Math.max(rightMax, height[end]);
+                water = water + rightMax - height[end];
+                end--;
+            }
+        }
+
+        return water;
+    }
+
+    public int maxOperations(int[] nums, int k) {
+
+        Arrays.sort(nums);
+        int start = 0;
+        int end = nums.length - 1;
+        int targetSumCount = 0;
+
+        while (start < end) {
+            int sum = nums[start] + nums[end];
+            if (sum == k) {
+                targetSumCount++;
+                start++;
+                end--;
+            } else if (sum < k) {
+                start++;
+            } else {
+                end--;
+            }
+        }
+
+        return targetSumCount;
+    }
+
 
     public static void main(String[] args) {
         TwoPointer twoPointer = new TwoPointer();

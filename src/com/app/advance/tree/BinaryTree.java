@@ -378,8 +378,38 @@ public class BinaryTree {
     }
 
 
+    public int pathSum(TreeNode root, int targetSum, int prev, int sum) {
+        if (prev + root.val <= targetSum) {
 
+        }
+        pathSum(root.left, targetSum, prev, sum);
+        if (root.left == null && root.right == null) {
+//            targetSum
+        }
 
+        return targetSum;
+    }
+
+    public int goodNodesUtil(TreeNode root, int maxVal) {
+
+        if (Objects.isNull(root)) {
+            return 0;
+        }
+
+        int c = 0;
+        if (maxVal < root.val) {
+            maxVal =  root.val;
+            c++;
+        }
+        int left = goodNodesUtil(root.left, maxVal);
+        int right = goodNodesUtil(root.right, maxVal);
+
+        return c + left+ right;
+    }
+
+    public int goodNodes(TreeNode root) {
+        return goodNodesUtil(root, Integer.MIN_VALUE);
+    }
 
 
     public static void main(String[] args) {

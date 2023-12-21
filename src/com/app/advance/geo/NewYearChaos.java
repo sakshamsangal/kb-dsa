@@ -4,7 +4,8 @@ import java.util.List;
 
 public class NewYearChaos {
 
-    public static void minimumBribes(List<Integer> q) {
+
+    public static void minimumBribe1s(List<Integer> q) {
         // Write your code here
         int[] A = new int[q.size()];
         for (int i = 0; i < q.size(); i++) {
@@ -34,6 +35,25 @@ public class NewYearChaos {
         System.out.println("cnt = " + cnt);
 
 
+    }
+
+    public static void minimumBribes(List<Integer> pos) {
+        int ans = 0;
+        for (int i = 0; i < pos.size(); i++) {
+            if (pos.get(i) - (i + 1) > 2) {
+                System.out.println("Too chaotic");
+                return;
+            }
+            int j = Math.max(0, pos.get(i) - 2);
+            while (j < i) {
+                if (pos.get(j) > pos.get(i)) {
+                    ans++;
+                }
+//                System.out.println("i = " + i + " j = " + j);
+                j++;
+            }
+        }
+        System.out.println(ans);
     }
 
     public static void main(String[] args) {

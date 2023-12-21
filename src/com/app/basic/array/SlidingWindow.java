@@ -179,6 +179,47 @@ public class SlidingWindow {
         return count;
     }
 
+    private int isVowel(char c) {
+        return c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u' ? 1 : 0;
+    }
+
+    public int maxVowels(String s, int k) {
+
+        int start = 0;
+        int vowelCount = 0;
+
+        for (int i = 0; i < k; i++) {
+            char ch = s.charAt(i);
+            vowelCount = vowelCount + isVowel(ch);
+        }
+        int maxVowelCount = vowelCount;
+
+        for (int i = k; i < s.length(); i++) {
+            char ch = s.charAt(start);
+            vowelCount += isVowel(s.charAt(i)) - isVowel(ch);
+            maxVowelCount = Math.max(maxVowelCount, vowelCount);
+            start++;
+        }
+        return maxVowelCount;
+    }
+
+    public double findMaxAverage(int[] nums, int k) {
+        int start = 0;
+        int sum = 0;
+
+        for (int i = 0; i < k; i++) {
+            sum += nums[i];
+        }
+
+        double maxSum = sum;
+        for (int i = k; i < nums.length; i++) {
+            sum = sum - nums[start] + nums[i];
+            maxSum = Math.max(maxSum, sum);
+            start++;
+        }
+
+        return maxSum / k;
+    }
 
     public static void main(String[] args) {
         SlidingWindow slidingWindow = new SlidingWindow();
