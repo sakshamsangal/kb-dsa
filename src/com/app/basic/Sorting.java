@@ -1,4 +1,4 @@
-package com.app.basic.sorting;
+package com.app.basic;
 
 import java.util.*;
 
