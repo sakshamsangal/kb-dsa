@@ -2,7 +2,7 @@ package com.app.advance.dp;
 
 import java.util.Arrays;
 
-public class DpTwoDim {
+public class Dp2D {
 
     public int maximizeCuts(int n, int x, int y, int z) {
         int[] dp = new int[n + 1];
@@ -523,13 +523,13 @@ public class DpTwoDim {
     }
 
     public static void main(String[] args) {
-        DpTwoDim dpTwoDim = new DpTwoDim();
+        Dp2D dp2Dim = new Dp2D();
         int[] arr = {1, 2, 3};
 
         int[] values = {1, 2, 3};
         int[] weight = {4, 5, 1};
 
-        int i = dpTwoDim.knapSack(4, weight, values, weight.length);
+        int i = dp2Dim.knapSack(4, weight, values, weight.length);
         System.out.println("i = " + i);
 
     }
