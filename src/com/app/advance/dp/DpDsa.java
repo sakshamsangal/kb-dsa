@@ -342,6 +342,185 @@ public class DpDsa {
     }
 
 
+    public int uniquePathsUtil(int x, int y, int row, int col, int[][] dp) {
+
+        if (x == row - 1 && y == col - 1) {
+            return 1;
+        }
+        if (x == row || y == col) {
+            return 0;
+        }
+        if (dp[x][y] != -1) {
+            return dp[x][y];
+        }
+
+        int opt1 = uniquePathsUtil(x, y + 1, row, col, dp);// right
+        int opt2 = uniquePathsUtil(x + 1, y, row, col, dp); // down
+
+        dp[x][y] = opt1 + opt2;
+        return dp[x][y];
+    }
+
+    public int uniquePaths(int m, int n) {
+        int[][] dp = new int[m][n];
+        for (int i = 0; i < dp.length; i++) {
+            dp[i] = new int[n];
+            Arrays.fill(dp[i], -1);
+        }
+        return uniquePathsUtil(0, 0, m, n, dp);
+    }
+
+
+    public int uniquePathsTab(int m, int n) {
+        int[][] dpChoices = new int[m][n];
+        for (int i = 0; i < dpChoices.length; i++) {
+            dpChoices[i] = new int[n];
+        }
+        for (int i = 0; i < n; i++) {
+            dpChoices[m - 1][i] = 1;
+        }
+        for (int i = 0; i < m; i++) {
+            dpChoices[i][n - 1] = 1;
+        }
+
+        int row = m - 2;
+        int col = n - 2;
+        for (int i = row; i >= 0; i--) {
+            for (int j = col; j >= 0; j--) {
+                dpChoices[i][j] = dpChoices[i][j + 1] + dpChoices[i + 1][j];
+            }
+        }
+        return dpChoices[0][0];
+    }
+
+    public int longestCommonSubsequenceUtil(char[] text1, char[] text2, int start1, int start2, int[][] dpChoices) {
+        if (start1 == text1.length || start2 == text2.length) {
+            return 0;
+        }
+
+        if (dpChoices[start1][start2] != -1) {
+            return dpChoices[start1][start2];
+        }
+        if (text1[start1] == text2[start2]) {
+            dpChoices[start1][start2] = 1 + longestCommonSubsequenceUtil(text1, text2, start1 + 1, start2 + 1, dpChoices);
+            return dpChoices[start1][start2];
+        }
+
+        // abc def
+        int opt1 = longestCommonSubsequenceUtil(text1, text2, start1, start2 + 1, dpChoices); // a==e
+        int opt2 = longestCommonSubsequenceUtil(text1, text2, start1 + 1, start2, dpChoices); // d==b
+
+        dpChoices[start1][start2] = Math.max(opt1, opt2);
+        return dpChoices[start1][start2];
+    }
+
+    public int longestCommonSubsequence(String text1, String text2) {
+        char[] ch1 = text1.toCharArray();
+        char[] ch2 = text2.toCharArray();
+
+        int[][] dpChoices = new int[text1.length()][text2.length()];
+        for (int i = 0; i < dpChoices.length; i++) {
+            dpChoices[i] = new int[text2.length()];
+            Arrays.fill(dpChoices[i], -1);
+        }
+        return longestCommonSubsequenceUtil(ch1, ch2, 0, 0, dpChoices);
+    }
+
+    public int longestCommonSubsequenceTab(String text1, String text2) {
+        char[] ch1 = text1.toCharArray();
+        char[] ch2 = text2.toCharArray();
+
+        int[][] dpChoices = new int[text1.length() + 1][text2.length() + 1];
+        for (int i = 0; i < dpChoices.length; i++) {
+            dpChoices[i] = new int[text2.length() + 1];
+        }
+
+        for (int i = 0; i < ch2.length + 1; i++) {
+            dpChoices[0][i] = 0;
+        }
+
+        for (int i = 0; i < ch1.length + 1; i++) {
+            dpChoices[i][0] = 0;
+        }
+
+        for (int i = 1; i < ch1.length + 1; i++) {
+            for (int j = 1; j < ch2.length; j++) {
+                if (ch1[i] == ch2[j]) {
+                    dpChoices[i][j] = 1 + dpChoices[i - 1][j - 1];
+                } else {
+                    // abc def
+                    int opt1 = dpChoices[i][j - 1]; // a==e
+                    int opt2 = dpChoices[i - 1][j]; // a==e
+                    dpChoices[i][j] = Math.max(opt1, opt2);
+                }
+            }
+        }
+        return dpChoices[ch1.length][ch2.length];
+    }
+
+    // return earning
+    public int maxProfitUtil(int[] prices, int day, int buy, int[][] dpChoices) {
+        if (day >= prices.length) {
+            return 0;
+        }
+        if (dpChoices[day][buy] != -1) {
+            return dpChoices[day][buy];
+        }
+
+        // buy
+        int earning;
+
+        if (buy == 1) {
+            int opt1 = -prices[day] + maxProfitUtil(prices, day + 1, 0, dpChoices);
+
+            // don't buy
+            int opt2 = maxProfitUtil(prices, day + 1, 1, dpChoices);
+            earning = Math.max(opt1, opt2);
+
+        } else {
+            // sell
+            int opt3 = prices[day] + maxProfitUtil(prices, day + 2, 1, dpChoices);
+
+            // don't sell
+            int opt4 = maxProfitUtil(prices, day + 1, 0, dpChoices);
+            earning = Math.max(opt3, opt4);
+        }
+
+        dpChoices[day][buy] = earning;
+
+        return dpChoices[day][buy];
+
+    }
+
+    public int maxProfit(int[] prices) {
+        int[][] dpChoices = new int[prices.length][];
+        for (int i = 0; i < dpChoices.length; i++) {
+            dpChoices[i] = new int[2];
+            Arrays.fill(dpChoices[i], -1);
+        }
+
+        return maxProfitUtil(prices, 0, 1, dpChoices);
+    }
+
+    public int findTargetSumWaysUtil(int[] nums, int target, int start, int sum) {
+        if (start == nums.length) {
+            return 0;
+        }
+        if (sum == target) {
+            return 1;
+        }
+        
+        int opt1 = findTargetSumWaysUtil(nums, target, start + 1, sum + nums[start]);
+        int opt2 = findTargetSumWaysUtil(nums, target, start + 1, sum - nums[start]);
+
+        int ways = opt1 + opt2;
+        return ways;
+    }
+
+    public int findTargetSumWays(int[] nums, int target) {
+        return findTargetSumWaysUtil(nums, target, 0, 0);
+    }
+
     public static void main(String[] args) {
         DpDsa dpDsa = new DpDsa();
         int[] arr = {1, 2, 3};

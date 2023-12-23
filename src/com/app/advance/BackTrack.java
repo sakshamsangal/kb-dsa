@@ -72,6 +72,12 @@ public class BackTrack {
     }
 
 
+
+
+    private int guess(int n) {
+        return 1;
+    }
+
     public static void main(String[] args) {
         int n = 4;
         ArrayList<ArrayList<Integer>> list = nQueen(n);

@@ -2,8 +2,7 @@ package com.app.advance.greedy;// Java program for activity selection problem.
 // The following implementation assumes that the activities
 // are already sorted according to their finish time
 
-import java.util.Arrays;
-import java.util.Collections;
+import java.util.*;
 
 public class ActivitySelection {
     // Prints a maximum set of activities that can be done
@@ -28,8 +27,8 @@ public class ActivitySelection {
 
 
     int[] JobScheduling(Job[] arr, int n) {
-        Arrays.sort(arr, (a, b) -> (b.profit - a.profit));
 
+        Arrays.sort(arr, (a, b) -> (b.profit - a.profit));
 
         int maxi = 0;
         for (int i = 0; i < n; i++) {
@@ -65,6 +64,39 @@ public class ActivitySelection {
         ans[1] = jobProfit;
         return ans;
     }
+
+    public static ArrayList<Integer> maxMeetings(int N, int[] S, int[] F) {
+        List<Activity> activities = new ArrayList<>();
+        ArrayList<Integer> meetings = new ArrayList<>();
+
+        for (int i = 0; i < N; i++) {
+            activities.add(new Activity(S[i], F[i], i + 1));
+        }
+
+        activities.sort(Comparator.comparingInt(o -> o.end));
+        meetings.add(activities.get(0).index);
+        int selectedEnd = activities.get(0).end;
+
+        for (int i = 1; i < N; i++) {
+            if (selectedEnd < activities.get(i).start) {
+                meetings.add(activities.get(i).index);
+                selectedEnd = activities.get(i).end;
+            }
+        }
+
+        meetings.sort(Comparator.naturalOrder());
+
+        return meetings;
+    }
+
+
+
+
+
+
+
+
+
 
     // Driver code
     public static void main(String[] args) {
