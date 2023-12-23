@@ -2,7 +2,7 @@ package com.app.advance.dp;
 
 import java.util.Arrays;
 
-public class DpDsa {
+public class DpTwoDim {
 
     public int lengthOfLIS(int[] nums) {
         int[] arr = new int[nums.length];
@@ -246,13 +246,13 @@ public class DpDsa {
 
 
     public static void main(String[] args) {
-        DpDsa dpDsa = new DpDsa();
+        DpTwoDim dpTwoDim = new DpTwoDim();
         int[] arr = {1, 2, 3};
 
         int[] values = {1, 2, 3};
         int[] weight = {4, 5, 1};
 
-        int i = dpDsa.knapSack(4, weight, values, weight.length);
+        int i = dpTwoDim.knapSack(4, weight, values, weight.length);
         System.out.println("i = " + i);
 
     }
