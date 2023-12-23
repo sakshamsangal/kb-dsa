@@ -4,6 +4,7 @@ import java.util.*;
 
 public class StringDsa {
 
+
     public boolean wordPattern(String pattern, String s) {
 
         String[] arr = s.split("\\s");
@@ -214,12 +215,32 @@ public class StringDsa {
         return list;
     }
 
+    public int compress(char[] arr) {
+        StringBuilder ans = new StringBuilder();
+        for (int i = 0; i < arr.length; i++) {
+            int letterCount = 1;
+
+            while (i + 1 < arr.length && arr[i] == arr[i + 1]) {
+                letterCount++;
+                i++;
+            }
+            ans.append(arr[i]);
+            if (1 < letterCount) {
+                ans.append(letterCount);
+            }
+        }
+        for (int k = 0; k < ans.length(); k++) {
+            arr[k] = ans.charAt(k);
+        }
+        return ans.length();
+    }
+
 
     public static void main(String[] args) {
         StringDsa stringDsa = new StringDsa();
-//        stringDsa.getValidMutations("1122");
-        int i = stringDsa.minMutation("AACCGGTT", "AAACGGTA", new String[]{"AACCGGTA", "AACCGCTA", "AAACGGTA"});
-        System.out.println("i = " + i);
+        String st = "abc";
+        int compress = stringDsa.compress(st.toCharArray());
+        System.out.println("compress = " + compress);
 
     }
 }

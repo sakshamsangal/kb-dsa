@@ -400,7 +400,7 @@ public class LinkedList {
     }
 
     public ListNode sortList(ListNode head) {
-        if (Objects.isNull(head)|| Objects.isNull(head.next)) {
+        if (Objects.isNull(head) || Objects.isNull(head.next)) {
             return head;
         }
         ListNode prev = null;
@@ -453,12 +453,31 @@ public class LinkedList {
 
     }
 
+    public ListNode deleteMiddle(ListNode head) {
+
+        if (head.next == null) {
+            return null;
+        }
+        ListNode slow = head;
+        ListNode fast = head.next.next;
+
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        slow.next = slow.next.next;
+        return head;
+    }
+
     public static void main(String[] args) {
-
         LinkedList l1 = new LinkedList();
-        l1.appendRandom(10);
-        l1.appendRandom(20);
+        l1.append(1);
+        l1.append(2);
+        l1.append(3);
 
-        l1.copyRandomList(l1.headRandom);
+        l1.deleteMiddle(l1.head);
+
+
     }
 }

@@ -162,14 +162,37 @@ public class StackDsa {
         return currMax;
     }
 
-    // Driver code
-    public static void main(String[] args) {
-        int[] price = {100, 80, 60, 70, 60, 75, 85};
-        int n = price.length;
+    public String removeStars1(String s) {
+        Stack<Character> stack = new Stack<>();
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) == '*' && !stack.isEmpty()) {
+                stack.pop();
+            } else {
+                stack.push(s.charAt(i));
+            }
+        }
 
-        int i = maxLength("()()");
-        System.out.println("i = " + i);
-//        System.out.print(solve(price, n));
+        StringBuilder ans = new StringBuilder();
+        for (Character character : stack) {
+            ans.append(character);
+        }
+
+        return ans.toString();
+    }
+    public String removeStars(String s) {
+        byte[] arr = s.getBytes();
+        int write = 0;
+        for(byte c: arr){
+            if(c == '*') write--;
+            else arr[write++] = c;
+        }
+        return new String(arr, 0, write);
+    }
+    public static void main(String[] args) {
+        StackDsa stackDsa = new StackDsa();
+        String s = stackDsa.removeStars("abc");
+        System.out.println("s = " + s);
+
     }
 
 

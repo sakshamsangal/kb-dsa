@@ -98,24 +98,6 @@ public class SlidingWindow {
     }
 
 
-    public int minSubArrayLen2(int target, int[] nums) {
-        int exp = 0;
-        int shr = 0;
-        int currMin = Integer.MAX_VALUE;
-        int sum = 0;
-        while (exp < nums.length) {
-            sum += nums[exp];
-            while (sum >= target) {
-                currMin = Math.min(currMin, exp - shr);
-                sum -= nums[shr];
-                shr++;
-            }
-            exp++;
-        }
-        return currMin == Integer.MAX_VALUE ? 0 : currMin + 1;
-    }
-
-
     public int longestkSubstr(String s, int k) {
         if (s.isEmpty()) {
             return -1;
@@ -208,36 +190,98 @@ public class SlidingWindow {
         if (ans.length() == 0) {
             return s;
         }
-
         return ans;
     }
 
 
+    public int atMost(int[] nums, int goal) {
 
-    int circularSubarraySum(int a[], int n) {
-        int[] arr = new int[n +n-1];
-        if (n >= 0) System.arraycopy(a, 0, arr, 0, n);
-        int j = n;
-        n--;
-        for (int i = 0; i < n; i++) {
-            arr[j] = a[i];
-            j++;
-        }
-
-        int currMax = Integer.MIN_VALUE;
+        int start = 0;
         int sum = 0;
-        for (int num : arr) {
-            sum = Math.max(sum + num, num);
-            currMax = Math.max(currMax, sum);
+        int count = 0;
+        for (int i = 0; i < nums.length; i++) {
+            sum += nums[i];
+            while (start < i && sum > goal) {
+                sum = sum - nums[start];
+                start++;
+            }
+            if (sum <= goal) {
+                count = count + i - start + 1;
+            }
+        }
+        return count;
+    }
+
+    public int numSubarraysWithSum(int[] nums, int goal) {
+        return atMost(nums, goal) - atMost(nums, goal - 1);
+    }
+
+
+    public int numSubarrayProductLessThanK(int[] nums, int k) {
+        int start = 0;
+        int prod = 1;
+        int count = 0;
+        for (int i = 0; i < nums.length; i++) {
+            prod *= nums[i];
+
+            while (start < i && prod >= k) {
+                prod = prod / nums[start];
+                start++;
+            }
+
+            if (prod < k) {
+                int len = i - start + 1;
+                count += len;
+            }
         }
 
-        return currMax;
+        return count;
+    }
+
+    private int isVowel(char c) {
+        return c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u' ? 1 : 0;
+    }
+
+    public int maxVowels(String s, int k) {
+
+        int start = 0;
+        int vowelCount = 0;
+
+        for (int i = 0; i < k; i++) {
+            char ch = s.charAt(i);
+            vowelCount = vowelCount + isVowel(ch);
+        }
+        int maxVowelCount = vowelCount;
+
+        for (int i = k; i < s.length(); i++) {
+            char ch = s.charAt(start);
+            vowelCount += isVowel(s.charAt(i)) - isVowel(ch);
+            maxVowelCount = Math.max(maxVowelCount, vowelCount);
+            start++;
+        }
+        return maxVowelCount;
+    }
+
+    public double findMaxAverage(int[] nums, int k) {
+        int start = 0;
+        int sum = 0;
+
+        for (int i = 0; i < k; i++) {
+            sum += nums[i];
+        }
+
+        double maxSum = sum;
+        for (int i = k; i < nums.length; i++) {
+            sum = sum - nums[start] + nums[i];
+            maxSum = Math.max(maxSum, sum);
+            start++;
+        }
+
+        return maxSum / k;
     }
 
     public static void main(String[] args) {
         SlidingWindow slidingWindow = new SlidingWindow();
-        int[] arr = {1,2};
-        slidingWindow.circularSubarraySum(arr, arr.length);
-
+        int[] arr = {1, 2};
     }
 }
