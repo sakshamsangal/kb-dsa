@@ -1,4 +1,4 @@
-package com.app.basic.array;
+package com.app.basic;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -135,6 +135,64 @@ public class SlidingWindow {
         return len;
     }
 
+    public String findLongestSubstring(String str) {
+        int start = 0;
+        String ans = "";
+        int[] freq = new int[128];
+
+        for (int i = 0; i < str.length(); i++) {
+            char ch = str.charAt(i);
+            freq[ch]++;
+
+            while (freq[ch] > 1) {
+                char newCh = str.charAt(start);
+                freq[newCh]--;
+                start++;
+            }
+            if (ans.length() < i - start) {
+                ans = str.substring(start, i + 1);
+            }
+        }
+        return ans;
+    }
+
+    public String findLongestSubstring(String s, int k) {
+        // code here
+        String ans = "";
+        int start = 0;
+
+        HashSet<Character> set = new HashSet<>();
+        int[] freq = new int[128];
+
+        for (int i = 0; i < s.length(); i++) {
+            char ch = s.charAt(i);
+            set.add(ch);
+            freq[ch]++;
+
+            while (set.size() > k) {
+                char newCh = s.charAt(start);
+                freq[newCh]--;
+                if (freq[newCh] == 0) {
+                    set.remove(newCh);
+                }
+                start++;
+            }
+
+            if (set.size() == k) {
+                if (ans.length() < i - start) {
+                    ans = s.substring(start, i + 1);
+                }
+            }
+            System.out.println("set = " + set);
+            System.out.println("ans = " + ans);
+            System.out.println("i = " + i);
+        }
+        if (ans.length() == 0) {
+            return s;
+        }
+        return ans;
+    }
+
 
     public int atMost(int[] nums, int goal) {
 
@@ -157,6 +215,7 @@ public class SlidingWindow {
     public int numSubarraysWithSum(int[] nums, int goal) {
         return atMost(nums, goal) - atMost(nums, goal - 1);
     }
+
 
     public int numSubarrayProductLessThanK(int[] nums, int k) {
         int start = 0;
@@ -223,11 +282,6 @@ public class SlidingWindow {
 
     public static void main(String[] args) {
         SlidingWindow slidingWindow = new SlidingWindow();
-//        int[] arr = {1, 2, 3, 4, 5};
-        int[] arr = {1, 2, 3, 4, 5};
-//        int[] arr = {1, 4, 4};
-
-        int i = slidingWindow.numSubarrayProductLessThanK(arr, 1);
-        System.out.println("i = " + i);
+        int[] arr = {1, 2};
     }
 }

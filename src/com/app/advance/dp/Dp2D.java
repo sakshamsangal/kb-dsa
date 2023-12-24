@@ -4,7 +4,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DpDsa {
+public class Dp2D {
+
     public int maximizeCuts(int n, int x, int y, int z) {
         int[] dp = new int[n + 1];
         Arrays.fill(dp, -1);
@@ -532,13 +533,13 @@ public class DpDsa {
     }
 
     public static void main(String[] args) {
-        DpDsa dpDsa = new DpDsa();
-        int[] arr = {1, 1, 1, 1, 1};
+        Dp2D dp2Dim = new Dp2D();
+        int[] arr = {1, 2, 3};
 
         int[] values = {1, 2, 3};
         int[] weight = {4, 5, 1};
 
-        int i = dpDsa.findTargetSumWays(arr, 3);
+        int i = dp2Dim.knapSack(4, weight, values, weight.length);
         System.out.println("i = " + i);
 
     }
