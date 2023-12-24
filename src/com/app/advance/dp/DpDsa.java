@@ -1,6 +1,8 @@
 package com.app.advance.dp;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DpDsa {
     public int maximizeCuts(int n, int x, int y, int z) {
@@ -502,37 +504,42 @@ public class DpDsa {
         return maxProfitUtil(prices, 0, 1, dpChoices);
     }
 
-    public int findTargetSumWaysUtil(int[] nums, int target, int start, int sum) {
+
+    public int findTargetSumWaysUtil(int[] nums, int target, int start, Map<Map.Entry<Integer,Integer>, Integer> dp) {
         if (start == nums.length) {
+            if (target == 0) {
+                return 1;
+            }
             return 0;
         }
-        if (sum == target) {
-            return 1;
-        }
-        
-        int opt1 = findTargetSumWaysUtil(nums, target, start + 1, sum + nums[start]);
-        int opt2 = findTargetSumWaysUtil(nums, target, start + 1, sum - nums[start]);
 
-        int ways = opt1 + opt2;
-        return ways;
+        Map.Entry<Integer,Integer> key = Map.entry(start,target);
+        if (dp.containsKey(key)) {
+            return dp.get(key);
+        }
+
+        int opt1 = findTargetSumWaysUtil(nums, target + nums[start], start + 1, dp);
+
+        int opt2 = findTargetSumWaysUtil(nums, target - nums[start], start + 1, dp);
+
+        dp.put(key, opt1 + opt2);
+        return dp.get(key);
     }
 
     public int findTargetSumWays(int[] nums, int target) {
-        return findTargetSumWaysUtil(nums, target, 0, 0);
+        Map<Map.Entry<Integer,Integer>, Integer> dp = new HashMap<>();
+        return findTargetSumWaysUtil(nums, target, 0, dp);
     }
 
     public static void main(String[] args) {
         DpDsa dpDsa = new DpDsa();
-        int[] arr = {1, 2, 3};
+        int[] arr = {1, 1, 1, 1, 1};
 
         int[] values = {1, 2, 3};
         int[] weight = {4, 5, 1};
 
-
-//        int i = dpDsa.maximizeCuts(9999, 94, 20, 244);
-        System.out.println("i = " + Integer.MAX_VALUE);
-        int a = Integer.MAX_VALUE + 1;
-        System.out.println("i = " + a);
+        int i = dpDsa.findTargetSumWays(arr, 3);
+        System.out.println("i = " + i);
 
     }
 
