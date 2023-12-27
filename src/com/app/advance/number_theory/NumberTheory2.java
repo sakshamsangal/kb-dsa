@@ -123,10 +123,43 @@ public class NumberTheory2 {
         return ans;
     }
 
+
+    int[][] reduceMatrix(int[][] matrix, int size, int colToSkip) {
+        int[][] reducedMat = new int[size - 1][];
+        int a = 0;
+        for (int i = 1; i < size; i++) {
+            reducedMat[a] = new int[size - 1];
+            int b = 0;
+            for (int j = 0; j < size; j++) {
+                if (j != colToSkip) {
+                    reducedMat[a][b] = matrix[i][j];
+                    b++;
+                }
+            }
+            a++;
+        }
+        return reducedMat;
+    }
+
+    int determinantOfMatrix(int matrix[][], int n) {
+        if (n == 1) {
+            return matrix[0][0];
+        }
+
+        int sign = 1;
+        int det = 0;
+        for (int j = 0; j < n; j++) {
+            int[][] reduceMat = reduceMatrix(matrix, n, j);
+            det += sign * matrix[0][j] * determinantOfMatrix(reduceMat, n - 1);
+            sign = -1 * sign;
+        }
+
+        return det;
+    }
+
     public static void main(String[] args) {
         NumberTheory2 numberTheory = new NumberTheory2();
-        int[][] arr = {{2, 3, 3, 10}, {3, 3, 3, 1}, {6, 1, 1, 4}};
-        List<Integer> goodIndices = numberTheory.getGoodIndices(arr, 2);
-        System.out.println("goodIndices = " + goodIndices);
+        int[][] arr = {{2, 3, 3, 10}, {3, 3, 3, 1}, {6, 1, 1, 4}, {6, 1, 1, 4}};
+        numberTheory.determinantOfMatrix(arr, 4);
     }
 }

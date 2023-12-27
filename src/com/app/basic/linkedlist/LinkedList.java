@@ -54,16 +54,6 @@ public class LinkedList {
         return head;
     }
 
-    public int getLength(ListNode head) {
-        ListNode curr = head;
-        int count = 0;
-        while (curr != null) {
-            curr = curr.next;
-            count++;
-        }
-        return count;
-    }
-
 
     public ListNode getTail(ListNode head) {
         ListNode curr = head;
@@ -187,31 +177,6 @@ public class LinkedList {
         temp.next = temp.next.next;
     }
 
-    // iterative solution
-    // we will traverse the list, and while traversing we keep changing pointers
-    // using the current node and previous node.
-    private ListNode reverse(ListNode head) {
-        ListNode curr = head;
-        ListNode prev = null;
-
-        // traversing the list
-        while (curr != null) {
-
-            // getting hold of next of curr
-            ListNode next = curr.next;
-
-            // making curr next as previous
-            curr.next = prev;
-
-            // new prev
-            prev = curr;
-
-            // new curr
-            curr = next;
-        }
-        // since curr is null so prev is head now
-        return prev;
-    }
 
     //Function to check if the linked list has a loop.
 //    public static boolean detectLoop(Node head) {
@@ -470,13 +435,77 @@ public class LinkedList {
         return head;
     }
 
+    private ListNode reverseRec(ListNode head) {
+
+        if (head.next == null) {
+            return head;
+        }
+        ListNode newHead = reverseRec(head.next);
+        ListNode tail = head.next;
+        tail.next = head;
+        head.next = null;
+
+        return newHead;
+
+    }
+
+    private ListNode reverse(ListNode head) {
+
+        ListNode prev = null;
+
+        while (head != null) {
+            ListNode next = head.next;
+            head.next = prev;
+            prev = head;
+            head = next;
+        }
+        return prev;
+    }
+
+    public int getLength(ListNode head) {
+        ListNode curr = head;
+        int count = 0;
+        while (curr != null) {
+            curr = curr.next;
+            count++;
+        }
+        return count;
+    }
+
+    public int pairSum(ListNode head) {
+        if (Objects.isNull(head)) {
+            return 0;
+        }
+        int len = getLength(head);
+        int mid = len / 2;
+        ListNode startNode = head;
+        ListNode midNode = head;
+
+        for (int i = 0; i < mid; i++) {
+            midNode = midNode.next;
+        }
+
+        ListNode midNodeRev = reverse(midNode);
+
+        int currMax = 0;
+        for (int i = 0; i < mid; i++) {
+            currMax = Math.max(currMax, startNode.val + midNodeRev.val);
+            startNode = startNode.next;
+            midNodeRev = midNodeRev.next;
+        }
+
+        return currMax;
+    }
+
     public static void main(String[] args) {
         LinkedList l1 = new LinkedList();
         l1.append(1);
         l1.append(2);
         l1.append(3);
+        l1.append(4);
 
-        l1.deleteMiddle(l1.head);
+        int i = l1.pairSum(l1.head);
+        System.out.println("i = " + i);
 
 
     }

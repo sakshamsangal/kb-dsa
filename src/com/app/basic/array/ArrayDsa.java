@@ -1,6 +1,7 @@
 package com.app.basic.array;
 
 import com.app.util.LinkedListNode;
+import com.app.util.Stock;
 
 import java.util.*;
 
@@ -28,7 +29,6 @@ public class ArrayDsa {
         }
 
     }
-
 
 
     public String simplifyPath(String path) {
@@ -388,7 +388,6 @@ public class ArrayDsa {
 //    }
 
 
-
     public boolean canJump(int[] nums) {
         int reachable = 0;
         for (int i = 0; i < nums.length; i++) {
@@ -507,11 +506,37 @@ public class ArrayDsa {
         return count;
     }
 
+    public int buyMaximumProducts(int n, int k, int[] price) {
+        Queue<Stock> stockPq = new PriorityQueue<>(Comparator.comparingInt(o -> o.price));
+
+        for (int i = 0; i < price.length; i++) {
+            stockPq.add(new Stock(price[i], i + 1));
+        }
+
+        int stockCount = 0;
+        while (!stockPq.isEmpty()) {
+            Stock stock = stockPq.poll();
+
+            if (0 < k && stock.price <= k) {
+                int maxSum = stock.price * stock.order;
+                if (maxSum <= k) {
+                    k = k - maxSum;
+                    stockCount = stockCount + stock.order;
+                } else {
+                    int stocksToTake = k / stock.price;
+                    k = k - stock.price * stocksToTake;
+                    stockCount = stockCount + stocksToTake;
+                }
+            }
+        }
+        return stockCount;
+    }
+
     public static void main(String[] args) {
         ArrayDsa arrayDsa = new ArrayDsa();
 
-        int[] arr = {0,1,2};
-        int i = arrayDsa.countTestedDevices(arr);
+        int[] arr = {10, 7, 19};
+        int i = arrayDsa.buyMaximumProducts(3, 45, arr);
         System.out.println("i = " + i);
 
     }

@@ -57,12 +57,34 @@ public class MatrixDsa {
         }
     }
 
+    public int[] antiDiagonalPattern(int[][] matrix) {
+        int[] antDia = new int[matrix.length * matrix.length];
+        int start = 0;
+        for (int j = 0; j < matrix.length; j++) {
+            int col = j;
+            for (int i = 0; i <= j; i++) {
+                antDia[start++] = matrix[i][col];
+                col--;
+            }
+        }
+
+        for (int i = 1; i < matrix.length; i++) {
+            int row = i;
+            for (int j = matrix.length - 1; j >= 0 && row < matrix.length; j--) {
+                antDia[start++] = matrix[row][j];
+                row++;
+            }
+        }
+
+        return antDia;
+    }
+
 
     public static void main(String[] args) {
         MatrixDsa matrixDsa = new MatrixDsa();
         int[][] mat = new int[][]{{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
-        matrixDsa.rotate90(mat, 3);
-        System.out.println("mat = " + Arrays.deepToString(mat));
+        int[] ints = matrixDsa.antiDiagonalPattern(mat);
+        System.out.println("mat = " + Arrays.toString(ints));
     }
 
 

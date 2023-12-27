@@ -236,11 +236,65 @@ public class StringDsa {
     }
 
 
+    public String mergeAlternately(String word1, String word2) {
+
+        StringBuilder altStr = new StringBuilder();
+        int i = 0;
+        int j = 0;
+
+        while (i < word1.length() && j < word2.length()) {
+            altStr.append(word1.charAt(i));
+            altStr.append(word2.charAt(j));
+            i++;
+            j++;
+        }
+        while (i < word1.length()) {
+            altStr.append(word1.charAt(i));
+            i++;
+        }
+
+        while (j < word2.length()) {
+            altStr.append(word2.charAt(j));
+            j++;
+        }
+        return altStr.toString();
+    }
+
+    private boolean[] vowelLetterMap() {
+        boolean[] letter = new boolean[128];
+        char[] vowels = "aeiouAEIOU".toCharArray();
+        for (char c : vowels) {
+            letter[c] = true;
+        }
+        return letter;
+    }
+
+    public String reverseVowels(String s) {
+        int end = s.length() - 1;
+        char[] chs = s.toCharArray();
+        boolean[] letter = vowelLetterMap();
+        for (int i = 0; i < chs.length; i++) {
+            if (letter[chs[i]]) {
+                for (int j = end; j > i; j--) {
+                    if (letter[chs[j]]) {
+                        char temp = chs[i];
+                        chs[i] = chs[j];
+                        chs[j] = temp;
+                        end = j - 1;
+                        break;
+                    }
+                }
+            }
+        }
+
+        return String.valueOf(chs);
+    }
+
     public static void main(String[] args) {
         StringDsa stringDsa = new StringDsa();
-        String st = "abc";
-        int compress = stringDsa.compress(st.toCharArray());
-        System.out.println("compress = " + compress);
+        String st = "leetcode";
+        String s = stringDsa.reverseVowels(st);
+        System.out.println("s = " + s);
 
     }
 }
