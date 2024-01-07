@@ -72,8 +72,6 @@ public class BackTrack {
     }
 
 
-
-
     private int guess(int n) {
         return 1;
     }
