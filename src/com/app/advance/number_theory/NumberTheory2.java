@@ -157,6 +157,30 @@ public class NumberTheory2 {
         return det;
     }
 
+    public static int getPoints(long ticketId) {
+        int points = 0;
+        long limit = ticketId;
+        for (long primeNo = 2; primeNo * primeNo <= limit; primeNo++) {
+            while (ticketId % primeNo == 0) {
+                ticketId = ticketId / primeNo;
+                points++;
+            }
+        }
+        if (ticketId != 1) {
+            points++;
+        }
+        return points;
+    }
+
+    public static long sumOfPowers(long a, long b) {
+        int powerCount = 0;
+        while (a <= b) {
+            powerCount += getPoints(a);
+            a++;
+        }
+        return powerCount;
+    }
+
     public static void main(String[] args) {
         NumberTheory2 numberTheory = new NumberTheory2();
         int[][] arr = {{2, 3, 3, 10}, {3, 3, 3, 1}, {6, 1, 1, 4}, {6, 1, 1, 4}};

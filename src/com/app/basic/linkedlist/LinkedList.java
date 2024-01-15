@@ -497,16 +497,72 @@ public class LinkedList {
         return currMax;
     }
 
+
+    public ListNode deleteDuplicates(ListNode head) {
+        if (Objects.isNull(head) || head.next == null) {
+            return head;
+        }
+        ListNode newHead = new ListNode(-1);
+        ListNode newTail = newHead;
+        ListNode curr = head;
+        while (curr != null) {
+            int freq = 1;
+            while (curr.next != null && curr.val == curr.next.val) {
+                curr = curr.next;
+                freq++;
+            }
+            ListNode next = curr.next;
+            if (freq == 1) {
+                curr.next = null;
+                newTail.next = curr;
+                newTail = curr;
+            }
+            curr = next;
+        }
+
+        return newHead.next;
+    }
+
+    Node mergeResult(Node node1, Node node2) {
+        Node newHead = null;
+        while (node1 != null && node2 != null) {
+            Node item;
+            if (node1.data < node2.data) {
+                item = node1;
+                node1 = node1.next;
+            } else {
+                item = node2;
+                node2 = node2.next;
+            }
+            item.next = newHead;
+            newHead = item;
+        }
+
+        while (node1 != null) {
+            Node item = node1;
+            node1 = node1.next;
+            item.next = newHead;
+            newHead = item;
+        }
+
+        while (node2 != null) {
+            Node item = node2;
+            node2 = node2.next;
+            item.next = newHead;
+            newHead = item;
+        }
+
+        return newHead;
+    }
+
     public static void main(String[] args) {
         LinkedList l1 = new LinkedList();
         l1.append(1);
         l1.append(2);
-        l1.append(3);
-        l1.append(4);
+        l1.append(2);
 
-        int i = l1.pairSum(l1.head);
-        System.out.println("i = " + i);
-
+        l1.head = l1.deleteDuplicates(l1.head);
+        l1.traverse();
 
     }
 }
