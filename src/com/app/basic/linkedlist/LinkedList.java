@@ -555,6 +555,33 @@ public class LinkedList {
         return newHead;
     }
 
+
+    public Node sortedInsert(Node head, int data) {
+
+        if (Objects.isNull(head)) {
+            return null;
+        }
+
+        if (Objects.isNull(head.next)) {
+            return null;
+        }
+
+        Node prev = head;
+        Node curr = head.next;
+        while (curr != head) {
+            if (data < curr.data) {
+                Node newNode = new Node(data);
+                newNode.next = curr;
+                prev.next = newNode;
+            }
+            prev = curr;
+            curr = curr.next;
+        }
+        return head;
+    }
+
+
+
     public static void main(String[] args) {
         LinkedList l1 = new LinkedList();
         l1.append(1);
