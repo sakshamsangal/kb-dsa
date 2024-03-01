@@ -181,6 +181,8 @@ public class NumberTheory2 {
         return powerCount;
     }
 
+    
+
     public static void main(String[] args) {
         NumberTheory2 numberTheory = new NumberTheory2();
         int[][] arr = {{2, 3, 3, 10}, {3, 3, 3, 1}, {6, 1, 1, 4}, {6, 1, 1, 4}};
