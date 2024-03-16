@@ -326,12 +326,33 @@ public class Dp1D {
         return ways * ways % 1000_000_007;
     }
 
+    int numberSequenceUtil(int maxLimit, int size, int num) {
+        if (size == 0) {
+            return 1;
+        }
+        int count = 0;
+        for (int i = num * 2; i <= maxLimit; i++) {
+            int res = numberSequenceUtil(maxLimit, size - 1, i);
+            if (res == 0) {
+                return 0;
+            }
+            count += res;
+        }
+        return count;
+    }
+
+    int numberSequence(int m, int n) {
+        return numberSequenceUtil(m, n, 1);
+    }
+
     public static void main(String[] args) {
         Dp1D dp1D = new Dp1D();
         int[] arr = {1, 2, 3};
 
         int[] values = {2, 2, 3};
         int[] weight = {4, 5, 1};
+        int i = dp1D.numberSequence(5, 2);
+        System.out.println("i = " + i);
 
 //        int i = dpDsa.knapSack(4, weight, values, weight.length);
 

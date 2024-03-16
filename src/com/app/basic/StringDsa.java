@@ -290,11 +290,20 @@ public class StringDsa {
         return String.valueOf(chs);
     }
 
+    ArrayList<Integer> search(String pat, String txt) {
+        int winLen = 2;
+        for (int i = 0; i < txt.length() - 1; i++) {
+            System.out.println("txt = " + txt.substring(i, winLen));
+            winLen++;
+        }
+
+        return null;
+    }
+
     public static void main(String[] args) {
         StringDsa stringDsa = new StringDsa();
         String st = "leetcode";
-        String s = stringDsa.reverseVowels(st);
-        System.out.println("s = " + s);
+        stringDsa.search("123", "abc");
 
     }
 }

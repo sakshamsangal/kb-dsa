@@ -501,44 +501,99 @@ public class LinkedListTemp {
         return currMax;
     }
 
-    public Node insertionSort(Node head_ref) {
-        if (Objects.isNull(head_ref) || Objects.isNull(head_ref.next)) {
-            return head_ref;
+
+    public ListNode deleteDuplicates(ListNode head) {
+        if (Objects.isNull(head) || head.next == null) {
+            return head;
         }
-        Node newHead = head_ref;
-        head_ref = head_ref.next;
-
-        while (head_ref != null) {
-            Node curr = newHead;
-            Node next = head_ref.next;
-            // 10 20 30 40 .. 25
-
-            if (head_ref.data < curr.data) {
-                head_ref.next = curr;
-                newHead = head_ref;
-            } else {
-                while (curr.next != null && curr.next.data > head_ref.data) {
-                    curr = curr.next;
-                }
-                Node newNext = curr.next;
-                curr.next = head_ref;
-                head_ref.next = newNext;
+        ListNode newHead = new ListNode(-1);
+        ListNode newTail = newHead;
+        ListNode curr = head;
+        while (curr != null) {
+            int freq = 1;
+            while (curr.next != null && curr.val == curr.next.val) {
+                curr = curr.next;
+                freq++;
             }
-            head_ref = next;
+            ListNode next = curr.next;
+            if (freq == 1) {
+                curr.next = null;
+                newTail.next = curr;
+                newTail = curr;
+            }
+            curr = next;
         }
+
+        return newHead.next;
+    }
+
+    Node mergeResult(Node node1, Node node2) {
+        Node newHead = null;
+        while (node1 != null && node2 != null) {
+            Node item;
+            if (node1.data < node2.data) {
+                item = node1;
+                node1 = node1.next;
+            } else {
+                item = node2;
+                node2 = node2.next;
+            }
+            item.next = newHead;
+            newHead = item;
+        }
+
+        while (node1 != null) {
+            Node item = node1;
+            node1 = node1.next;
+            item.next = newHead;
+            newHead = item;
+        }
+
+        while (node2 != null) {
+            Node item = node2;
+            node2 = node2.next;
+            item.next = newHead;
+            newHead = item;
+        }
+
         return newHead;
     }
+
+
+    public Node sortedInsert(Node head, int data) {
+
+        if (Objects.isNull(head)) {
+            return null;
+        }
+
+        if (Objects.isNull(head.next)) {
+            return null;
+        }
+
+        Node prev = head;
+        Node curr = head.next;
+        while (curr != head) {
+            if (data < curr.data) {
+                Node newNode = new Node(data);
+                newNode.next = curr;
+                prev.next = newNode;
+            }
+            prev = curr;
+            curr = curr.next;
+        }
+        return head;
+    }
+
+
 
     public static void main(String[] args) {
         LinkedListTemp l1 = new LinkedListTemp();
         l1.append(1);
         l1.append(2);
-        l1.append(3);
-        l1.append(4);
+        l1.append(2);
 
-        int i = l1.insertionSort();
-        System.out.println("i = " + i);
-
+        l1.head = l1.deleteDuplicates(l1.head);
+        l1.traverse();
 
     }
 }*/

@@ -398,19 +398,35 @@ public class BinaryTree {
 
         int c = 0;
         if (maxVal < root.val) {
-            maxVal =  root.val;
+            maxVal = root.val;
             c++;
         }
         int left = goodNodesUtil(root.left, maxVal);
         int right = goodNodesUtil(root.right, maxVal);
 
-        return c + left+ right;
+        return c + left + right;
     }
 
     public int goodNodes(TreeNode root) {
         return goodNodesUtil(root, Integer.MIN_VALUE);
     }
 
+
+    public TreeNode flattenBST(TreeNode root) {
+        if (Objects.isNull(root)) {
+            return null;
+        }
+        flattenBST(root.left);
+        TreeNode head = null;
+        if (Objects.isNull(prev2)) {
+            head = root;
+        } else {
+            prev2.right = root;
+        }
+        prev2 = root;
+        flattenBST(root.right);
+        return head;
+    }
 
     public static void main(String[] args) {
 

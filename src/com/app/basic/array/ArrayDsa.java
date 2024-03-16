@@ -532,11 +532,52 @@ public class ArrayDsa {
         return stockCount;
     }
 
+    public int maxCoursesUtil(int start, int amount, int[] cost, int[][] dp) {
+        if (start == cost.length) {
+            return 0;
+        }
+
+        if (dp[start][amount] != -1) {
+            return dp[start][amount];
+        }
+        int pick = 0;
+        if (amount >= cost[start]) {
+            pick = 1 + maxCoursesUtil(start + 1, (int) (amount - (cost[start] * 0.1)), cost, dp);
+        }
+        int skip = maxCoursesUtil(start + 1, amount, cost, dp);
+
+        dp[start][amount] = Math.max(pick, skip);
+
+        return dp[start][amount];
+    }
+
+    public int max_courses(int n, int total, int[] cost) {
+
+        int[][] dp = new int[n][];
+        for (int i = 0; i < dp.length; i++) {
+            dp[i] = new int[total + 1];
+            Arrays.fill(dp[i], -1);
+        }
+        return maxCoursesUtil(0, total, cost, dp);
+    }
+
+    public boolean countSub(long arr[], long n) {
+        for (int i = 0; i < arr.length; i++) {
+            if (2 * i + 1 < arr.length && arr[i] <= arr[2 * i + 1]) {
+                return false;
+            }
+            if (2 * i + 2 < arr.length && arr[i] <= arr[2 * i + 2]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+
     public static void main(String[] args) {
         ArrayDsa arrayDsa = new ArrayDsa();
-
-        int[] arr = {10, 7, 19};
-        int i = arrayDsa.buyMaximumProducts(3, 45, arr);
+        int[] arr = {10, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
+        int i = arrayDsa.max_courses(11, 10, arr);
         System.out.println("i = " + i);
 
     }
