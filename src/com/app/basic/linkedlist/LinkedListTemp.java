@@ -1,3 +1,4 @@
+/*
 package com.app.basic.linkedlist;
 
 import com.app.util.ListNode;
@@ -6,8 +7,9 @@ import com.app.util.NodeRandom;
 import java.util.HashMap;
 import java.util.Objects;
 
-public class LinkedList {
+public class LinkedListTemp {
     ListNode head;
+    Node head2;
     NodeRandom headRandom;
 
     public ListNode reverseKGroup(ListNode head, int k) {
@@ -271,11 +273,13 @@ public class LinkedList {
 
 
     public ListNode rotateRight(ListNode head, int k) {
-        /*
+        */
+/*
          * need 2 tail
          * 5 next head
          * 3 next null
-         * */
+         * *//*
+
 
         ListNode curr = head;
         ListNode newHead = null;
@@ -497,16 +501,44 @@ public class LinkedList {
         return currMax;
     }
 
+    public Node insertionSort(Node head_ref) {
+        if (Objects.isNull(head_ref) || Objects.isNull(head_ref.next)) {
+            return head_ref;
+        }
+        Node newHead = head_ref;
+        head_ref = head_ref.next;
+
+        while (head_ref != null) {
+            Node curr = newHead;
+            Node next = head_ref.next;
+            // 10 20 30 40 .. 25
+
+            if (head_ref.data < curr.data) {
+                head_ref.next = curr;
+                newHead = head_ref;
+            } else {
+                while (curr.next != null && curr.next.data > head_ref.data) {
+                    curr = curr.next;
+                }
+                Node newNext = curr.next;
+                curr.next = head_ref;
+                head_ref.next = newNext;
+            }
+            head_ref = next;
+        }
+        return newHead;
+    }
+
     public static void main(String[] args) {
-        LinkedList l1 = new LinkedList();
+        LinkedListTemp l1 = new LinkedListTemp();
         l1.append(1);
         l1.append(2);
         l1.append(3);
         l1.append(4);
 
-        int i = l1.pairSum(l1.head);
+        int i = l1.insertionSort();
         System.out.println("i = " + i);
 
 
     }
-}
+}*/

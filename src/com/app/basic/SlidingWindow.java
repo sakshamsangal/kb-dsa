@@ -6,7 +6,6 @@ import java.util.Map;
 
 public class SlidingWindow {
 
-
     // a bcad
     // abc ad
     // aaa aa
@@ -33,9 +32,7 @@ public class SlidingWindow {
         return len + 1;
     }
 
-
     public int lengthOfLongestSubstring(String s) {
-
         if (s.isEmpty()) return 0;
         HashSet<Character> set = new HashSet<>();
         int currMax = 0;

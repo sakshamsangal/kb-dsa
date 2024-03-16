@@ -162,6 +162,7 @@ public class Dp1D {
         }
         return j;
     }
+
     public int climbStairsUtil(int n, int[] dp) {
         if (n < 3) {
             return n;
@@ -278,16 +279,17 @@ public class Dp1D {
         List<Integer> list = rooms.get(src);
         vis[src] = true;
         for (int room : list) {
-            if (!vis[room]){
+            if (!vis[room]) {
                 canVisitAllRoomsUtil(rooms, room, vis);
             }
         }
     }
+
     public boolean canVisitAllRooms(List<List<Integer>> rooms) {
 
         boolean[] vis = new boolean[rooms.size()];
         for (int i = 0; i < rooms.size(); i++) {
-            if (!vis[i]){
+            if (!vis[i]) {
                 canVisitAllRoomsUtil(rooms, i, vis);
             }
         }
@@ -300,6 +302,29 @@ public class Dp1D {
         return true;
     }
 
+    public int totalWaysUtil(int N, int start, int[] dp) {
+        if (N == 1) {
+            return 2;
+        }
+        if (start >= N) {
+            return 1;
+        }
+        if (dp[start] != -1) {
+            return dp[start];
+        }
+        int pick = totalWaysUtil(N, start + 2, dp);
+        int skip = totalWaysUtil(N, start + 1, dp);
+        int m = (int) 1e9+7;
+        dp[start] = ((pick % m) + (skip % m))%m;
+        return dp[start];
+    }
+
+    public int TotalWays(int N) {
+        int[] dp = new int[N];
+        Arrays.fill(dp, -1);
+        int ways = totalWaysUtil(N, 0, dp);
+        return ways * ways % 1000_000_007;
+    }
 
     public static void main(String[] args) {
         Dp1D dp1D = new Dp1D();

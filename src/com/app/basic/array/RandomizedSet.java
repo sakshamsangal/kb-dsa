@@ -5,7 +5,6 @@ import java.util.Random;
 import java.util.Set;
 
 class RandomizedSet {
-
     Set<Integer> set;
     Random random;
 

@@ -1,7 +1,9 @@
 package com.app.basic;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class MatrixDsa {
 
@@ -80,11 +82,32 @@ public class MatrixDsa {
     }
 
 
+    public ArrayList<Integer> repeatedRows(int matrix[][], int m, int n) {
+        ArrayList<Integer> ans = new ArrayList<>();
+        Set<Integer> setDecimal = new HashSet<>();
+        for (int i = 0; i < m; i++) {
+            int num = 0;
+            for (int j = 0; j < n; j++) {
+                if (matrix[i][j] != 0) {
+                    num = num + (1 << j);
+                }
+            }
+            if (setDecimal.contains(num)) {
+                ans.add(i);
+            } else {
+                setDecimal.add(num);
+            }
+        }
+        return ans;
+
+
+    }
+
     public static void main(String[] args) {
         MatrixDsa matrixDsa = new MatrixDsa();
-        int[][] mat = new int[][]{{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
-        int[] ints = matrixDsa.antiDiagonalPattern(mat);
-        System.out.println("mat = " + Arrays.toString(ints));
+        int[][] mat = new int[][]{{0, 0, 3}, {0, 0, 3}, {7, 8, 9}};
+        ArrayList<Integer> integers = matrixDsa.repeatedRows(mat, 3, 3);
+        System.out.println("integers = " + integers);
     }
 
 

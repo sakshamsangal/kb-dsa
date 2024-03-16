@@ -21,11 +21,14 @@ public class DoublyList {
         // Assigning the address of head
         // to node's previous pointer.
         node.prev = head;
+
         // Assigning the address of head's next
         // to node's next pointer.
         node.next = head.next;
+
         // Now making node to be head's next.
         head.next = node;
+
         // Then, make node's next's
         // previous to be node.
         node.next.prev = node;
